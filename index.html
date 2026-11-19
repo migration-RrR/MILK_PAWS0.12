@@ -21,18 +21,19 @@ canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
 #btns{position:absolute;bottom:2.1em;left:0;right:0;display:flex;justify-content:center;flex-wrap:wrap;gap:.65em;pointer-events:none;padding:0 .7em}
 #btns .bt{pointer-events:auto;display:none}
 #hold{font-size:1.5em;padding:.8em 1.25em}
-#evt{position:absolute;top:3.6em;left:.8em;right:.8em;background:rgba(34,22,14,.94);border:1px solid #c87838;color:#f5e6c8;padding:.45em .7em;font-size:1.05em;text-align:center;display:none;pointer-events:none;box-shadow:0 2px 6px rgba(0,0,0,.6)}
+#evt{position:absolute;top:9.4em;left:.8em;right:.8em;background:rgba(34,22,14,.94);border:1px solid #c87838;color:#f5e6c8;padding:.45em .7em;font-size:1.05em;text-align:center;display:none;pointer-events:none;box-shadow:0 2px 6px rgba(0,0,0,.6);z-index:25}
 #dlg{position:absolute;left:.8em;right:.8em;bottom:1em;background:rgba(24,18,14,.98);border:2px solid #7a5530;padding:1em;display:none;box-shadow:0 0 0 3px #0a0705;z-index:15}
 #dlg .nm{color:#c87838;font-size:1.2em;font-weight:bold;letter-spacing:2px;margin-bottom:.4em;display:flex;justify-content:space-between}
 #dlg .tx{color:#f0e8d0;font-size:1.22em;line-height:1.35;margin-bottom:.8em}
 #dlg .bt{display:block;width:100%;margin-top:.45em;font-size:1.12em;padding:.55em .8em;text-align:left;letter-spacing:0}
-#pass{position:absolute;left:1.2em;right:1.2em;top:15%;background:#d8cbb4;color:#1e1610;border:3px solid #4a2e18;padding:1em;display:none;box-shadow:0 6px 24px rgba(0,0,0,.85);z-index:16}
+#pass{position:absolute;left:1em;right:1em;bottom:1em;background:#d8cbb4;color:#1e1610;border:3px solid #4a2e18;padding:.8em;display:none;box-shadow:0 6px 24px rgba(0,0,0,.85);z-index:16}
 #pass .phd{display:flex;justify-content:space-between;border-bottom:2px solid #4a2e18;padding-bottom:.35em;margin-bottom:.6em;font-weight:bold;font-size:1.05em;color:#4a2e18}
 #pass .pbody{display:flex;gap:.8em;align-items:center}
 #pass canvas{width:76px;height:76px;border:2px solid #4a2e18;background:#efe6d4;flex-shrink:0}
 #pass .pinfo{font-size:1.05em;line-height:1.45}
 #pass .pinfo b{color:#3a2010}
-#pass .pbtns{display:flex;gap:.6em;margin-top:.8em}
+#pass .phint{font-size:.82em;line-height:1.3;margin-top:.6em;color:#5a3a20;border-top:1px dashed #7a5530;padding-top:.4em}
+#pass .pbtns{display:flex;gap:.6em;margin-top:.7em}
 #pass .pbtns .bt{flex:1;padding:.55em;font-size:1.1em;text-align:center}
 #sum,#title,#shop,#book,#opts{position:absolute;inset:0;background:rgba(10,7,5,.96);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:1.4em;z-index:20}
 #title{z-index:30;background:#0a0705}
@@ -50,13 +51,13 @@ canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
 .sbtn{background:#5a3818;color:#fff0d0;border:1px solid #c87838;padding:.45em .65em;font:bold 1.02em 'Courier New',monospace;cursor:pointer;white-space:nowrap}
 .sbtn:disabled{opacity:.4;border-color:#5a3a22;cursor:default}
 .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:.45em}
-.ccard{border:1px solid #3a2414;background:#120d0a;padding:.5em;font-size:.96em;color:#d0c0a0}
+.ccard{border:1px solid #3a2414;background:#120d0a;padding:.5em;font-size:.96em;color:#d0c0a0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.2em;text-align:center}
 .hearts{color:#e06060;letter-spacing:1.5px;font-size:1.05em}
 .ibtn{pointer-events:auto;background:rgba(18,12,8,.92);border:1px solid #7a5530;color:#e0d0b0;padding:.25em .5em;font:bold 1em 'Courier New',monospace;cursor:pointer}
 .srow{margin:.8em 0;color:#e0d0b0;font-size:1.15em}
 .srow input{width:100%;margin-top:.35em;accent-color:#c87838}
 
-/* ===== визуальная полировка (единая палитра: тёмное дерево + янтарь + сливочный) ===== */
+/* ===== визуальная полировка ===== */
 :root{--amber:#c87838;--amber2:#e0a060;--wood:#7a5530;--cream:#f0e8d0}
 .bd{background:linear-gradient(#26190f,#160f0a);border:1px solid var(--wood);border-radius:2px;color:#e8d8b8;box-shadow:0 2px 0 #0a0705,inset 0 1px 0 rgba(255,220,170,.10)}
 .bd b{color:var(--cream)}
@@ -70,7 +71,7 @@ canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
 .sbtn{background:linear-gradient(#6a4220,#4a2c12);border-radius:2px;transition:filter .15s}
 .ibtn{background:linear-gradient(#26190f,#160f0b);border-radius:2px;padding:.3em .55em;box-shadow:0 2px 0 #0a0705}
 .ibtn:active{transform:translateY(2px);box-shadow:none}
-@media (hover:hover){.bt:hover:not(:disabled){filter:brightness(1.18)}.sbtn:hover:not(:disabled){filter:brightness(1.22)}.ibtn:hover{filter:brightness(1.3)}.hnav:hover{filter:brightness(1.3)}.sitem:hover{border-color:var(--wood)}}
+@media (hover:hover){.bt:hover:not(:disabled){filter:brightness(1.18)}.sbtn:hover:not(:disabled){filter:brightness(1.22)}.ibtn:hover{filter:brightness(1.3)}.hnav:hover{filter:brightness(1.3)}.sitem:hover,.ccard:hover{border-color:var(--wood)}}
 .box{background:linear-gradient(#211911,#150f0b);border:2px solid #6a4528;box-shadow:inset 0 0 0 2px #0a0705,0 10px 28px rgba(0,0,0,.65)}
 .sitem{background:linear-gradient(#17100c,#100a07);transition:border-color .15s}
 .ccard{background:linear-gradient(#17100c,#100a07)}
@@ -79,13 +80,12 @@ canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
 .logo{text-shadow:3px 3px 0 #7a4a1e,0 0 22px rgba(224,160,96,.35)}
 #dlg{border-radius:2px;background:linear-gradient(#211911,#15100c);animation:rise .18s ease-out}
 #pass{animation:rise .18s ease-out}
-#evt{top:9.4em;border-radius:2px;animation:fadein .3s ease-out}
+#evt{border-radius:2px;animation:fadein .3s ease-out}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 #hold:not(:disabled){animation:glow 1.6s ease-in-out infinite}
 #hold.on{animation:none}
 @keyframes glow{0%,100%{box-shadow:0 2px 0 #0a0705,0 0 0 rgba(224,160,96,0)}50%{box-shadow:0 2px 0 #0a0705,0 0 14px rgba(224,160,96,.55)}}
-/* HUD: где я, что осталось, куда можно пойти */
 #ui>#hud{position:absolute;top:3.6em;left:.7em;right:.7em;display:none;flex-direction:column;gap:.35em;pointer-events:none}
 .hrow{display:flex;justify-content:space-between;align-items:center;gap:.4em}
 .hroom{color:var(--amber2);font-weight:bold;letter-spacing:3px;font-size:1.1em;text-shadow:1px 1px 0 #0a0705;background:rgba(18,12,8,.7);padding:.15em .7em;border:1px solid #4a301c}
@@ -95,7 +95,6 @@ canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
 .hchips .bd{padding:.2em .5em}
 .hchips .warn{color:#ff9a88;border-color:#a04a3a}
 #ui>#hint{position:absolute;left:1em;right:1em;bottom:2.6em;display:none;text-align:center;color:#f5e6c8;font-size:1.15em;line-height:1.3;background:rgba(18,12,8,.88);border:1px solid var(--amber);padding:.5em .7em;pointer-events:none;border-radius:2px;animation:fadein .3s ease-out}
-/* ===== v10: HUD и лавка ===== */
 #top .bd{font-size:.95em}
 .dayb{display:flex;flex-direction:column;line-height:1.05;padding:.22em .55em;border-color:var(--amber)}
 .dayb b{font-size:1.12em;color:var(--amber2);letter-spacing:.5px}
@@ -117,6 +116,7 @@ canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
 .shmon{color:#ffd870;font-weight:bold;font-size:1.2em;background:#120b07;border:1px solid var(--wood);padding:.15em .5em}
 .shgrid{display:grid;grid-template-columns:1fr 1fr;gap:.8em .55em;padding:.6em .8em .8em;overflow-y:auto;flex:1;min-height:0}
 .scard{position:relative;background:linear-gradient(#241911,#150f0b);border:2px solid #4a301c;padding:.5em;display:flex;flex-direction:column;gap:.3em;transition:transform .12s,border-color .15s;box-shadow:0 .45em 0 -.1em #5a3a1c}
+.scard.wide{grid-column:1/-1}
 .scard.own{border-color:#6ca05e}
 .scard.max{border-color:#e0b050;box-shadow:0 .45em 0 -.1em #8a6a2c,0 0 .9em rgba(224,176,80,.25)}
 .scard.flash{animation:flashc .5s ease-out}
@@ -132,12 +132,37 @@ canvas{display:block;width:100%;height:100%;image-rendering:pixelated}
 .scard.max .badge{background:#6a4a14;color:#ffe8a0;border-color:#e0b050}
 .scard .sbtn{width:100%;text-align:center;padding:.5em .2em;font-size:.9em}
 .need{color:#e08070;font-size:.75em;text-align:center}
+/* ===== v11: обучение, книга, звёзды ===== */
+#tut{position:absolute;top:10.4em;left:.8em;right:.8em;background:rgba(40,26,12,.96);border:2px solid #e0a040;color:#fff0d0;padding:.55em .7em;font-size:1.02em;line-height:1.3;display:none;pointer-events:none;z-index:14;border-radius:2px;box-shadow:0 2px 8px rgba(0,0,0,.6)}
+#tut b{color:#ffd870}
+#tut .sbtn{pointer-events:auto;width:auto;font-size:.8em;padding:.3em .5em;margin-top:.4em}
+.tabs{display:flex;gap:.4em;margin-bottom:.7em}
+.tb{flex:1;background:#17100c;color:#9a866a;border:1px solid #4a301c;padding:.45em .2em;font:bold 1em 'Courier New',monospace;cursor:pointer}
+.tb.on{background:linear-gradient(#8c5726,#6a3c14);color:#fff0d0;border-color:var(--amber)}
+.pcv{width:56px;height:64px;background:radial-gradient(circle at 50% 40%,#3a2818,#150f0b);border:1px solid #4a301c;image-rendering:auto}
+.cdet{display:flex;gap:.8em;align-items:flex-start}
+.cdet canvas{width:110px;height:120px;flex-shrink:0;border:2px solid #7a5530;background:radial-gradient(circle at 50% 40%,#4a3420,#150f0b)}
+.cinfo{color:#d0c0a0;font-size:1em;line-height:1.5}
+.cinfo b.cn{color:#ffd870;font-size:1.15em}
+.cdesc{color:#e0d0b0;font-size:1.05em;line-height:1.4;margin:.8em 0;padding:.6em;border:1px dashed #5a3a22;background:#120d0a}
+.arow{display:flex;gap:.6em;align-items:center;padding:.45em;border:1px solid #3a2414;background:#120d0a;margin-bottom:.4em;color:#6a5a4a}
+.arow.got{color:#f0e0c0;border-color:#c87838;background:#1e150d}
+.arow .ai{font-size:1.6em;width:1.5em;text-align:center;filter:grayscale(1);opacity:.5}
+.arow.got .ai{filter:none;opacity:1}
+.arow small{display:block;color:#9a866a;font-size:.85em}
+.stars{font-size:3em;text-align:center;letter-spacing:.1em;color:#3a2c1c;margin:.1em 0 .2em}
+.stars i{font-style:normal;display:inline-block}
+.stars i.on{color:#ffd040;text-shadow:0 0 .4em rgba(255,200,60,.7);animation:starpop .5s both}
+@keyframes starpop{0%{transform:scale(0) rotate(-40deg);opacity:0}70%{transform:scale(1.35) rotate(8deg)}100%{transform:scale(1);opacity:1}}
+.rate{text-align:center;color:#e0a060;font-weight:bold;letter-spacing:2px;margin-bottom:.5em}
+.jarrow{display:flex;justify-content:space-between;color:#ffd870;font-size:1.15em;padding:.4em .5em;margin:.5em 0;background:#120b07;border:1px solid var(--wood)}
 </style></head><body>
 <div id="w"><canvas id="g"></canvas>
 <div id="ui">
 <div id="top"></div>
 <div id="evt"></div>
 <div id="hud"><div class="hrow"><button class="hnav" id="navL"></button><div class="hroom" id="hroom"></div><button class="hnav" id="navR"></button></div><div class="hchips" id="hchips"></div></div>
+<div id="tut"></div>
 <div id="hint"></div>
 <div id="btns">
   <button class="bt" id="bdoc">ПАСПОРТ</button>
@@ -193,13 +218,32 @@ var CHATTER = [
   'Мрр... Отличная смена сегодня.'
 ];
 
+var DESC = {
+  martin: 'Серый архивариус в красном шарфе. Любит порядок, дождь и тишину. В детстве мечтал стать смотрителем маяка.',
+  ryzhik: 'Рыжий весельчак в кепке. Вечно попадает в приключения и мечтает открыть собственный кошачий бар.',
+  black: 'Сдержанный и немногословный джентльмен во фраке. Под строгим видом скрывает тёплое сердце и грустную историю.',
+  ellie: 'Белая нежная библиотекарша с бантиком. Замечает мелочи, радуется цветам на подоконнике и рисует портреты.',
+  barny: 'Крупный добродушный кот с огромным аппетитом. Лучший спорт, по его мнению, это сон после плотного обеда.',
+  sima: 'Сиамская болтушка и несостоявшаяся оперная дива. Мурлычет, когда ей приятно, и стесняется своих арий.',
+  prof: 'Профессор Котц изучает «теорию молока». Педант и перфекционист: любит, когда налито строго до метки.',
+  pirate: 'Капитан Флинт, грозный морской волк. Повязку носит для стиля: оба глаза видят прекрасно.',
+  murka: 'Трёхцветная добрячка, приносящая удачу. Помогает котятам, хотя сама иногда застревает на деревьях.',
+  snow: 'Пушистый белоснежный мечтатель. Верит, что пыль с потолка это первый снег, а молоко делает невидимым.',
+  charlie: 'Фокусник во фраке и цилиндре. Из его шляпы однажды выпрыгнула мышь, теперь она его ассистент.',
+  bun: 'Круглая сладкая булочка на вечной диете. Просит налить побольше. Нет, ещё больше.',
+  luna: 'Тихая мечтательница в тёмных тонах. Смотрит на луну, ждёт падающих звёзд и верит в важность снов.',
+  felix: 'Уличный странник, исходивший пол-города лапами. В баре находит покой и внимательного слушателя.',
+  oliver: 'Юный скейтер в кепке. Хвост мешает на поворотах, но взрослеть он ни за что не собирается.',
+  cleo: 'Утончённая ценительница сливок и искусства. Не терпит грубости и дешёвых напитков.'
+};
+
 var EB = '#4a6a8a', EG = '#4a7a5a', EA = '#c08030', EP = '#8a5a8a';
 var CATS = [
   {id:'martin', n:'Мартин', fn:'Мартин Грей', by:1998, f:'#6a6a72', l:'#9a9aa2', d:'#3a3a42', e:'#8a7070', eye:EB, nose:'#8a7070', p:'solid', c:'#4a3a2a', cd:'#2a1e12', a:'scarf', ac:'#7a3030', s:1, i:'Добрый вечер. Мне, как обычно, молока.',
     r:['Идеально. Спасибо, как всегда.','Хорошо. Благодарю.','Пойдёт.','Маловато будет...','Перебор, но ладно.'], b:12,
     q:[['Сегодня весь день шёл дождь. Иногда кажется, что город забыл о нас.',[['Зато здесь всегда тепло.',2,'Да... здесь тепло. Это многое значит.'],['Тебе стоит отдохнуть.',1,'Хорошая мысль. Но работа не ждёт.'],['Бывает и похуже.',-1,'Хм. Пожалуй, ты прав.']]],
      ['Я работаю в архиве. Иногда кажется, что я сам становлюсь бумагой.',[['Ты кот, который любит порядок.',2,'Ха. Пожалуй. Спасибо, друг.'],['Звучит скучно.',-2,'Возможно. Кто-то же должен.']]],
-     ['В детстве я мечтал стать смотрителем маяка. Сидеть в тепле и смотреть на волны.',[['Этот бар чем-то похож на маяк.',2,'Точно подмечено. Ты светите нам в темноте.'],['Слишком одинокая работа.',-1,'Иногда тишина лучше шума.']]]]},
+     ['В детстве я мечтал стать смотрителем маяка. Сидеть в тепле и смотреть на волны.',[['Этот бар чем-то похож на маяк.',2,'Точно подмечено. Ты светишь нам в темноте.'],['Слишком одинокая работа.',-1,'Иногда тишина лучше шума.']]]]},
   {id:'ryzhik', n:'Рыжик', fn:'Рыжик Санни', by:2002, f:'#c07030', l:'#e09050', d:'#8a4a18', e:'#e0a080', eye:EG, nose:'#c07070', p:'striped', c:'#3a5a3a', cd:'#1e301e', a:'cap', ac:'#5a3a2a', s:1.05, i:'Здорово, бармен! Налей-ка молочка, а?',
     r:['Вот это мастерство! Уважаю!','Отлично, спасибо!','Нормально, сойдёт.','Эй, а добавки?','Ого, с горкой! Ну ладно.'], b:11,
     q:[['Прикол на работе! Захожу в кабинет — а начальник спит на клавиатуре!',[['Ха-ха, серьёзно?',2,'Абсолютно! В отчёте одни «ааааа».'],['Не смешно.',-2,'Ну ты и зануда. Я старался!']]],
@@ -209,7 +253,7 @@ var CATS = [
     r:['...Хм. Приемлемо.','...Благодарю.','...','...Маловато.','...Слишком.'], b:16,
     q:[['Ты всегда здесь. Каждый вечер. Не надоедает?',[['Мне нравится здесь.',2,'...Понимаю. Здесь тихо.'],['А тебе не надоедает приходить?',1,'...Ты первый, кто спросил.']]],
      ['У меня была... семья. Давно. Не хочу об этом.',[['Понимаю. Не будем.',2,'...Спасибо.'],['Расскажешь?',-1,'...Нет.']]],
-     ['Люди говорят, чёрные коты приносят неудачу. Глупости.',[['Ты приношь только хорошие чаевые.',2,'...Хм. Неплохой ответ.'],['Иногда я в это верю.',-2,'...Я так и знал.']]]]},
+     ['Люди говорят, чёрные коты приносят неудачу. Глупости.',[['Ты приносишь только хорошие чаевые.',2,'...Хм. Неплохой ответ.'],['Иногда я в это верю.',-2,'...Я так и знал.']]]]},
   {id:'ellie', n:'Элли', fn:'Элли Сноу', by:2003, f:'#e8e0d0', l:'#f5f0e0', d:'#b0a890', e:'#e0a0a0', eye:EG, nose:'#c08080', p:'solid', c:'#8a4a5a', cd:'#4a2030', a:'bow', ac:'#c05070', s:.92, i:'Привет! Можно мне молока, пожалуйста?',
     r:['Ой, как красиво! Спасибо!','Спасибо!','Спасибо.','Ой... маловато.','Ой, перелилось! Ничего.'], b:12,
     q:[['Сегодня на моём подоконнике распустился цветок. Мелочь, а приятно.',[['Маленькие радости — самое важное.',2,'Да! Именно так я и думаю.'],['Подумаешь, цветок.',-2,'...Ну да. Наверное.']]],
@@ -235,7 +279,7 @@ var CATS = [
     r:['Какая красота!','Спасибо большое!','Нормально.','Чуточку мало.','Ой, много!'], b:12,
     q:[['Говорят, трёхцветные кошки приносят удачу. Проверим?',[['Ты уже моя удача.',2,'Ой, ты смутил меня!'],['Это суеверие.',0,'Ну и пусть. Мне нравится.']]],
      ['Я сегодня помогла котёнку слезть с дерева. Правда, потом сама застряла.',[['Настоящая героиня!',2,'Хи-хи, спасибо! Пожарные тоже так сказали.'],['Осторожнее надо быть.',1,'Да уж, урок усвоен!']]]]},
-  {id:'snow', n:'Снежок', fn:'Снежок Уайт', by:2010, f:'#f8f8f8', l:'#ffffff', d:'#c0c0d0', e:'#f0b0b8', eye:EB, nose:'#e0a0a8', p:'solid', c:'#5a7aa0', cd:'#30486a', a:'none', ac:'#000', s:.9, i:'Привет-привет! Молочка, чтоб белое-белое!',
+  {id:'snow', n:'Снежок', fn:'Снежок Уайт', by:2006, f:'#f8f8f8', l:'#ffffff', d:'#c0c0d0', e:'#f0b0b8', eye:EB, nose:'#e0a0a8', p:'solid', c:'#5a7aa0', cd:'#30486a', a:'none', ac:'#000', s:.9, i:'Привет-привет! Молочка, чтоб белое-белое!',
     r:['Ура, идеально!','Здорово!','Ну ладно.','Мало, мало...','Ух ты, много!'], b:12,
     q:[['Сегодня видел первый снег! Правда, это была пыль с потолка.',[['Всё равно красиво!',2,'Вот и я так думаю!'],['Ха-ха, Снежок...',1,'Эй, я старался верить!']]],
      ['Если пить много молока, я стану невидимым в сугробе?',[['Идеальная маскировка!',2,'Ура! Никто меня не найдёт!'],['Так это не работает.',-1,'Ну вот, всю магию испортил.']]]]},
@@ -244,7 +288,7 @@ var CATS = [
     q:[['Я фокусник. Могу сделать так, что молоко исчезнет. Смотри.',[['Покажи!',2,'Вот! ...Стакан пуст. Магия.'],['Старый трюк.',-1,'Ты не ценишь искусство.']]],
      ['Из моей шляпы однажды выпрыгнула мышь. Мы оба испугались.',[['Надеюсь, вы подружились.',2,'Теперь она мой ассистент.'],['Плохой из тебя фокусник.',-2,'Это была импровизация!']]]]},
   {id:'bun', n:'Булочка', fn:'Булочка Пай', by:2004, f:'#d8a868', l:'#f0cc90', d:'#a07838', e:'#e8b8a0', eye:EA, nose:'#c08070', p:'striped', c:'#8a5a3a', cd:'#4a2e1a', a:'none', ac:'#000', s:.95, w:1.3, i:'Мне молока. Побольше. Нет, ещё больше.',
-    r:['Ммм, как раз!','Вкусненьko!','Ну, хоть так.','Мало!! Совсем мало!','Много? Не бывает!'], b:13,
+    r:['Ммм, как раз!','Вкусненько!','Ну, хоть так.','Мало!! Совсем мало!','Много? Не бывает!'], b:13,
     q:[['Я на диете. Уже третий раз с понедельника.',[['У тебя получится!',2,'Спасибо! Завтра точно начну.'],['Молоко калорийное.',-1,'Не говори мне это!']]],
      ['Я не толстая, у меня просто пушистая кость!',[['Самая милая пушистость!',2,'Вот! Ты настоящий друг!'],['Пора на пробежку.',-2,'Пробежка? Только к холодильнику!']]]]},
   {id:'luna', n:'Луна', fn:'Луна Стар', by:2001, f:'#3a4060', l:'#5a6490', d:'#20243a', e:'#7a6a90', eye:EA, nose:'#8a6a8a', p:'solid', c:'#3a2a5a', cd:'#1e1230', a:'bow', ac:'#e0d080', s:.93, i:'Тихий вечер... Налей молока, пожалуйста.',
@@ -267,21 +311,27 @@ function PAY(b){ return [b+5, b+1, b-3, b-7, b-10]; }
 var SLOTS = [62, 162, 258], NSHIFT = 6, SN = ['Утро', 'Полдень', 'Вечер', 'Ночь'];
 var game = {
   phase: 'title', day: 1, shift: 0, money: 50, time: 0, total: 0, served: 0, spawned: 0, spawnT: 0, nextT: 0,
-  combo: 0, bestCombo: 0, blackout: 0, heavyRain: false, priceMult: 1,
+  combo: 0, bestCombo: 0, blackout: 0, heavyRain: false, priceMult: 1, rush: false, evtKind: 'calm',
   view: 0,
   dirtyGlasses: 0,
   cleanGlasses: 3,
+  glassTotal: 3,
   milk: 1.0,
+  canShift: 0,
   milkBought: 0,
   warehouseCan: false,
   pouringCan: 0,
-  kitchenStep: 0, wash: {active: false, t: 0, dur: 1.8},
-  st: {serve: 0, happy: 0, perf: 0, tips: 0, acc: 0, err: 0, m0: 0},
+  tutDone: false, tutStep: 0, tutT: 0,
+  garl: 0,
+  basket: {t: 0, taps: 0, reward: 0},
+  police: null,
+  kitchenStep: 0, ach: {}, jarT: 0, wash:{active: false, t: 0, dur: 1.8},
+  st: {serve: 0, happy: 0, perf: 0, tips: 0, acc: 0, err: 0, m0: 0, earn: 0, spent: 0, fines: 0, bc: 0},
   rel: {}, upg: {nozzle: 0, barrel: 0, jukebox: 0, snacks: 0, foam: 0, decor: 0, sink: 0},
   snd: {sfx: .7, bgm: .45, muted: false},
   cats: [], active: null, dlg: null, last: null, rain: [], particles: [], floats: [],
   glass: {placed: false, x: 212, y: 432, sc: 1, level: 0, target: .7, pouring: false, inertia: 0, used: false, serving: false, settle: 0, sp: 0,
-         orderType: 'normal', foam: 0, whipping: false, needsDoc: false, docVerified: false, docData: null, needsSnack: null, snackGiven: false, riskMode: false, pressure: 0},
+         orderType: 'normal', foam: 0, whipping: false, needsDoc: false, docVerified: false, docData: null, needsSnack: null, snackGiven: false, riskMode: false, pressure: 0, taste: null},
   drag: {active: false, type: null, x: 0, y: 0, startX: 0, startY: 0}
 };
 for(var i=0; i<36; i++) game.rain.push({x: Math.random()*110, y: Math.random()*110, s: Math.random()});
@@ -357,19 +407,86 @@ function addBurst(x, y, col, n){
   }
 }
 
-var KEY = 'milkpaws_v9';
+var KEY = 'milkpaws_v10', OLDKEY = 'milkpaws_v9';
+var TASTE = {
+  prof: {k: 'prec', bonus: 8, say: ' Строго до отметки, пожалуйста.', like: 'строго до метки'},
+  charlie: {k: 'prec', bonus: 8, say: ' И без лишних миллиметров.', like: 'строго до метки'},
+  bun: {k: 'big', bonus: 5, lo: .8, hi: .92, say: ' Побольше!', like: 'побольше'},
+  barny: {k: 'big', bonus: 5, lo: .8, hi: .92, say: ' Налей полнее!', like: 'побольше'},
+  snow: {k: 'small', bonus: 4, lo: .4, hi: .5, say: ' Чуть-чуть, на донышке.', like: 'на донышке'},
+  ellie: {k: 'small', bonus: 4, lo: .4, hi: .5, say: ' Не много, пожалуйста.', like: 'на донышке'}
+};
+var ACH = [
+  {id: 'bull', n: 'Снайпер', d: 'Сверх-идеальный налив', i: '🎯'},
+  {id: 'combo5', n: 'Набираю обороты', d: '5 идеальных подряд', i: '🔥'},
+  {id: 'combo10', n: 'Золотая рука', d: '10 идеальных подряд', i: '🏅'},
+  {id: 'serve25', n: 'Постоянный бармен', d: 'Обслужить 25 гостей', i: '🥛'},
+  {id: 'serve100', n: 'Легенда бара', d: 'Обслужить 100 гостей', i: '👑'},
+  {id: 'taste1', n: 'Знаток вкусов', d: 'Угадать любимый заказ кота', i: '♥'},
+  {id: 'critic', n: 'Критик доволен', d: 'Угодить критику', i: '📝'},
+  {id: 'stars5', n: 'Пять звёзд', d: 'Закончить смену на 5 звёзд', i: '★'},
+  {id: 'meetall', n: 'Все свои', d: 'Познакомиться со всеми котами', i: '🐱'},
+  {id: 'petall', n: 'Гладильщик', d: 'Погладить каждого кота', i: '🐾'},
+  {id: 'rich', n: 'Копилка', d: 'Накопить 300 ◈', i: '◈'}
+];
+function unlock(id){
+  if(!game.ach) game.ach = {};
+  if(game.ach[id]) return;
+  game.ach[id] = 1;
+  var a = ACH.filter(function(x){ return x.id === id; })[0];
+  if(a){ showEvent('🏆 Достижение: ' + a.n); tone(1040, .12, 'triangle'); }
+}
+function chkAch(){
+  if(!game.ach) game.ach = {};
+  if(game.bestCombo >= 5) unlock('combo5');
+  if(game.bestCombo >= 10) unlock('combo10');
+  if(game.total >= 25) unlock('serve25');
+  if(game.total >= 100) unlock('serve100');
+  if(game.money >= 300) unlock('rich');
+  var meet = true, pet = true;
+  for(var i=0; i<CATS.length; i++){ var rl = game.rel[CATS[i].id]; if(!rl || !(rl.visits > 0)) meet = false; if(!rl || !rl.pet) pet = false; }
+  if(meet) unlock('meetall');
+  if(pet) unlock('petall');
+}
+function tipJar(){
+  var tips = game.st.tips, n = Math.min(12, Math.ceil(tips / 4)), jt = game.jarT > 0 ? game.jarT : 0;
+  var bob = jt > 0 ? -Math.sin(jt / .7 * Math.PI) * 3 : 0, x = 10, y = 392 + bob, i;
+  R('rgba(0,0,0,.35)', x + 1, 436, 26, 4);
+  ctx.fillStyle = 'rgba(190,225,235,.22)'; rr(x, y, 24, 44, 4); ctx.fill();
+  for(i = 0; i < n; i++){
+    var cx = x + 4 + (i % 3)*7, cy = y + 38 - Math.floor(i / 3)*5;
+    R(i % 2 ? '#e0b050' : '#f0c868', cx, cy, 6, 3); R('#9a7020', cx, cy + 3, 6, 1);
+  }
+  ctx.strokeStyle = '#e4ece8'; ctx.lineWidth = 1.5; rr(x, y, 24, 44, 4); ctx.stroke();
+  R('rgba(255,255,255,.4)', x + 3, y + 5, 2, 24);
+  R('#8a5a2c', x - 1, y - 4, 26, 5); R('#1a0f07', x + 8, y - 3, 8, 1);
+  R('#f0e4c8', x - 2, y + 46, 28, 10); TX(tips + ' ◈', x + 12, y + 51, 7, '#6a3a1a');
+  if(jt > 0){ GL(x + 12, y + 20, 26, .35 * jt / .7, '255,216,112'); }
+}
+function steam(c){
+  if((c.state !== 'drinking' && c.state !== 'sitting') || !(c.cup >= .03)) return;
+  var q = geo(c), gy = 348 + (q.hy + q.hh*.8 - 348) * c.lift, a = Math.min(1, c.cup * 3);
+  for(var k = 0; k < 3; k++){
+    var ph = (game.time * .55 + k*.33 + c.ph) % 1;
+    ctx.fillStyle = 'rgba(255,255,255,' + ((1 - ph) * .32 * a) + ')';
+    ctx.beginPath(); ctx.arc(c.x + (k - 1)*7 + Math.sin(game.time*2 + k*2 + c.ph)*2.5, gy - 24 - ph*22, 2 + ph*2.2, 0, 7); ctx.fill();
+  }
+}
+
 function save(){
+  try{ chkAch(); }catch(e){}
   try{
     localStorage.setItem(KEY, JSON.stringify({
       day: game.day, shift: game.shift, money: game.money, total: game.total,
       rel: game.rel, upg: game.upg, snd: game.snd, bestCombo: game.bestCombo,
-      cleanGlasses: game.cleanGlasses, dirtyGlasses: game.dirtyGlasses, milk: game.milk, milkBought: game.milkBought
+      cleanGlasses: game.cleanGlasses, dirtyGlasses: game.dirtyGlasses, glassTotal: game.glassTotal,
+      milk: game.milk, milkBought: game.milkBought, ach: game.ach, tutDone: game.tutDone
     }));
   }catch(e){}
 }
 function load(){
   try{
-    var r = localStorage.getItem(KEY);
+    var r = localStorage.getItem(KEY) || localStorage.getItem(OLDKEY);
     if(!r) return false;
     var d = JSON.parse(r);
     game.day = d.day || 1;
@@ -382,13 +499,15 @@ function load(){
     game.bestCombo = d.bestCombo || 0;
     game.cleanGlasses = d.cleanGlasses != null ? d.cleanGlasses : 3;
     game.dirtyGlasses = d.dirtyGlasses || 0;
+    game.glassTotal = Math.max(d.glassTotal || 3, game.cleanGlasses + game.dirtyGlasses);
     game.milk = d.milk != null ? d.milk : 1.0;
-    game.milkBought = d.milkBought || 0;
+    game.milkBought = d.milkBought || 0; game.ach = d.ach || {};
+    game.tutDone = d.tutDone != null ? !!d.tutDone : ((d.total || 0) > 0 || (d.day || 1) > 1);
     return true;
   }catch(e){ return false; }
 }
 function hasSave(){
-  try{ return !!localStorage.getItem(KEY); }catch(e){ return false; }
+  try{ return !!(localStorage.getItem(KEY) || localStorage.getItem(OLDKEY)); }catch(e){ return false; }
 }
 function rel(id){
   return game.rel[id] || (game.rel[id] = {aff: 0, seen: [], visits: 0});
@@ -413,17 +532,17 @@ function rr(x, y, w, h, r){
 
 function bgBarBase(){
   var p = skyP === null ? 0 : skyP;
-  var r1, g1, b1, r2, g2, b2;
+  var r1, g1, b1, r2, g2, b2, k;
   if(p < 0.35){
-    var k = p / 0.35;
+    k = p / 0.35;
     r1 = Math.round(38 + k*(46-38)); g1 = Math.round(27 + k*(34-27)); b1 = Math.round(19 + k*(24-19));
     r2 = Math.round(53 + k*(61-53)); g2 = Math.round(37 + k*(44-37)); b2 = Math.round(26 + k*(30-26));
   }else if(p < 0.7){
-    var k = (p - 0.35) / 0.35;
+    k = (p - 0.35) / 0.35;
     r1 = Math.round(46 + k*(28-46)); g1 = Math.round(34 + k*(20-34)); b1 = Math.round(24 + k*(14-24));
     r2 = Math.round(61 + k*(39-61)); g2 = Math.round(44 + k*(28-44)); b2 = Math.round(30 + k*(19-30));
   }else{
-    var k = (p - 0.7) / 0.3;
+    k = (p - 0.7) / 0.3;
     r1 = Math.round(28 + k*(19-28)); g1 = Math.round(20 + k*(13-20)); b1 = Math.round(14 + k*(19-14));
     r2 = Math.round(39 + k*(28-39)); g2 = Math.round(28 + k*(19-28)); b2 = Math.round(19 + k*(26-19));
   }
@@ -442,19 +561,21 @@ function bgBarBase(){
   ctx.fillStyle = '#1f140c'; ctx.fillRect(0, 188, W, 7);
   ctx.fillStyle = '#4a311e'; ctx.fillRect(0, 187, W, 2);
 
-  if(game.upg.decor > 0 || game.shift >= 2){
-    ctx.strokeStyle = '#1a110a'; ctx.lineWidth = 1.5; ctx.beginPath();
+  // плавная гирлянда
+  var gA = game.garl;
+  if(gA > .01){
+    ctx.globalAlpha = gA; ctx.strokeStyle = '#1a110a'; ctx.lineWidth = 1.5; ctx.beginPath();
     for(var x=0; x<=W; x+=12){
       var y = 14 + Math.sin(x*.052)*7;
       if(x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     }
-    ctx.stroke();
+    ctx.stroke(); ctx.globalAlpha = 1;
     var bulbCols = ['#ffcf75', '#ff9e5e', '#ffe6a3', '#ffb86c'];
     for(var i=0; i<14; i++){
       var bx = 14 + i*25, by = 14 + Math.sin(bx*.052)*7;
       var tw = .65 + .35*Math.sin(game.time*3.2 + i*1.7);
-      ctx.fillStyle = 'rgba(255,205,110,' + (.15*tw) + ')'; ctx.beginPath(); ctx.arc(bx, by+3, 9, 0, 7); ctx.fill();
-      ctx.fillStyle = bulbCols[i%4]; ctx.globalAlpha = .65 + .35*tw;
+      ctx.fillStyle = 'rgba(255,205,110,' + (.15*tw*gA) + ')'; ctx.beginPath(); ctx.arc(bx, by+3, 9, 0, 7); ctx.fill();
+      ctx.fillStyle = bulbCols[i%4]; ctx.globalAlpha = (.65 + .35*tw) * gA;
       ctx.beginPath(); ctx.arc(bx, by+3, 2.2, 0, 7); ctx.fill(); ctx.globalAlpha = 1;
     }
   }
@@ -464,15 +585,15 @@ function bgBarBase(){
 
   var sr1, sg1, sb1, sr2, sg2, sb2;
   if(p < 0.35){
-    var k = p / 0.35;
+    k = p / 0.35;
     sr1 = Math.round(40 + k*(68-40)); sg1 = Math.round(58 + k*(96-58)); sb1 = Math.round(82 + k*(122-82));
     sr2 = Math.round(66 + k*(116-66)); sg2 = Math.round(84 + k*(132-84)); sb2 = Math.round(106 + k*(146-106));
   }else if(p < 0.7){
-    var k = (p - 0.35) / 0.35;
+    k = (p - 0.35) / 0.35;
     sr1 = Math.round(68 + k*(45-68)); sg1 = Math.round(96 + k*(31-96)); sb1 = Math.round(122 + k*(56-122));
     sr2 = Math.round(116 + k*(88-116)); sg2 = Math.round(132 + k*(56-132)); sb2 = Math.round(146 + k*(74-146));
   }else{
-    var k = (p - 0.7) / 0.3;
+    k = (p - 0.7) / 0.3;
     sr1 = Math.round(45 + k*(7-45)); sg1 = Math.round(31 + k*(11-31)); sb1 = Math.round(56 + k*(20-56));
     sr2 = Math.round(88 + k*(19-88)); sg2 = Math.round(56 + k*(26-56)); sb2 = Math.round(74 + k*(42-74));
   }
@@ -502,7 +623,7 @@ function bgBarBase(){
     ctx.fillStyle = sg; ctx.fillRect(20, 56, 110, 110);
   }
 
-  var sp = skyP === null ? 0 : skyP, twT = game.time, nA = Math.max(0, Math.min(1, (sp - .55) / .3));
+  var sp = p, twT = game.time;
   var farC = pal(['#7a8ea0', '#8aa0b4', '#4a3a52', '#151b2b'], sp);
   var midC = pal(['#56687c', '#60758a', '#2e2a3e', '#0f1420'], sp);
   var nearC = pal(['#2e3a4a', '#34425a', '#1c1c2a', '#0a0d14'], sp);
@@ -570,6 +691,14 @@ function bgBarBase(){
       ctx.fillRect(Math.round(sx) + 1, Math.round(sy) - 1, 1, 1); ctx.fillRect(Math.round(sx) + 1, Math.round(sy) + 3, 1, 1);
     }
   }
+  // капли, стекающие по стеклу
+  for(var di = 0; di < 7; di++){
+    var dx2 = 28 + di*14 + ((di*37) % 9), dy2 = 56 + ((game.time*(4 + (di % 3)*2) + di*23) % 118) - 4;
+    ctx.globalAlpha = .55; ctx.fillStyle = 'rgba(220,235,255,.85)';
+    ctx.beginPath(); ctx.ellipse(dx2, dy2, 1.2, 2.2, 0, 0, 7); ctx.fill();
+    ctx.fillStyle = 'rgba(220,235,255,.25)'; ctx.fillRect(dx2 - .4, dy2 - 9, .8, 9);
+  }
+  ctx.globalAlpha = 1;
   ctx.restore();
 
   ctx.fillStyle = '#2a190e'; ctx.fillRect(73, 56, 4, 110); ctx.fillRect(20, 108, 110, 4);
@@ -591,8 +720,9 @@ function bgBarBase(){
 
   ctx.fillStyle = '#181008'; ctx.fillRect(249, 0, 2, 28);
   if(game.blackout <= 0){
+    var pn2 = Math.max(0, Math.min(1, (p - .3) / .4));
     var cone = ctx.createLinearGradient(250, 44, 250, 245);
-    cone.addColorStop(0, 'rgba(255,205,120,.24)'); cone.addColorStop(1, 'rgba(255,180,90,0)');
+    cone.addColorStop(0, 'rgba(255,205,120,' + (.14 + .24*pn2) + ')'); cone.addColorStop(1, 'rgba(255,180,90,0)');
     ctx.fillStyle = cone; ctx.beginPath(); ctx.moveTo(234, 44); ctx.lineTo(266, 44); ctx.lineTo(345, 245); ctx.lineTo(155, 245); ctx.fill();
   }
   ctx.fillStyle = '#4a2e16'; ctx.beginPath(); ctx.moveTo(232, 44); ctx.lineTo(268, 44); ctx.lineTo(258, 26); ctx.lineTo(242, 26); ctx.fill();
@@ -701,11 +831,19 @@ function bgBar(){
   R('#9a6c36', 312, 316, 44, 18); for(i = 0; i < 4; i++) R('#6a4622', 312, 319 + i*4, 44, 1);
   ctx.fillStyle = '#c08a46'; ctx.beginPath(); ctx.ellipse(334, 316, 22, 5, 0, 0, 7); ctx.fill();
   ctx.fillStyle = '#c05070'; ctx.beginPath(); ctx.ellipse(334, 316, 18, 3.5, 0, 0, 7); ctx.fill();
-  var br = Math.sin(t*1.7)*.8;
-  ctx.fillStyle = '#e8e0d0'; ctx.beginPath(); ctx.ellipse(334, 311 - br*.5, 12, 6 + br*.4, 0, 0, 7); ctx.fill();
-  ctx.beginPath(); ctx.arc(325, 309, 5, 0, 7); ctx.fill();
-  ctx.beginPath(); ctx.moveTo(321, 306); ctx.lineTo(322, 300); ctx.lineTo(326, 304); ctx.moveTo(326, 304); ctx.lineTo(329, 300); ctx.lineTo(329, 306); ctx.fill();
-  R('#6a4a3a', 323, 309, 3, 1);
+  // белый котик в корзинке: дышит, иногда просыпается и потягивается, по тапу тоже
+  var br = Math.sin(t*1.7)*.8, scy = t % 26, stt = scy < 3.2 ? Math.sin(scy/3.2*Math.PI) : 0;
+  var bkt = game.basket.t > 0 ? Math.sin(Math.min(1, game.basket.t/.9)*Math.PI) : 0; stt = Math.max(stt, bkt);
+  var ddx = -stt*5, ddy = -stt*3;
+  ctx.fillStyle = '#e8e0d0'; ctx.beginPath(); ctx.ellipse(334 + stt*3, 311 - br*.5, 12 + stt*5, 6 + br*.4 - stt*1.5, 0, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.arc(325 + ddx, 309 + ddy, 5, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(321 + ddx, 306 + ddy); ctx.lineTo(322 + ddx, 300 + ddy); ctx.lineTo(326 + ddx, 304 + ddy); ctx.moveTo(326 + ddx, 304 + ddy); ctx.lineTo(329 + ddx, 300 + ddy); ctx.lineTo(329 + ddx, 306 + ddy); ctx.fill();
+  R('#6a4a3a', 323 + ddx, 309 + ddy, 3, 1);
+  if(stt > .45){ R('#c06070', 322 + ddx, 311 + ddy, 3, 2); R('#e8e0d0', 313 - stt*5, 308 + ddy + 2, 6, 2); }
+  if(stt < .1){
+    var zp = (t*.8) % 1; ctx.globalAlpha = (1 - zp)*.7;
+    TX('z', 322 + zp*5, 298 - zp*12, 7 + zp*3, '#f5ecd8'); ctx.globalAlpha = 1;
+  }
   ctx.fillStyle = '#c05070'; ctx.beginPath(); ctx.arc(300, 331, 5, 0, 7); ctx.fill();
   R('#8a3050', 297, 330, 7, 1); R('#8a3050', 299, 328, 1, 6);
   ctx.fillStyle = '#d8c8ae'; ctx.beginPath(); ctx.ellipse(14, 331, 9, 3.5, 0, 0, 7); ctx.fill();
@@ -715,8 +853,22 @@ function bgBar(){
   door(332, 176, 28, 70, 'КУХНЯ', true);
 }
 
+/* ===== ЭКОНОМИКА ===== */
+// Цена бидона растёт плавно с днями (+ небольшая надбавка за повторные покупки в смену),
+// а оплата за стаканы растёт вместе с днями, так что денег хватает и на 30-й день.
 function milkPrice(){
-  return 14 + game.milkBought * 4 + (game.day - 1) * 6;
+  return 12 + Math.floor(game.day * .9) + Math.min(4, game.canShift) * 2;
+}
+function payScale(){ return 1 + Math.min(.9, (game.day - 1) * .035); }
+function glassPrice(){ return 16 + (game.glassTotal - 3) * 2; }
+function buyGlass(){
+  if(game.glassTotal >= 12){ addFloat(36, 360, 'Максимум стаканов', '#e0a060'); return false; }
+  var p = glassPrice();
+  if(game.money < p){ tone(180, .15, 'sawtooth'); addFloat(36, 360, 'Не хватает ◈', '#e06060'); return false; }
+  game.money -= p; game.glassTotal += 2; game.cleanGlasses += 2; game.st.spent += p;
+  tone(700, .09, 'triangle'); setTimeout(function(){ tone(940, .1, 'triangle'); }, 80);
+  addFloat(36, 360, '+2 стакана', '#78c878'); topBar(); save(); refresh();
+  return true;
 }
 
 function drawMilkCan(x, y, full, tilt){
@@ -777,12 +929,23 @@ function bgWarehouse(){
   door(332, 176, 28, 70, 'БАР', true);
 }
 function counterWarehouse(){
+  var k;
   var g = ctx.createLinearGradient(0, 335, 0, 472); g.addColorStop(0, '#46525c'); g.addColorStop(1, '#262f37');
   ctx.fillStyle = g; ctx.fillRect(0, 335, W, 137);
   R('rgba(200,225,240,.3)', 0, 335, W, 2); R('#d8b030', 0, 468, W, 4);
   for(var x = 10; x < W; x += 36){ R('rgba(0,0,0,.4)', x, 352, 3, 3); R('rgba(0,0,0,.4)', x, 452, 3, 3); }
   R('#1a2026', 70, 446, 92, 8); R(game.warehouseCan ? 'rgba(224,160,96,.5)' : '#46525c', 70, 446, 92, 2);
   var fx = 275, fy = 395, mp = Math.max(0, Math.min(1, game.milk));
+  // ящик со стаканами
+  var gp = glassPrice(), gMax = game.glassTotal >= 12, canG = !gMax && game.money >= gp, gpu = .5 + .5*Math.sin(game.time*5);
+  R('rgba(0,0,0,.4)', 6, 442, 60, 4);
+  R(canG ? '#6a4426' : '#3a2a1a', 6, 366, 60, 76); R('rgba(0,0,0,.25)', 6, 392, 60, 2);
+  for(k = 0; k < 3; k++) cup(19 + k*17, 384, 14, 20, 'clean');
+  R('#f0e4c8', 9, 404, 54, 32); TX('СТАКАНЫ', 36, 411, 7, '#3a2414');
+  TX(gMax ? 'МАКС' : '+2 · ' + gp + ' ◈', 36, 424, 8, canG ? '#9a5a14' : '#8a6855');
+  TX(game.glassTotal + '/13', 36, 432, 6, '#6a5040');
+  ctx.strokeStyle = canG ? 'rgba(224,160,96,' + (.6 + gpu*.4) + ')' : '#4a301c'; ctx.lineWidth = 2; ctx.strokeRect(6, 366, 60, 76);
+  if(!canG){ ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fillRect(6, 366, 60, 76); }
   // бочонок
   R('rgba(0,0,0,.4)', fx-40, 466, 80, 5);
   R('#5e3b1e', fx-36, 410, 72, 56); R('#7a4e28', fx-30, 410, 24, 56); R('#2a180a', fx-36, 410, 2, 56);
@@ -821,9 +984,7 @@ function bgKitchen(){
   ctx.fillStyle = 'rgba(60,84,92,.35)';
   for(var y = 0, r = 0; y < 250; y += 14, r++){ ctx.fillRect(0, y, W, 1); for(var x = (r & 1) ? -12 : 0; x < W; x += 24) ctx.fillRect(x, y, 1, 14); }
   R('#e8f0f0', 90, 0, 180, 5); GL(180, 4, 160, .3, '220,240,255');
-  // шкаф справа
   R('#4a5a64', 288, 30, 64, 162); R('#8aa0aa', 292, 34, 27, 154); R('#8aa0aa', 321, 34, 27, 154); R('rgba(255,255,255,.2)', 292, 34, 27, 2); R('#4a5a64', 312, 100, 3, 14); R('#4a5a64', 324, 100, 3, 14);
-  // полки слева
   var i;
   R('#8a6a48', 10, 100, 140, 5); R('#b08c60', 10, 100, 140, 1); R('#8a6a48', 10, 152, 140, 5); R('#b08c60', 10, 152, 140, 1);
   for(i = 0; i < 4; i++){ R('#f0f0ea', 16, 96 - i*4, 30, 3); R('#c8d0d0', 16, 98 - i*4, 30, 1); }
@@ -833,17 +994,14 @@ function bgKitchen(){
   R('#e0c040', 68, 142, 18, 10); R('#4a8a4a', 68, 139, 18, 3);
   R('#a87838', 94, 138, 4, 14); R('#e8d8b0', 92, 131, 8, 7); R('#e8a040', 108, 132, 12, 20); R('#fff', 110, 140, 8, 6);
   R('#c8d6de', 126, 136, 20, 16); R('#e8f0f0', 128, 138, 16, 4);
-  // рейка с приборами
   R('#8a9aa4', 20, 22, 120, 3);
   R('#7a8a94', 32, 25, 2, 26); R('#7a8a94', 29, 50, 8, 5);
   R('#7a8a94', 54, 25, 2, 22); R('#c87838', 50, 46, 10, 9);
   R('#7a8a94', 80, 25, 2, 18); R('#9aaab4', 74, 42, 14, 2); R('#9aaab4', 74, 42, 2, 12); R('#9aaab4', 86, 42, 2, 12); R('#9aaab4', 78, 48, 6, 2);
   R('#7a8a94', 104, 25, 2, 28); R('#a87838', 102, 50, 6, 6);
-  // часы
   ctx.fillStyle = '#f4f4ee'; ctx.beginPath(); ctx.arc(206, 56, 15, 0, 7); ctx.fill(); ctx.strokeStyle = '#4a5a64'; ctx.lineWidth = 2; ctx.stroke();
   var a1 = game.time*.25, a2 = game.time*.02; ctx.lineWidth = 1.5; ctx.beginPath();
   ctx.moveTo(206, 56); ctx.lineTo(206 + Math.sin(a1)*11, 56 - Math.cos(a1)*11); ctx.moveTo(206, 56); ctx.lineTo(206 + Math.sin(a2)*7, 56 - Math.cos(a2)*7); ctx.stroke();
-  // вывеска «МОЙКА»
   R('#2a4a5a', 148, 176, 64, 16); R('#e8f0f0', 149, 177, 62, 1); TX('МОЙКА', 180, 185, 9, '#e8f0f0');
   R('#6a7a84', 0, 246, W, 5);
   var sg = ctx.createLinearGradient(0, 251, 0, 340); sg.addColorStop(0, '#9aaab4'); sg.addColorStop(1, '#6a7a84');
@@ -856,10 +1014,8 @@ function counterKitchen(){
   var kg = ctx.createLinearGradient(0, 335, 0, 472); kg.addColorStop(0, '#d5dde0'); kg.addColorStop(1, '#9fb0b8');
   ctx.fillStyle = kg; ctx.fillRect(0, 335, W, 137);
   R('rgba(255,255,255,.5)', 0, 335, W, 2); R('#7a8a94', 0, 466, W, 6); R('rgba(0,0,0,.2)', 0, 472, W, 4);
-  // принадлежности на столешнице
   R('#e8e8e8', 114, 324, 14, 22); R('#e05050', 117, 318, 8, 6); R('#e8e8e8', 120, 318, 10, 3); R('#4aa8d8', 116, 332, 10, 8);
   R('#3a7aa8', 226, 322, 12, 26); R('#e0e0e0', 226, 318, 16, 5);
-  // мойка
   R('#7a8a94', 94, 349, 172, 107); ctx.fillStyle = '#c8d4d8'; rr(96, 351, 168, 103, 10); ctx.fill(); ctx.strokeStyle = '#7a8a94'; ctx.lineWidth = 2; ctx.stroke();
   var wg = ctx.createLinearGradient(0, 361, 0, 444); wg.addColorStop(0, '#3a6a8a'); wg.addColorStop(1, '#1e4260');
   ctx.fillStyle = wg; rr(106, 361, 148, 83, 8); ctx.fill();
@@ -881,20 +1037,16 @@ function counterKitchen(){
   }else if(game.dirtyGlasses > 0){
     TX('▼ бросай стакан сюда', 180, 410, 8, 'rgba(235,248,255,' + (.5 + .4*Math.sin(t*5)) + ')');
   }
-  // кран
   R('#9aaab4', 168, 330, 26, 8); R('#c8d6de', 176, 298, 8, 36); R('#e8f0f4', 176, 298, 2, 36); R('#c8d6de', 172, 346, 16, 6); R('#8aa0aa', 158, 326, 18, 5); R('#e05050', 158, 323, 4, 3); R('#4a8ad8', 168, 323, 4, 3);
-  // грязные стаканы
   var vd = game.dirtyGlasses - (wsh ? 1 : 0) - (game.drag.active && game.drag.type === 'dirty_glass' ? 1 : 0); if(vd < 0) vd = 0;
   R('#5a6a72', 12, 424, 88, 14); R('#7a8a94', 12, 424, 88, 2); R('rgba(0,0,0,.3)', 12, 438, 88, 3);
   R('#5a2420', 14, 354, 80, 12); TX('ГРЯЗНЫЕ ×' + vd, 54, 360, 8, '#ffdcd6');
   for(k = 0; k < Math.min(vd, 8); k++) cup(28 + (k % 4)*20, 407 - Math.floor(k / 4)*16, 22, 32, 'dirty');
   if(vd > 8) TX('+' + (vd - 8), 90, 396, 9, '#5a2420');
-  // сушилка
   R('#9aaab4', 272, 424, 76, 8); R('rgba(0,0,0,.25)', 272, 432, 76, 3);
   R('#2d4a28', 274, 354, 72, 12); TX('ЧИСТЫЕ ×' + game.cleanGlasses, 310, 360, 8, '#e4f4dc');
   for(k = 0; k < 4; k++){ R('#7a8a94', 282 + k*18, 408, 3, 16); if(k < game.cleanGlasses) cup(283 + k*18, 400, 18, 26, 'clean', true); }
   if(game.cleanGlasses > 4) TX('+' + (game.cleanGlasses - 4), 310, 444, 9, '#2d4a28');
-  // нижние шкафы
   R('#4a5a64', 0, 476, W, 164);
   for(k = 0; k < 3; k++){
     var dx = 8 + k*118; R('#8a9aa2', dx, 482, 112, 124); R('#d6dee0', dx + 2, 484, 108, 120); R('rgba(0,0,0,.12)', dx + 8, 492, 96, 104); R('#e8f0f2', dx + 8, 492, 96, 1);
@@ -940,10 +1092,8 @@ function counterBar(){
     ctx.fillStyle = '#4a2620'; rr(116, 405 + pl, 42, 30, 3); ctx.fill();
     ctx.strokeStyle = '#d4a856'; ctx.lineWidth = 1.2; rr(118, 407 + pl, 38, 26, 2); ctx.stroke(); TX('ПАСПОРТ', 137, 420 + pl, 7, '#f0d890');
   }
-  // передний кант и торцы
   R('#a06a34', 0, 466, W, 4); R('#d09858', 0, 466, W, 1); R('#3a2410', 0, 470, W, 4);
   R('#c09050', 0, 335, 5, 139); R('#c09050', W - 5, 335, 5, 139); R('rgba(255,235,190,.4)', 0, 335, 1, 139);
-  // подстольный шкаф
   R('#150c06', 0, 474, W, 166); R('#0e0804', 6, 480, 348, 132); R('#2a1a0e', 8, 482, 344, 128);
   var lg = ctx.createLinearGradient(0, 484, 0, 560); lg.addColorStop(0, 'rgba(255,216,144,.28)'); lg.addColorStop(1, 'rgba(255,216,144,0)');
   ctx.fillStyle = lg; ctx.fillRect(10, 484, 214, 76);
@@ -958,7 +1108,6 @@ function counterBar(){
   R(game.cleanGlasses > 0 ? '#2d4a28' : '#5a2420', 14, 486, 84, 13); TX(game.cleanGlasses > 0 ? 'ЧИСТЫЕ ×' + game.cleanGlasses : 'ПУСТО!', 56, 492, 8, '#f0f4e8');
   if(game.cleanGlasses > 0 && game.active && game.active.state === 'active' && !gg.placed) TX('тащи стакан ↑', 168, 492, 8, 'rgba(255,216,144,' + (.5 + pu*.5) + ')');
   R('#2a2e34', 226, 482, 6, 128);
-  // ведро грязных
   var vd = game.dirtyGlasses;
   R('#2b2a2a', 236, 484, 112, 124);
   for(k = 0; k < Math.min(vd, 6); k++) cup(264 + (k % 3)*28, 566 - Math.floor(k / 3)*16, 22, 30, 'dirty');
@@ -1110,10 +1259,13 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
   X.fillStyle = d.cd; X.fillRect(bx + 8*s, by + bh*.2, bw - 16*s, 4*s);
   if(ser){ X.fillStyle = 'rgba(0,0,0,.4)'; for(var k=0; k<3; k++){ X.beginPath(); X.arc(x, by + bh*(.36 + k*.1), 1.8*s, 0, 7); X.fill(); } }
 
+  // реакция на оценку: счастье (прищур + мурлыканье) / испуг (прижатые уши, большие зрачки)
+  var rc = !ox && c.react > 0, happyR = rc && c.rr === 0, bad = rc && c.rr > 2;
+
   // уши (за головой)
   var ec = pts ? d.d : d.f, twk = (!ox && Math.sin(T*.9 + c.ph*3) > .94) ? 3*s : 0;
   [-1, 1].forEach(function(m){
-    var tipY = hy - (ser ? 22 : 20)*s + (m === 1 ? twk : 0), tipX = x + m*(hw/2 + (ser ? 0 : 3)*s);
+    var tipY = hy - (ser ? 22 : 20)*s + (m === 1 ? twk : 0) + (bad ? 15*s : 0), tipX = x + m*(hw/2 + (ser ? 0 : 3)*s + (bad ? 10*s : 0));
     X.fillStyle = ec; X.beginPath(); X.moveTo(x + m*(hw/2 - 8*s), hy + 6*s); X.lineTo(tipX, tipY); X.lineTo(x + m*(hw/2 - (ser ? 24 : 28)*s), hy + 2*s); X.closePath(); X.fill();
     X.strokeStyle = OL; X.lineWidth = 1.3*s; X.stroke();
     X.fillStyle = d.e; X.beginPath(); X.moveTo(x + m*(hw/2 - 11*s), hy + 3*s); X.lineTo(tipX - m*2*s, tipY + 7*s); X.lineTo(x + m*(hw/2 - 22*s), hy + 1*s); X.closePath(); X.fill();
@@ -1151,8 +1303,8 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
   RR(hx, hy, hw, hh, hr); X.strokeStyle = OL; X.lineWidth = 1.4*s; X.stroke();
 
   // румянец (милые)
-  var purr = !ox && c.purr > 0;
-  if(!ser){
+  var purr = !ox && (c.purr > 0 || happyR);
+  if(!ser || happyR){
     X.fillStyle = 'rgba(255,120,145,' + (purr ? .55 : .38) + ')';
     X.beginPath(); X.ellipse(hx + hw*.2, hy + hh*.64, 7*s, 4.5*s, 0, 0, 7); X.fill();
     X.beginPath(); X.ellipse(hx + hw*.8, hy + hh*.64, 7*s, 4.5*s, 0, 0, 7); X.fill();
@@ -1160,7 +1312,7 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
 
   // глаза
   var ey = hy + hh*(ser ? .44 : .46), exl = hx + hw*.28, exr = hx + hw*.72;
-  var blink = !ox && (c.sip || c.purr > 0 || Math.sin(T*.8 + c.ph) > .97);
+  var blink = !bad && !ox && (c.sip || c.purr > 0 || happyR || Math.sin(T*.8 + c.ph) > .97);
   if(blink){
     X.strokeStyle = d.d; X.lineWidth = 2.5*s; X.lineCap = 'round'; X.beginPath();
     var cy = ey + (purr ? -5 : 4)*s;
@@ -1173,21 +1325,24 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
       X.save(); X.beginPath(); X.ellipse(e, ey, 7.5*s, 6*s, 0, 0, 7); X.clip();
       X.fillStyle = '#f2eee0'; X.fillRect(e - 9*s, ey - 7*s, 18*s, 14*s);
       X.fillStyle = d.eye; X.beginPath(); X.arc(e, ey, 5*s, 0, 7); X.fill();
-      X.fillStyle = '#0a0705'; X.beginPath(); X.ellipse(e, ey, 1.7*s, 4.6*s, 0, 0, 7); X.fill();
+      X.fillStyle = '#0a0705'; X.beginPath(); X.ellipse(e, ey, (bad ? 4.4 : 1.7)*s, 4.6*s, 0, 0, 7); X.fill();
       X.fillStyle = 'rgba(255,255,255,.9)'; X.fillRect(e - 3*s, ey - 3.5*s, 1.8*s, 1.8*s);
-      X.fillStyle = d.f; X.fillRect(e - 9*s, ey - 7*s, 18*s, 6*s);
+      X.fillStyle = d.f; X.fillRect(e - 9*s, ey - 7*s, 18*s, bad ? 2*s : 6*s);
       X.restore();
       X.strokeStyle = 'rgba(10,5,2,.85)'; X.lineWidth = 1.6*s; X.beginPath(); X.moveTo(e - 7.5*s, ey - 1*s); X.lineTo(e + 7.5*s, ey - 1*s); X.stroke();
-      X.strokeStyle = brc; X.lineWidth = 2.2*s; X.lineCap = 'round'; X.beginPath(); X.moveTo(e + m*8*s, ey - 10*s); X.lineTo(e - m*7*s, ey - 6.5*s); X.stroke(); X.lineCap = 'butt';
+      X.strokeStyle = brc; X.lineWidth = 2.2*s; X.lineCap = 'round'; X.beginPath(); X.moveTo(e + m*8*s, ey - (bad ? 12 : 10)*s); X.lineTo(e - m*7*s, ey - (bad ? 9 : 6.5)*s); X.stroke(); X.lineCap = 'butt';
     });
   }else{
     [exl, exr].forEach(function(e){
       X.fillStyle = '#1a0f0a'; X.beginPath(); X.ellipse(e, ey, 8*s, 10*s, 0, 0, 7); X.fill();
       X.fillStyle = d.eye; X.beginPath(); X.ellipse(e, ey + .5*s, 7*s, 9*s, 0, 0, 7); X.fill();
-      X.fillStyle = '#0a0705'; X.beginPath(); X.ellipse(e, ey + 1*s, 4.2*s, 6.4*s, 0, 0, 7); X.fill();
+      X.fillStyle = '#0a0705'; X.beginPath(); X.ellipse(e, ey + 1*s, (bad ? 6.3 : 4.2)*s, (bad ? 8.3 : 6.4)*s, 0, 0, 7); X.fill();
       X.fillStyle = 'rgba(255,255,255,.22)'; X.beginPath(); X.ellipse(e, ey + 6*s, 4*s, 1.6*s, 0, 0, 7); X.fill();
       X.fillStyle = '#ffffff'; X.beginPath(); X.arc(e - 2.4*s, ey - 3.2*s, 2.6*s, 0, 7); X.arc(e + 2.4*s, ey + 3*s, 1.3*s, 0, 7); X.fill();
     });
+  }
+  if(bad){
+    X.fillStyle = 'rgba(140,200,255,.9)'; X.beginPath(); X.ellipse(hx + hw + 2*s, hy + 8*s, 2.4*s, 3.6*s, 0, 0, 7); X.fill();
   }
 
   // нос, рот, усы
@@ -1197,7 +1352,7 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
   if(ser){ X.moveTo(x - 5*s, hy + hh*.76); X.quadraticCurveTo(x, hy + hh*.72, x + 5*s, hy + hh*.76); }
   else{ X.moveTo(x, hy + hh*.71); X.quadraticCurveTo(x - 3.5*s, hy + hh*.8, x - 6*s, hy + hh*.71); X.moveTo(x, hy + hh*.71); X.quadraticCurveTo(x + 3.5*s, hy + hh*.8, x + 6*s, hy + hh*.71); }
   X.stroke(); X.lineCap = 'butt';
-  if(!ox && c.sip){ X.fillStyle = '#7a2a30'; X.beginPath(); X.ellipse(x, hy + hh*.77, 3*s, 3.4*s, 0, 0, 7); X.fill(); }
+  if(!ox && (c.sip || bad)){ X.fillStyle = '#7a2a30'; X.beginPath(); X.ellipse(x, hy + hh*.77, 3*s, 3.4*s, 0, 0, 7); X.fill(); }
   if(!ox && c.stache > 0){
     X.globalAlpha = Math.min(1, c.stache); X.fillStyle = '#fffdf4';
     X.beginPath(); X.ellipse(x - 6*s, hy + hh*.7, 6*s, 3*s, -.2, 0, 7); X.fill();
@@ -1242,6 +1397,11 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
     X.fillStyle = c.pat > .5 ? '#78c878' : (c.pat > .25 ? '#e0a040' : '#e06060');
     X.beginPath(); X.roundRect(px, py, pw * Math.max(0, c.pat), 4, 1.5); X.fill();
   }
+  if(!ox && c.critic && c.state !== 'leaving'){
+    X.font = 'bold 10px "Courier New",monospace'; X.textAlign = 'center'; X.textBaseline = 'middle';
+    X.fillStyle = 'rgba(10,7,5,.8)'; X.fillRect(x - 28, hy - 52, 56, 12);
+    X.fillStyle = '#ffd870'; X.fillText('📝 КРИТИК', x, hy - 46);
+  }
 }
 
 function hands(c){
@@ -1285,13 +1445,29 @@ function bubble(c){
   for(var i=0; i<L.length; i++){ ctx.fillText(L[i], bx + p, by + p + i*lh); }
 }
 
+function drawPolice(){
+  var p = game.police; if(!p) return;
+  var f = Math.floor(game.time*6) % 2, a = Math.min(1, p.t * 1.5);
+  ctx.save(); ctx.globalAlpha = a;
+  ctx.fillStyle = f ? 'rgba(220,40,40,.22)' : 'rgba(40,80,230,.22)'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = f ? '#e03030' : '#3050e8'; ctx.fillRect(0, 0, W/2, 9); ctx.fillRect(W/2, H - 9, W/2, 9);
+  ctx.fillStyle = f ? '#3050e8' : '#e03030'; ctx.fillRect(W/2, 0, W/2, 9); ctx.fillRect(0, H - 9, W/2, 9);
+  ctx.fillStyle = 'rgba(10,7,5,.92)'; rr(18, 238, 324, 92, 8); ctx.fill();
+  ctx.strokeStyle = f ? '#e05050' : '#5070f0'; ctx.lineWidth = 3; rr(18, 238, 324, 92, 8); ctx.stroke();
+  TX('🚔 ПОЛИЦИЯ!', W/2, 264, 22, '#ffe070');
+  TX(p.txt, W/2, 290, 13, '#ffffff');
+  TX(p.sub, W/2, 312, 10, '#ffb0a0');
+  ctx.restore();
+}
+
 function render(){
   ctx.clearRect(0, 0, W, H);
   if(game.view === 0){
     bgBar();
     for(var i=0; i<game.cats.length; i++) drawCat(game.cats[i]);
-    counterBar(); barrel(); tapDeco();
+    counterBar(); barrel(); tapDeco(); tipJar();
     for(var i=0; i<game.cats.length; i++) hands(game.cats[i]);
+    for(var i=0; i<game.cats.length; i++) steam(game.cats[i]);
 
     var g = game.glass;
     if(g.placed && (!g.serving || g.sp < .9)){
@@ -1362,6 +1538,14 @@ function render(){
   }
   ctx.globalAlpha = 1;
 
+  // вечернее освещение бара следует за временем суток
+  if(game.view === 0){
+    var spp = skyP === null ? 0 : skyP, nv = Math.max(0, Math.min(1, (spp - .35) / .5));
+    if(nv > 0){
+      ctx.fillStyle = 'rgba(10,12,40,' + (.2*nv) + ')'; ctx.fillRect(0, 0, W, H);
+      if(game.blackout <= 0) GL(250, 60, 170, .22*nv, '255,200,120');
+    }
+  }
   if(game.blackout > 0){ ctx.fillStyle = 'rgba(6,4,3,.58)'; ctx.fillRect(0, 0, W, H); }
 
   if(fadeT > 0){ ctx.fillStyle = 'rgba(10,6,3,' + (fadeT/.2*.55) + ')'; ctx.fillRect(0, 0, W, H); }
@@ -1370,11 +1554,11 @@ function render(){
   ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
   ctx.fillStyle = 'rgba(15,10,5,.06)';
   for(var y=0; y<H; y+=3) ctx.fillRect(0, y, W, 1);
+  drawPolice();
 }
 
-var topEl = $('top'), holdB = $('hold'), briskB = $('brisk'), talkB = $('talk'), docB = $('bdoc'), snackB = $('bsnack'), dlgEl = $('dlg'), passEl = $('pass'), sumEl = $('sum'), shopEl = $('shop'), bookEl = $('book'), optsEl = $('opts'), titleEl = $('title');
+var topEl = $('top'), holdB = $('hold'), briskB = $('brisk'), talkB = $('talk'), docB = $('bdoc'), snackB = $('bsnack'), dlgEl = $('dlg'), passEl = $('pass'), sumEl = $('sum'), shopEl = $('shop'), bookEl = $('book'), optsEl = $('opts'), titleEl = $('title'), tutEl = $('tut');
 
-var topEl0 = 0;
 function tapDeco(){
   var g = game.glass, a = game.active;
   R('#15110e', 184, 457, 56, 9); R('#3a3430', 185, 457, 54, 3); R('#8a8478', 185, 457, 54, 1);
@@ -1395,7 +1579,7 @@ function dayLabel(){ return 'День ' + game.day; }
 function washDur(){ return 1.8 / (1 + (game.upg.sink || 0)); }
 function startWash(){
   var w = game.wash; w.active = true; w.t = 0; w.dur = washDur(); game.kitchenStep = 1;
-  tone(520, .08, 'sine', .05); addFloat(180, 380, 'Моем стакан...', '#9ad0f0'); refresh();
+  tone(520, .08, 'sine', .05); addFloat(180, 380, 'Моем стакан...', '#9ad0f0'); tutAdv(3); refresh();
 }
 function finishWash(){
   var w = game.wash; w.active = false; w.t = 0; game.kitchenStep = 0;
@@ -1411,7 +1595,7 @@ function topBar(){
   var pop = (lastMoney !== null && lastMoney !== game.money) ? ' pop' : ''; lastMoney = game.money;
   topEl.innerHTML = '<div class="bd dayb"><b>' + dayLabel() + '</b><span>' + SN[game.shift] + '</span></div>' +
   '<div class="bd money' + pop + '"><span class="coin">◈</span> <b>' + game.money + '</b></div>' + cb +
-  '<div style="display:flex;gap:.25em"><button class="ibtn" id="bbook" title="Гости">📖</button><button class="ibtn" id="bopt" title="Звук">⚙</button></div>';
+  '<div style="display:flex;gap:.25em"><button class="ibtn" id="bbook" title="Гости">📖</button><button class="ibtn" id="bopt" title="Настройки">⚙</button></div>';
   $('bbook').onclick = function(){ au(); sClick(); openBook(); };
   $('bopt').onclick = function(){ au(); sClick(); openOpts(); };
 }
@@ -1434,15 +1618,15 @@ function updateHud(){
   }else if(v === -1){
     if(game.pouringCan > 0) hint = 'Молоко переливается в бочонок...';
     else if(game.warehouseCan) hint = 'Перетащи банку в бочонок справа';
-    else if(game.money >= price) hint = 'Нажми на ящик внизу: банка молока за ' + price + ' ◈';
+    else if(game.money >= price) hint = 'Ящик внизу: банка молока за ' + price + ' ◈. Слева: стаканы +2 за ' + glassPrice() + ' ◈';
     else hint = 'Банка молока стоит ' + price + ' ◈ — не хватает денег';
   }else if(game.cleanGlasses <= 0){
-    hint = game.dirtyGlasses > 0 ? 'Чистых стаканов нет — помой их на кухне ▶' : '';
+    hint = game.dirtyGlasses > 0 ? 'Чистых стаканов нет — помой их на кухне ▶' : 'Стаканов не осталось — купи на складе ◀';
   }
   var ord = (a && a.state === 'active' && !g.serving) ?
     (g.orderType === 'aged' ? 'Выдержанное 18+' : (g.orderType === 'foam' ? 'Молоко с пенкой' : 'Молоко')) + ' до ' + Math.round(g.target*100) + '%' +
-    (g.needsSnack ? ' + ' + (g.needsSnack === 'fish' ? 'рыбка' : 'печенье') : '') : '';
-  var key = [v, milkP, game.cleanGlasses, game.dirtyGlasses, hint, game.served, ord, game.wash.active ? 1 : 0].join('|');
+    (g.needsSnack ? ' + ' + (g.needsSnack === 'fish' ? 'рыбка' : 'печенье') : '') + (g.taste ? ' ♥' : '') : '';
+  var key = [v, milkP, game.cleanGlasses, game.dirtyGlasses, hint, game.served, ord, game.wash.active ? 1 : 0, NSHIFT].join('|');
   if(key === hudKey) return;
   hudKey = key;
   hudEl.style.display = 'flex';
@@ -1573,8 +1757,6 @@ window.addEventListener('touchstart', function(e){
 }, {passive: true});
 
 window.addEventListener('touchend', function(e){
-  // pointerup срабатывает раньше touchend: если жест был перетаскиванием предмета
-  // (стакан в раковину, банка в бочонок), это НЕ свайп между комнатами.
   var blocked = swipeBlock; swipeBlock = false;
   if(blocked) return;
   var dx = e.changedTouches[0].clientX - touchX;
@@ -1584,15 +1766,27 @@ window.addEventListener('touchend', function(e){
   }
 }, {passive: true});
 
+/* ===== ПАСПОРТ и ПОЛИЦИЯ ===== */
 function makeDocData(c){
   var r = Math.random();
-  if(r < .65){ return {valid: true, name: c.d.fn, by: c.d.by, exp: 2028, photoCat: c, reason: ''}; }
-  else if(r < .82){ return {valid: false, name: c.d.fn, by: 2011, exp: 2028, photoCat: c, reason: 'Кот ещё котёнок (нет 18 лет)!'}; }
-  else if(r < .92){ return {valid: false, name: c.d.fn, by: c.d.by, exp: 2023, photoCat: c, reason: 'Паспорт просрочен!'}; }
+  if(r < .6){ return {valid: true, name: c.d.fn, by: c.d.by, exp: 2028, photoCat: c, reason: '', fine: 0}; }
+  else if(r < .76){ return {valid: false, name: c.d.fn, by: 2011, exp: 2028, photoCat: c, reason: 'Несовершеннолетний (нет 18 лет)!', fine: 30}; }
+  else if(r < .88){ return {valid: false, name: c.d.fn, by: c.d.by, exp: 2023, photoCat: c, reason: 'Паспорт просрочен!', fine: 25}; }
   else{
-    var other = CATS.filter(function(x){ return x.id !== c.d.id; })[0] || CATS[0];
-    return {valid: false, name: c.d.fn, by: c.d.by, exp: 2028, photoCat: {d: other, ph: 0, stache: 0, purr: 0, sip: false}, reason: 'Чужая фотография в паспорте!'};
+    var others = CATS.filter(function(x){ return x.id !== c.d.id; });
+    var other = others[Math.floor(Math.random() * others.length)];
+    return {valid: false, name: c.d.fn, by: c.d.by, exp: 2028, photoCat: {d: other, ph: 0, stache: 0, purr: 0, sip: false, state: 'idle', react: 0}, reason: 'Чужая фотография в паспорте!', fine: 40};
   }
+}
+
+function callPolice(c, dd){
+  var fine = dd.fine + game.day * 2;
+  game.money = Math.max(0, game.money - fine); game.st.fines += fine; game.st.err++; game.combo = 0;
+  game.police = {t: 3.2, tick: 0, txt: 'Штраф −' + fine + ' ◈ за одобрение фальшивого паспорта', sub: dd.reason};
+  tone(700, .15, 'square', .06); tone(520, .2, 'sawtooth', .04);
+  c.bub = 'Только не в участок!'; c.bt = 2.5;
+  topBar(); save();
+  leave(c, false);
 }
 
 function openPassport(){
@@ -1601,6 +1795,7 @@ function openPassport(){
   passEl.innerHTML = '<div class="phd"><span>КОШАЧИЙ ПАСПОРТ · 18+</span><span>№' + (1000 + dd.by) + '</span></div>' +
   '<div class="pbody"><canvas id="pcv" width="76" height="76"></canvas>' +
   '<div class="pinfo"><b>Имя:</b> ' + dd.name + '<br><b>Год рожд.:</b> ' + dd.by + ' (сейчас 2026)<br><b>Годен до:</b> ' + dd.exp + ' г.</div></div>' +
+  '<div class="phint">Проверь: 1) возраст от 18 лет (рожд. не позже 2008); 2) срок не истёк (не раньше 2026); 3) фото совпадает с котом у стойки. Одобришь фальшивку — приедет полиция и выпишет штраф!</div>' +
   '<div class="pbtns"><button class="bt ok" id="pok">ОДОБРИТЬ</button><button class="bt no" id="pno">ОТКАЗАТЬ</button></div>';
   passEl.style.display = 'block';
   var pcv = $('pcv').getContext('2d');
@@ -1613,23 +1808,20 @@ function openPassport(){
       g.docVerified = true;
       addFloat(c.x, 235, 'Документ в порядке!', '#78c878');
     }else{
-      game.money = Math.max(0, game.money - 12); game.combo = 0; game.st.err++;
-      addFloat(c.x, 235, 'Штраф -12 ◈: ' + dd.reason, '#e06060');
-      tone(180, .2, 'sawtooth'); topBar(); save();
-      leave(c, false);
+      callPolice(c, dd);
     }
     refresh();
   };
   $('pno').onclick = function(){
     au(); sClick(); passEl.style.display = 'none';
     if(!dd.valid){
-      game.money += 10; game.st.happy++; game.st.serve++; game.total++; game.served++;
-      addFloat(c.x, 235, 'Верный отказ! +10 ◈', '#78c878');
+      var rew = 10; game.money += rew; game.st.earn += rew; game.st.happy++; game.st.serve++; game.total++; game.served++;
+      addFloat(c.x, 235, 'Верный отказ! +' + rew + ' ◈', '#78c878');
       tone(880, .1, 'triangle'); topBar(); save();
       c.bub = 'Эх, раскусили... Ладно, пойду.'; c.bt = 2.2;
       setTimeout(function(){ leave(c, false); }, 900);
     }else{
-      game.money = Math.max(0, game.money - 6); game.combo = 0; game.st.err++;
+      game.money = Math.max(0, game.money - 6); game.st.fines += 6; game.combo = 0; game.st.err++;
       addFloat(c.x, 235, 'Зря отказали (-6 ◈)', '#e06060');
       tone(200, .15, 'sawtooth'); topBar(); save();
       c.bub = 'Но у меня всё в порядке с документами!'; c.bt = 2.2;
@@ -1643,7 +1835,7 @@ function resetGlass(){
   var g = game.glass;
   g.placed = false; g.x = GX; g.y = GY; g.sc = 1; g.level = 0; g.pouring = false; g.inertia = 0; g.used = false;
   g.serving = false; g.settle = 0; g.sp = 0; g.orderType = 'normal'; g.foam = 0; g.whipping = false;
-  g.needsDoc = false; g.docVerified = false; g.docData = null; g.needsSnack = null; g.snackGiven = false; g.riskMode = false; g.pressure = 0;
+  g.needsDoc = false; g.docVerified = false; g.docData = null; g.needsSnack = null; g.snackGiven = false; g.riskMode = false; g.pressure = 0; g.taste = null;
 }
 
 function showEvent(txt){
@@ -1651,19 +1843,37 @@ function showEvent(txt){
   el.textContent = txt; el.style.display = 'block'; evtT = 5;
 }
 
+/* ===== СОБЫТИЯ СМЕНЫ ===== */
 function triggerRandomEvent(){
-  showEvent('За окном тихо падает пушистый снег. В баре тепло и уютно.');
-  game.priceMult = 1;
+  game.evtKind = 'calm'; game.heavyRain = false; game.rush = false; game.priceMult = 1; game.blackout = 0; NSHIFT = 6;
+  if(!game.tutDone) return;
+  var r = Math.random(), k;
+  if(r < .3) k = 'calm'; else if(r < .5) k = 'blackout'; else if(r < .7) k = 'critic'; else if(r < .88) k = 'rush'; else k = 'rain';
+  game.evtKind = k;
+  if(k === 'calm'){ showEvent('Тихая смена. Дождь стучит по стеклу, в баре тепло и уютно.'); }
+  else if(k === 'blackout'){ game.blackout = 28; showEvent('Отключился свет! Гости терпеливее, но в темноте легко промахнуться.'); }
+  else if(k === 'critic'){ showEvent('Сегодня заглянет кошачий критик: двойная оплата за хороший налив, но он строг!'); }
+  else if(k === 'rush'){ game.rush = true; NSHIFT = 8; game.priceMult = 1.15; showEvent('Час пик! Гостей больше и они торопятся. Оплата +15%.'); }
+  else{ game.heavyRain = true; game.priceMult = 1.1; showEvent('Ливень за окном! Мокрые гости ценят тепло: оплата +10%.'); }
 }
 
 function startShift(){
   var st = game.st;
-  st.serve = 0; st.happy = 0; st.perf = 0; st.tips = 0; st.acc = 0; st.err = 0; st.m0 = game.money;
+  st.serve = 0; st.happy = 0; st.perf = 0; st.tips = 0; st.acc = 0; st.err = 0; st.m0 = game.money; st.earn = 0; st.spent = 0; st.fines = 0; st.bc = 0;
   game.cats = []; game.active = null; game.dlg = null; dlgEl.style.display = 'none'; passEl.style.display = 'none';
-  game.served = 0; game.spawned = 0; game.nextT = .5; game.spawnT = 1.0;  game.priceMult = 1;
+  game.served = 0; game.spawned = 0; game.nextT = .5; game.spawnT = 1.0; game.priceMult = 1; game.canShift = 0; game.police = null;
+  game.basket.taps = 0; game.basket.reward = 0; game.basket.t = 0;
   game.view = 0; game.drag.active = false; game.drag.type = null; game.wash.active = false; game.wash.t = 0; game.kitchenStep = 0;
+  // стаканы, оставшиеся в руках у прошлых гостей, возвращаются на полку
+  game.cleanGlasses = Math.max(game.cleanGlasses, game.glassTotal - game.dirtyGlasses);
   resetGlass(); game.phase = 'play'; sumEl.classList.add('hid'); shopEl.classList.add('hid'); bookEl.classList.add('hid'); optsEl.classList.add('hid');
-  triggerRandomEvent(); topBar(); refresh();
+  triggerRandomEvent();
+  // защита от тупика: пустой бочонок и нет денег на бидон
+  if(game.milk < .12 && game.money < milkPrice() && !game.warehouseCan){
+    game.milk = Math.min(1, game.milk + .4);
+    showEvent('Поставщик в долг оставил немного молока. Береги запасы!');
+  }
+  topBar(); refresh();
 }
 
 function spawn(){
@@ -1679,8 +1889,9 @@ function spawn(){
   game.cats.push({
     d: d, slot: slot, x: left ? -80 : W + 80, tx: SLOTS[slot], state: 'entering',
     bub: '', bt: 0, cup: 0, cup0: 0, cupFoam: 0, cyc: 0, lift: 0, tilt: 0,
-    sip: false, sit: 0, stache: 0, purr: 0, pat: 1, res: 0, talk: false,
-    ph: Math.random()*6, isSpecial: false, gotSnack: false
+    sip: false, sit: 0, stache: 0, purr: 0, pat: 1, res: 0, talk: false, react: 0, rr: 0,
+    ph: Math.random()*6, isSpecial: false, gotSnack: false,
+    critic: game.evtKind === 'critic' && game.spawned === 2
   });
   game.spawned++; sStep(); return true;
 }
@@ -1696,11 +1907,20 @@ function activate(c){
   g.target = oType === 'foam' ? (.48 + Math.random()*.22) : (.52 + Math.random()*.32);
 
   var intro = c.d.i;
+  if(c.critic) intro = 'Я кошачий критик. Оценю ваш налив. ' + intro;
   if(oType === 'aged'){
     g.needsDoc = true; g.docData = makeDocData(c);
     intro = 'Мне бы выдержанного сливкового (18+). Вот паспорт!';
   }else if(oType === 'foam'){
     intro += ' И с пышной пенкой!';
+  }else{
+    // любимый заказ: у каждого кота свой характер в наливании
+    var tz = TASTE[c.d.id];
+    if(tz && Math.random() < .7){
+      g.taste = tz;
+      g.target = tz.k === 'prec' ? (.52 + Math.random()*.3) : (tz.lo + Math.random()*(tz.hi - tz.lo));
+      intro += tz.say;
+    }
   }
 
   if(game.upg.snacks > 0 && Math.random() < .45){
@@ -1749,24 +1969,31 @@ function serve(){
   else if(diff < .18 + tolBonus) r = 2;
   else r = totalLv < g.target ? 3 : 4;
   if(g.orderType === 'foam' && g.foam < .06 && r < 2) r = 2;
+  if(g.needsSnack && !g.snackGiven && r < 2) r = 2;
 
   c.res = r; c.isSpecial = (g.orderType === 'aged'); c.gotSnack = g.snackGiven;
   var st = game.st;
-  var basePay = PAY(c.d.b + game.upg.barrel*6)[r];
-  if(g.orderType === 'aged' && r < 2) basePay += 8;
-  if(g.orderType === 'foam' && r < 2) basePay += 8;
-  if(g.needsSnack){
-    if(g.snackGiven) basePay += 8;
-    else if(r < 2) r = 2;
+  var pre = PAY(c.d.b + game.upg.barrel*6)[r];
+  if(g.orderType === 'aged' && r < 2) pre += 8;
+  if(g.orderType === 'foam' && r < 2) pre += 8;
+  if(g.needsSnack && g.snackGiven) pre += 8;
+  var tz = g.taste, sat = false;
+  if(tz && r < 2){ sat = tz.k === 'prec' ? diff < .03 : true; }
+  if(sat) pre += tz.bonus;
+  var basePay = Math.round(pre * payScale() * game.priceMult);
+
+  var critNote = '';
+  if(c.critic){
+    if(r < 2){ basePay *= 2; critNote = ' 📝x2'; unlock('critic'); }
+    else{ basePay = Math.round(basePay * .5); critNote = ' 📝 разочарован'; }
   }
-  basePay = Math.round(basePay * game.priceMult);
 
   if(g.riskMode){
     if(r === 0) basePay = basePay * 2;
     else basePay = Math.min(-8, basePay - 6);
   }
   if(bullseye && r === 0){
-    basePay += 10;
+    basePay += 10; unlock('bull');
   }
 
   if(r === 0){
@@ -1775,10 +2002,13 @@ function serve(){
   }else if(r > 1){
     game.combo = 0;
   }
+  st.bc = Math.max(st.bc, game.combo);
 
   game.money = Math.max(0, game.money + basePay);
   st.serve++; game.total++; game.served++; st.acc += Math.max(0, 1 - diff*4);
-  if(r < 2) st.happy++; if(r === 0) st.perf++; if(r > 2) st.err++;
+  if(r < 2) st.happy++;
+  if(r === 0) st.perf++;
+  if(r > 2) st.err++;
 
   var rl = rel(c.d.id);
   var decorBonus = game.upg.decor > 0 ? 1 : 0;
@@ -1787,14 +2017,17 @@ function serve(){
     addBurst(c.x, 260, bullseye ? '#fff070' : '#ffd890', bullseye ? 24 : 14);
   }
   else if(r === 1 && decorBonus){ rl.aff += 1; }
+  if(sat){ rl.aff += 1; unlock('taste1'); addFloat(c.x, 212, '♥ Любимый заказ! +' + tz.bonus, '#e08090'); }
+  if(c.critic && r >= 2) rl.aff = Math.max(0, rl.aff - 1);
 
   var tip = 0;
   if(rl.aff >= 4 && r < 2){ tip += 2 + game.upg.jukebox + (bullseye ? 3 : 0); }
-  if(tip > 0){ game.money += tip; st.tips += tip; }
+  if(tip > 0){ game.money += tip; st.tips += tip; game.jarT = .7; }
+  st.earn += basePay + tip;
 
   var tag = bullseye ? '★ СВЕРХ-ИДЕАЛ! ' : (r === 0 ? 'ИДЕАЛЬНО! ' : '');
   if(g.riskMode && r === 0) tag = '⚡ КУШ x2! ' + tag;
-  var label = tag + (basePay >= 0 ? '+' : '') + basePay + ' ◈' + (tip ? ' (+' + tip + ' чаевые)' : '');
+  var label = tag + (basePay >= 0 ? '+' : '') + basePay + ' ◈' + (tip ? ' (+' + tip + ' чаевые)' : '') + critNote;
   addFloat(c.x, 235, label, bullseye ? '#fff060' : (r === 0 ? '#ffd890' : (r > 2 ? '#e06060' : '#c8b898')));
 
   sRes(r); topBar(); save();
@@ -1803,14 +2036,19 @@ function serve(){
 function afterServe(){
   var g = game.glass, c = game.active; if(!c) return;
   c.cup = c.cup0 = g.level; c.cupFoam = g.foam; c.state = 'drinking'; c.cyc = 0; c.lift = 0; c.tilt = 0; c.bub = c.d.r[c.res]; c.bt = 3;
+  c.react = 2.6; c.rr = c.res;
+  if(c.res === 0){ c.purr = 2; sPurr(); }
   game.shift = Math.min(3, game.served);
   resetGlass(); game.active = null; game.nextT = .8; refresh();
 }
 
 function leave(c, angry){
   if(angry){ game.combo = 0; addFloat(c.x, 230, 'Ушёл не дождавшись...', '#e06060'); topBar(); }
-  c.state = 'leaving'; c.out = c.x < W/2 ? -1 : 1; c.bub = angry ? 'Слишком долго...' : ''; c.bt = angry ? 1.5 : 0;
-  if(game.active === c){ game.active = null; resetGlass(); }
+  c.state = 'leaving'; c.out = c.x < W/2 ? -1 : 1; c.bub = angry ? 'Слишком долго...' : (c.bub || ''); c.bt = angry ? 1.5 : (c.bt || 0);
+  if(game.active === c){
+    if(game.glass.placed && !game.glass.serving) game.cleanGlasses++;
+    pourOff(); game.active = null; resetGlass();
+  }
   refresh();
 }
 
@@ -1823,7 +2061,7 @@ function openDlg(c){
     if(rel(c.d.id).aff >= 3){ c.purr = 1.5; sPurr(); addBurst(c.x, 250, '#e07080', 6); }
     return;
   }
-  var idx = u[0], q = c.d.q[idx]; game.dlg = {c: c, idx: idx, stage: 0, t: 0}; c.talk = true;
+  var idx = u[0], q = c.d.q[idx]; game.dlg = {c: c, idx: idx, stage: 0, t: 0}; c.talk = true; tutAdv(2);
   var hearts = ''; for(var i=0; i<Math.min(5, Math.max(0, rel(c.d.id).aff)); i++) hearts += '♥';
   var btnsHtml = '';
   for(var i=0; i<q[1].length; i++){
@@ -1850,25 +2088,42 @@ function closeDlg(){
   d.c.talk = false; game.dlg = null; dlgEl.style.display = 'none'; refresh();
 }
 
+/* ===== ИТОГИ СМЕНЫ ===== */
+function starsFor(s){
+  if(!s.serve) return 0;
+  var pts = (s.acc / s.serve) * 50 + (s.happy / s.serve) * 30 + Math.min(10, s.perf * 3) + Math.min(10, s.bc * 2.5) - s.err * 5;
+  return pts >= 88 ? 5 : (pts >= 74 ? 4 : (pts >= 58 ? 3 : (pts >= 40 ? 2 : 1)));
+}
+var RATE = ['', 'Тяжёлая смена', 'Неплохо', 'Хорошая смена', 'Отличная смена!', 'Безупречно! Легенда бара!'];
+
 function endShift(){
   game.phase = 'summary'; refresh();
   var s = game.st, e = game.money - s.m0, acc = s.serve ? Math.round(s.acc / s.serve * 100) : 0;
+  var stars = starsFor(s);
+  if(stars >= 5) unlock('stars5');
   sumEl.classList.remove('hid');
   var rows = [
     ['Смена', dayLabel() + ' · ' + SN[game.shift]],
     ['Обслужено', s.serve + '/' + NSHIFT],
-    ['Выручка за смену', (e >= 0 ? '+' : '') + e + ' ◈'],
+    ['Заработано', '+' + s.earn + ' ◈'],
+    ['Закупки (молоко, стаканы)', '−' + s.spent + ' ◈'],
+    ['Штрафы', '−' + s.fines + ' ◈'],
+    ['Итого за смену', (e >= 0 ? '+' : '') + e + ' ◈'],
     ['Средняя точность', acc + '%'],
     ['Довольных клиентов', s.happy + '/' + s.serve],
-    ['Ошибок', s.err],
-    ['Чаевые от друзей', '+' + s.tips + ' ◈']
+    ['Идеальных / лучшее комбо', s.perf + ' / x' + s.bc],
+    ['Ошибок', s.err]
   ];
   var rowsHtml = '';
   for(var i=0; i<rows.length; i++){
     rowsHtml += '<div class="row"><span>' + rows[i][0] + '</span><b>' + rows[i][1] + '</b></div>';
   }
-  sumEl.innerHTML = '<div class="box"><div class="st">КОНЕЦ СМЕНЫ</div>' + rowsHtml +
-  '<button class="bt" id="goshop" style="margin:1em auto .5em;display:block">МАГАЗИН БАРА (' + game.money + ' ◈)</button>' +
+  var starsHtml = '<div class="stars">';
+  for(var i=0; i<5; i++) starsHtml += '<i class="' + (i < stars ? 'on' : '') + '" style="animation-delay:' + (.2 + i*.25) + 's">★</i>';
+  starsHtml += '</div><div class="rate">' + RATE[stars] + '</div>';
+  var jar = '<div class="jarrow"><span>🫙 Банка чаевых</span><b>+' + s.tips + ' ◈</b></div>';
+  sumEl.innerHTML = '<div class="box"><div class="st">КОНЕЦ СМЕНЫ</div>' + starsHtml + rowsHtml + jar +
+  '<button class="bt" id="goshop" style="margin:.6em auto .5em;display:block">МАГАЗИН БАРА (' + game.money + ' ◈)</button>' +
   '<button class="bt p" id="nx" style="margin:0 auto;display:block">СЛЕДУЮЩАЯ СМЕНА</button></div>';
   $('goshop').onclick = function(){ au(); sClick(); openShop(); };
   $('nx').onclick = function(){ au(); sClick(); nextShift(); };
@@ -1895,6 +2150,9 @@ function openShop(){
         '<button class="sbtn" data-id="' + u.id + '" ' + (game.money < price ? 'disabled' : '') + '>' + (lv > 0 ? 'УЛУЧШИТЬ · ' : 'КУПИТЬ · ') + price + ' ◈</button>' +
         (game.money < price ? '<div class="need">не хватает ' + (price - game.money) + ' ◈</div>' : '')) + '</div>';
   }
+  var gMax = game.glassTotal >= 12, gp = glassPrice();
+  html += '<div class="scard wide' + (shopFlash === 'glass' ? ' flash' : '') + '"><div class="sn">🥛 Набор стаканов (+2)</div><div class="sd">Всего стаканов: ' + game.glassTotal + '/13. Чем их больше, тем реже нужно бегать на кухню.</div>' +
+    (gMax ? '<button class="sbtn" disabled>МАКСИМУМ</button>' : '<button class="sbtn" id="glbuy" ' + (game.money < gp ? 'disabled' : '') + '>КУПИТЬ · ' + gp + ' ◈</button>' + (game.money < gp ? '<div class="need">не хватает ' + (gp - game.money) + ' ◈</div>' : '')) + '</div>';
   html += '</div><div style="padding:0 .8em .8em"><button class="bt p" id="shdone" style="width:100%;margin:0;display:block">К СМЕНЕ</button></div></div>';
   shopEl.innerHTML = html; shopFlash = '';
   var cvs = shopEl.querySelectorAll('canvas.sico');
@@ -1914,44 +2172,134 @@ function openShop(){
       };
     })(sbtns[i]);
   }
+  var gb = $('glbuy');
+  if(gb) gb.onclick = function(){ au(); if(buyGlass()){ shopFlash = 'glass'; openShop(); } };
   $('shdone').onclick = function(){ au(); sClick(); nextShift(); };
 }
 
-function openBook(){
-  bookEl.classList.remove('hid');
-  var html = '<div class="box"><div class="st">ПОСТОЯННЫЕ ГОСТИ</div><div class="cgrid">';
-  for(var i=0; i<CATS.length; i++){
-    var c = CATS[i], rl = rel(c.id), vis = rl.visits > 0;
-    var h = '';
-    for(var j=0; j<Math.min(5, rl.aff); j++) h += '♥';
-    for(var j=0; j<Math.max(0, 5 - Math.min(5, rl.aff)); j++) h += '♡';
-    html += '<div class="ccard"><b style="color:' + (vis ? '#f0e0c0' : '#6a5a4a') + '">' + (vis ? c.n : '???') + '</b><div class="hearts">' + h + '</div><div style="font-size:.85em;color:#8a7860">Визитов: ' + rl.visits + '</div></div>';
-  }
-  html += '</div><button class="bt p" id="bkclose" style="margin:.9em auto 0;display:block">ЗАКРЫТЬ</button></div>';
-  bookEl.innerHTML = html;
-  $('bkclose').onclick = function(){ au(); sClick(); bookEl.classList.add('hid'); refresh(); };
+/* ===== КНИГА ГОСТЕЙ: коты, описания, фото, достижения ===== */
+var bookTab = 'cats', bookCat = null;
+function drawPortrait(cvEl, d, sil){
+  var x = cvEl.getContext('2d'), h = cvEl.height;
+  x.clearRect(0, 0, cvEl.width, h);
+  drawCat({d: d, ph: 1, state: 'idle', x: 0, purr: 0, sip: false, stache: 0, react: 0, pat: 1}, x, cvEl.width/2, h*.28, h/120*.85);
+  if(sil){ x.globalCompositeOperation = 'source-atop'; x.fillStyle = '#120c08'; x.fillRect(0, 0, cvEl.width, h); x.globalCompositeOperation = 'source-over'; }
 }
+function heartsStr(a){
+  var h = '', n = Math.min(5, a); for(var j=0; j<n; j++) h += '♥'; for(var j=n; j<5; j++) h += '♡'; return h;
+}
+function openBook(){
+  bookCat = null; bookEl.classList.remove('hid'); renderBook(); refresh();
+}
+function renderBook(){
+  var got = 0; for(var i=0; i<ACH.length; i++) if(game.ach && game.ach[ACH[i].id]) got++;
+  var html = '<div class="box"><div class="tabs"><button class="tb' + (bookTab === 'cats' ? ' on' : '') + '" data-t="cats">ГОСТИ</button>' +
+    '<button class="tb' + (bookTab === 'ach' ? ' on' : '') + '" data-t="ach">ДОСТИЖЕНИЯ ' + got + '/' + ACH.length + '</button></div>';
+  if(bookTab === 'ach'){
+    for(var i=0; i<ACH.length; i++){
+      var a = ACH[i], has = game.ach && game.ach[a.id];
+      html += '<div class="arow' + (has ? ' got' : '') + '"><div class="ai">' + a.i + '</div><div><b>' + a.n + '</b><small>' + a.d + '</small></div></div>';
+    }
+    html += '<button class="bt p" data-act="close" style="margin:.9em auto 0;display:block">ЗАКРЫТЬ</button></div>';
+    bookEl.innerHTML = html; return;
+  }
+  if(bookCat){
+    var d = CATS.filter(function(x){ return x.id === bookCat; })[0], rl = rel(d.id), vis = rl.visits > 0, tz = TASTE[d.id];
+    html += '<div class="cdet"><canvas id="bpc" width="110" height="120"></canvas><div class="cinfo"><b class="cn">' + (vis ? d.fn : '???') + '</b><br>' +
+      (vis ? 'Возраст: ' + (2026 - d.by) + ' лет<br>Любимый заказ: ' + (tz ? tz.like : 'классический налив') + '<br>' : 'Ещё не встречен<br>') +
+      'Дружба: <span class="hearts">' + heartsStr(rl.aff) + '</span><br>Визитов: ' + rl.visits + '<br>' +
+      (vis ? 'Истории: ' + Math.min(rl.seen.length, d.q.length) + '/' + d.q.length : '') + '</div></div>' +
+      '<div class="cdesc">' + (vis ? DESC[d.id] : 'Этот кот ещё не заходил в бар. Дождись его в одну из смен, чтобы узнать больше.') + '</div>' +
+      '<button class="bt p" data-act="back" style="margin:.6em auto 0;display:block">НАЗАД</button></div>';
+    bookEl.innerHTML = html;
+    drawPortrait($('bpc'), d, !vis);
+    return;
+  }
+  html += '<div class="cgrid">';
+  for(var i=0; i<CATS.length; i++){
+    var c = CATS[i], rl2 = rel(c.id), vs = rl2.visits > 0;
+    html += '<div class="ccard" data-c="' + c.id + '"><canvas class="pcv" width="56" height="64" data-id="' + c.id + '"></canvas><b style="color:' + (vs ? '#f0e0c0' : '#6a5a4a') + '">' + (vs ? c.n : '???') + '</b><div class="hearts">' + heartsStr(rl2.aff) + '</div><div style="font-size:.85em;color:#8a7860">Визитов: ' + rl2.visits + '</div></div>';
+  }
+  html += '</div><div style="font-size:.85em;color:#8a7860;margin-top:.6em;text-align:center">Нажми на кота, чтобы открыть карточку</div>' +
+    '<button class="bt p" data-act="close" style="margin:.7em auto 0;display:block">ЗАКРЫТЬ</button></div>';
+  bookEl.innerHTML = html;
+  var pcs = bookEl.querySelectorAll('canvas.pcv');
+  for(var i=0; i<pcs.length; i++){
+    var cd = CATS.filter(function(x){ return x.id === pcs[i].getAttribute('data-id'); })[0];
+    drawPortrait(pcs[i], cd, !(rel(cd.id).visits > 0));
+  }
+}
+bookEl.addEventListener('click', function(e){
+  var t = e.target.closest('[data-t],[data-c],[data-act]'); if(!t) return;
+  au(); sClick();
+  if(t.dataset.t){ bookTab = t.dataset.t; bookCat = null; renderBook(); }
+  else if(t.dataset.c){ bookCat = t.dataset.c; renderBook(); }
+  else if(t.dataset.act === 'back'){ bookCat = null; renderBook(); }
+  else if(t.dataset.act === 'close'){ bookEl.classList.add('hid'); refresh(); }
+});
 
 function openOpts(){
   optsEl.classList.remove('hid');
-  optsEl.innerHTML = '<div class="box"><div class="st">НАСТРОЙКИ ЗВУКА</div>' +
+  optsEl.innerHTML = '<div class="box"><div class="st">НАСТРОЙКИ</div>' +
   '<div class="srow">Громкость музыки: <b id="vbgm">' + Math.round(game.snd.bgm*100) + '%</b><input type="range" id="rbgm" min="0" max="100" value="' + Math.round(game.snd.bgm*100) + '"></div>' +
   '<div class="srow">Громкость звуков: <b id="vsfx">' + Math.round(game.snd.sfx*100) + '%</b><input type="range" id="rsfx" min="0" max="100" value="' + Math.round(game.snd.sfx*100) + '"></div>' +
   '<button class="bt" id="bmute" style="margin:.8em auto;display:block">' + (game.snd.muted ? 'ВКЛЮЧИТЬ ЗВУК' : 'ВЫКЛЮЧИТЬ ЗВУК') + '</button>' +
+  '<button class="bt" id="bttut" style="margin:0 auto .8em;display:block">ПОКАЗАТЬ ОБУЧЕНИЕ</button>' +
   '<button class="bt p" id="optcl" style="margin:0 auto;display:block">ГОТОВО</button></div>';
   $('rbgm').oninput = function(e){ game.snd.bgm = e.target.value / 100; $('vbgm').textContent = e.target.value + '%'; save(); };
   $('rsfx').oninput = function(e){ game.snd.sfx = e.target.value / 100; $('vsfx').textContent = e.target.value + '%'; save(); };
   $('bmute').onclick = function(){ game.snd.muted = !game.snd.muted; if(game.snd.muted) pourOff(); save(); openOpts(); };
+  $('bttut').onclick = function(){ au(); sClick(); game.tutDone = false; game.tutStep = 0; game.tutT = 0; tutLast = ''; optsEl.classList.add('hid'); save(); refresh(); };
   $('optcl').onclick = function(){ au(); sClick(); optsEl.classList.add('hid'); refresh(); };
+}
+
+/* ===== ОБУЧЕНИЕ ===== */
+var tutLast = '';
+function tutAdv(n){ if(!game.tutDone && game.tutStep === n){ game.tutStep++; game.tutT = 0; } }
+function tutFinish(){
+  if(game.tutDone) return;
+  game.tutDone = true; tutLast = ''; tutEl.style.display = 'none'; save();
+  showEvent('Обучение пройдено! Удачи, бармен!');
+}
+function tutSet(msg){
+  if(msg === tutLast) return;
+  tutLast = msg;
+  if(!msg){ tutEl.style.display = 'none'; return; }
+  tutEl.innerHTML = '<div>' + msg + '</div><div style="text-align:right"><button class="sbtn" id="tutskip">ПРОПУСТИТЬ ОБУЧЕНИЕ</button></div>';
+  tutEl.style.display = 'block';
+}
+tutEl.addEventListener('click', function(e){ if(e.target && e.target.id === 'tutskip'){ au(); sClick(); tutFinish(); } });
+function tutUpdate(dt){
+  if(game.tutDone || game.phase !== 'play' || game.dlg || passEl.style.display === 'block' || !bookEl.classList.contains('hid') || !optsEl.classList.contains('hid') || game.police){ tutSet(''); return; }
+  var g = game.glass, a = game.active, s = game.tutStep, msg = '';
+  game.tutT += dt;
+  if(s === 0){
+    msg = a && a.state === 'active' ? '<b>ШАГ 1/5.</b> Гость сделал заказ. Перетащи чистый стакан из шкафа внизу на стойку под кран.' : 'Гость входит в бар... Подожди секунду.';
+    if(g.placed) tutAdv(0);
+  }else if(s === 1){
+    msg = '<b>ШАГ 2/5.</b> Зажми НАЛИВАТЬ и отпусти, когда молоко дойдёт до оранжевой метки. Чем точнее, тем больше ◈.';
+    if(game.st.serve >= 1) tutAdv(1);
+  }else if(s === 2){
+    msg = '<b>ШАГ 3/5.</b> Пока кот пьёт, погладь его (тап) или нажми ПОГОВОРИТЬ. Белого котика в корзинке справа тоже можно тапнуть. Симпатия ♥ даёт чаевые.';
+    if(game.tutT > 14) tutAdv(2);
+  }else if(s === 3){
+    msg = game.dirtyGlasses > 0 ? '<b>ШАГ 4/5.</b> Появился грязный стакан. Нажми КУХНЯ ▶ (или свайпни влево) и перетащи стакан в раковину.' : 'Дождись, пока кот допьёт: стакан станет грязным.';
+    if(game.served >= 3) tutAdv(3);
+  }else if(s === 4){
+    msg = game.view === -1 ? '<b>ШАГ 5/5.</b> Нажми на ящик внизу, чтобы купить бидон молока, и перетащи его в бочонок справа. Слева можно купить стаканы.' : '<b>ШАГ 5/5.</b> Следи за запасом молока! Когда бочонок пустеет, иди на СКЛАД ◀ и купи бидон.';
+    if(game.pouringCan > 0 || game.tutT > 26) tutAdv(4);
+  }else{ tutFinish(); return; }
+  tutSet(msg);
 }
 
 function showTitle(){
   game.phase = 'title'; titleEl.classList.remove('hid');
   titleEl.innerHTML = '<div class="logo">MILK &amp;<br>PAWS</div><div class="sub">УЮТНЫЙ БАР В МИРЕ КОТОВ</div>' + (hasSave() ? '<button class="bt p" id="co">ПРОДОЛЖИТЬ</button>' : '') + '<button class="bt" id="nw">НОВАЯ ИГРА</button>';
   $('nw').onclick = function(){
-    au(); sClick(); try{ localStorage.removeItem(KEY); }catch(e){}
+    au(); sClick(); try{ localStorage.removeItem(KEY); localStorage.removeItem(OLDKEY); }catch(e){}
     game.day = 1; game.shift = 0; game.money = 50; game.total = 0; game.rel = {}; game.combo = 0; game.bestCombo = 0;
-    game.cleanGlasses = 3; game.dirtyGlasses = 0; game.milk = 1.0; game.milkBought = 0; game.warehouseCan = false; game.pouringCan = 0;
+    game.ach = {}; game.cleanGlasses = 3; game.dirtyGlasses = 0; game.glassTotal = 3; game.milk = 1.0; game.milkBought = 0; game.warehouseCan = false; game.pouringCan = 0;
+    game.tutDone = false; game.tutStep = 0; game.tutT = 0; tutLast = '';
     game.upg = {nozzle:0, barrel:0, jukebox:0, snacks:0, foam:0, decor:0, sink:0};
     titleEl.classList.add('hid'); startShift();
   };
@@ -1961,6 +2309,15 @@ function showTitle(){
     if(!load()){ game.day = 1; game.shift = 0; game.money = 50; }
     titleEl.classList.add('hid'); startShift();
   };
+}
+
+/* ===== КОТИК В КОРЗИНКЕ ===== */
+function tapBasket(){
+  var b = game.basket; b.t = .9; b.taps++;
+  sPurr(); addBurst(334, 300, '#e07080', 8); addFloat(334, 288, 'Мурр ♥', '#e08090'); tutAdv(2);
+  if(b.taps % 5 === 0 && b.reward < 3){
+    b.reward++; game.money += 3; game.st.earn += 3; addFloat(334, 268, '+3 ◈ от котика', '#ffd870'); topBar(); save();
+  }
 }
 
 var dragStartX = 0, dragStartY = 0;
@@ -1986,6 +2343,9 @@ cv.addEventListener('pointerdown', function(e){
     }
     if(px >= 230 && py > 478 && py < 612){ addFloat(px, 470, 'Грязные — на кухню ▶', '#e0a060'); return; }
 
+    // белый котик в корзинке
+    if(px > 314 && py > 290 && py < 340){ tapBasket(); e.preventDefault(); return; }
+
     for(var i=0; i<game.cats.length; i++){
       var c = game.cats[i];
       if(c.state === 'leaving' || c.state === 'entering') continue;
@@ -1995,8 +2355,8 @@ cv.addEventListener('pointerdown', function(e){
           if(game.active && game.active !== c){ game.active.state = 'waiting'; game.active.bub = ''; }
           activate(c); sClick();
         }else if(c.state === 'drinking' || c.state === 'sitting'){
-          c.purr = 1.4; sPurr(); addBurst(c.x, 245, '#e07080', 6);
-          if(!c.petted){ c.petted = true; rel(c.d.id).aff++; addFloat(c.x, 225, 'Мррр +1 ♥', '#e08090'); save(); }
+          c.purr = 1.4; sPurr(); addBurst(c.x, 245, '#e07080', 6); tutAdv(2);
+          if(!c.petted){ c.petted = true; rel(c.d.id).aff++; rel(c.d.id).pet = true; addFloat(c.x, 225, 'Мррр +1 ♥', '#e08090'); save(); }
         }else{
           openDlg(c);
         }
@@ -2010,10 +2370,13 @@ cv.addEventListener('pointerdown', function(e){
       game.drag.x = px; game.drag.y = py;
     }
   }else if(game.view === -1){
+    if(px < 68 && py > 364 && py < 444){ buyGlass(); return; }
     if(px > 50 && px < W - 50 && py > 500 && py < 596){
       var price = milkPrice();
       if(!game.warehouseCan && game.pouringCan <= 0 && game.money >= price){
         game.money -= price;
+        game.st.spent += price;
+        game.canShift++;
         game.milkBought++;
         game.warehouseCan = true;
         tone(620, .09, 'triangle');
@@ -2078,6 +2441,13 @@ function update(dt){
   game.time += dt;
   if(evtT > 0){ evtT -= dt; if(evtT <= 0) $('evt').style.display = 'none'; }
   if(game.blackout > 0) game.blackout -= dt;
+  if(game.jarT > 0) game.jarT -= dt;
+  if(game.basket.t > 0) game.basket.t -= dt;
+  if(game.police){
+    game.police.t -= dt; game.police.tick -= dt;
+    if(game.police.tick <= 0){ game.police.tick = .32; tone(Math.floor(game.time*3) % 2 ? 760 : 960, .16, 'square', .035); }
+    if(game.police.t <= 0) game.police = null;
+  }
 
   var rainSp = game.heavyRain ? 1.7 : 1;
   for(var i=0; i<game.rain.length; i++){
@@ -2099,6 +2469,10 @@ function update(dt){
   if(fadeT > 0) fadeT -= dt;
   var skT = Math.min(1, Math.max(0, (game.spawned - 1 + (game.active ? 0.5 : 0)) / NSHIFT));
   if(skyP === null) skyP = skT; else skyP += (skT - skyP) * Math.min(1, dt * 0.4);
+  // плавная гирлянда: включается по вечернему небу, с декором горит всегда
+  var garT = game.upg.decor > 0 ? 1 : Math.max(0, Math.min(1, ((skyP || 0) - .3) / .25));
+  game.garl += (garT - game.garl) * Math.min(1, dt * 1.5);
+
   if(game.wash.active){
     game.wash.t += dt;
     if(game.view === 1 && Math.random() < .25) addBurst(150 + Math.random()*60, 400, '#cfeaff', 1);
@@ -2106,11 +2480,12 @@ function update(dt){
     if(game.wash.t >= game.wash.dur) finishWash();
   }
   var g = game.glass;
-  var patDrain = (1 / (35 + game.upg.jukebox * 12));
+  var patDrain = (1 / (35 + game.upg.jukebox * 12)) * (game.rush ? 1.3 : 1) * (game.blackout > 0 ? .6 : 1) * (game.tutDone ? 1 : .4);
 
   for(var i=0; i<game.cats.length; i++){
     var c = game.cats[i];
     if(c.purr > 0) c.purr -= dt;
+    if(c.react > 0) c.react -= dt;
     if(c.state === 'entering'){
       var dir = Math.sign(c.tx - c.x); c.x += dir * 150 * dt;
       if((c.tx - c.x)*dir <= 0){ c.x = c.tx; c.state = 'waiting'; }
@@ -2160,7 +2535,7 @@ function update(dt){
     }
     game.spawnT -= dt;
     if(game.spawned < NSHIFT && game.spawnT <= 0){
-      game.spawnT = spawn() ? 14.0 + Math.random()*8.0 : 3.0;
+      game.spawnT = spawn() ? (game.rush ? 7.0 + Math.random()*4.0 : 14.0 + Math.random()*8.0) : 3.0;
     }
     if(game.spawned >= NSHIFT && game.cats.length === 0 && !game.active && !game.dlg && !game.wash.active && !game.drag.active) endShift();
   }
@@ -2202,6 +2577,7 @@ function update(dt){
     }
   }
   if(game.dlg && game.dlg.stage === 1){ game.dlg.t += dt; if(game.dlg.t > 3.5) closeDlg(); }
+  tutUpdate(dt);
   refresh();
 }
 
