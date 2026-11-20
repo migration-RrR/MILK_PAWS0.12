@@ -1232,7 +1232,7 @@ function geo(c){
   return {d: d, s: s, bw: bw, bh: bh, hw: hw, hh: hh, x: c.x, by: by, bx: c.x - bw/2, hx: c.x - hw/2, hy: by - hh + 12*s};
 }
 
-var SERIOUS = {martin:1, black:1, prof:1, charlie:1, cleo:1, felix:1, pirate:1};
+var SERIOUS = {martin:1, black:1, prof:1, charlie:1, cleo:1, felix:1, pirate:1, mao:1};
 function catLum(h){ return (parseInt(h.substr(1,2),16)*299 + parseInt(h.substr(3,2),16)*587 + parseInt(h.substr(5,2),16)*114) / 1000; }
 
 function drawCat(c, overrideCtx, ox, oy, scMult){
@@ -1295,7 +1295,7 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
   X.strokeStyle = 'rgba(0,0,0,.35)'; X.lineWidth = 1.2*s; X.stroke();
   X.fillStyle = d.cd; X.fillRect(bx + 8*s, by + bh*.2, bw - 16*s, 4*s);
   }
-  if(ser){ X.fillStyle = 'rgba(0,0,0,.4)'; for(var k=0; k<3; k++){ X.beginPath(); X.arc(x, by + bh*(.36 + k*.1), 1.8*s, 0, 7); X.fill(); } }
+  if(ser && !d.vip){ X.fillStyle = 'rgba(0,0,0,.4)'; for(var k=0; k<3; k++){ X.beginPath(); X.arc(x, by + bh*(.36 + k*.1), 1.8*s, 0, 7); X.fill(); } }
 
   // реакция на оценку: счастье (прищур + мурлыканье) / испуг (прижатые уши, большие зрачки)
   var rc = !ox && c.react > 0, happyR = rc && c.rr === 0, bad = rc && c.rr > 2;
@@ -2342,7 +2342,44 @@ bookEl.addEventListener('click', function(e){
   else if(t.dataset.act === 'back'){ bookCat = null; renderBook(); }
   else if(t.dataset.act === 'close'){ bookEl.classList.add('hid'); refresh(); }
 });
-
+/* ===== ПАНЕЛЬ РАЗРАБОТЧИКА (скрытая) ===== */
+var DEV_HASH = -1212925576, devOn = false, devTaps = 0, devTapT = 0;
+function devHash(s){ var h = 5381; for(var i=0; i<s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return h; }
+function devSummon(){
+  if(game.phase !== 'play'){ showEvent('Мию и Мао можно вызвать только во время смены'); return false; }
+  if(game.vip){ showEvent('Мия и Мао уже в баре'); return false; }
+  game.cats.forEach(function(c){ if(c.state !== 'leaving') leave(c, false); });
+  game.active = null; resetGlass(); pourOff();
+  game.vip = true; game.vipServed = 0; game.vipSpawned = false;
+  vipStart(); game.spawnT = .6; game.nextT = .5;
+  return true;
+}
+function devMount(){
+  var box = optsEl.querySelector('.box'), at = $('optcl'), ttl = optsEl.querySelector('.st');
+  if(!box || !at) return;
+  if(ttl) ttl.onclick = function(){
+    var now = Date.now(); devTaps = (now - devTapT < 900) ? devTaps + 1 : 1; devTapT = now;
+    if(devTaps >= 7){
+      devTaps = 0;
+      var v = window.prompt('Код:');
+      if(v !== null && devHash(v) === DEV_HASH){ devOn = true; openOpts(); }
+      else if(v !== null){ tone(180, .15, 'sawtooth'); }
+    }
+  };
+  if(!devOn) return;
+  var d = document.createElement('div');
+  d.style.cssText = 'margin:.6em 0;padding:.6em;border:1px dashed #8a7860;border-radius:6px;text-align:center';
+  d.innerHTML = '<div style="color:#e0b060;margin-bottom:.4em">🛠 РАЗРАБОТЧИК</div>' +
+    '<button class="bt" id="dv1" style="margin:.2em;display:inline-block">+100 ◈</button>' +
+    '<button class="bt" id="dv2" style="margin:.2em;display:inline-block">+1000 ◈</button>' +
+    '<button class="bt p" id="dv3" style="margin:.3em auto;display:block">⭐ ВЫЗВАТЬ МИЮ И МАО</button>' +
+    '<button class="bt" id="dv4" style="margin:.2em auto;display:block">СКРЫТЬ ПАНЕЛЬ</button>';
+  box.insertBefore(d, at);
+  $('dv1').onclick = function(){ au(); game.money += 100; tone(900, .1, 'triangle'); topBar(); save(); };
+  $('dv2').onclick = function(){ au(); game.money += 1000; tone(900, .1, 'triangle'); topBar(); save(); };
+  $('dv3').onclick = function(){ au(); if(devSummon()){ optsEl.classList.add('hid'); refresh(); } };
+  $('dv4').onclick = function(){ au(); devOn = false; openOpts(); };
+}
 function openOpts(){
   optsEl.classList.remove('hid');
   optsEl.innerHTML = '<div class="box"><div class="st">НАСТРОЙКИ</div>' +
@@ -2356,6 +2393,7 @@ function openOpts(){
   $('bmute').onclick = function(){ game.snd.muted = !game.snd.muted; if(game.snd.muted) pourOff(); save(); openOpts(); };
   $('bttut').onclick = function(){ au(); sClick(); game.tutDone = false; game.tutStep = 0; game.tutT = 0; tutLast = ''; optsEl.classList.add('hid'); save(); refresh(); };
   $('optcl').onclick = function(){ au(); sClick(); optsEl.classList.add('hid'); refresh(); };
+    devMount();
 }
 
 /* ===== ОБУЧЕНИЕ ===== */
