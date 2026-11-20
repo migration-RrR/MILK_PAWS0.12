@@ -313,6 +313,7 @@ var game = {
   phase: 'title', day: 1, shift: 0, money: 50, time: 0, total: 0, served: 0, spawned: 0, spawnT: 0, nextT: 0,
   combo: 0, bestCombo: 0, blackout: 0, heavyRain: false, priceMult: 1, rush: false, evtKind: 'calm',
   view: 0,
+  shiftNo: 0, vip: false, vipServed: 0, vipSpawned: false, vipSave: null,
   dirtyGlasses: 0,
   cleanGlasses: 3,
   glassTotal: 3,
@@ -407,6 +408,21 @@ function addBurst(x, y, col, n){
   }
 }
 
+
+/* ===== ОСОБАЯ СМЕНА: МИЯ И МАО ===== */
+var VIP_EVERY = 5;      // каждая 5-я смена (день)
+var VIP_TOTAL = 20;     // сколько стаканов выпьют Мия и Мао за визит
+var VIP_PAT = 1/9;      // терпение: ~9 сек на стакан
+var VIP_DRINK = 7;      // во сколько раз быстрее пьют
+var VIPS = [
+  {id: 'mia', n: 'Мия', fn: 'Мия', by: 2022, f: '#c87a30', l: '#f5ecdd', d: '#5e3012', e: '#e4a090', eye: '#7a9a3a', nose: '#9a5a48',
+   p: 'mia', c: '#000', cd: '#000', a: 'none', ac: '#000', s: 1.2, w: 1.18, vip: 1, i: 'Мяу!', q: [],
+   r: ['Мур! Идеально!', 'Ням-ням!', 'Сойдёт!', 'Маловато!', 'Через край!'], b: 13},
+  {id: 'mao', n: 'Мао', fn: 'Мао', by: 2021, f: '#7a7a80', l: '#c4c0ba', d: '#24242a', e: '#c89090', eye: '#d9a521', nose: '#b87c7c',
+   p: 'mao', c: '#000', cd: '#000', a: 'none', ac: '#000', s: 1.2, w: 1.18, vip: 1, i: 'Мр-р!', q: [],
+   r: ['Мр-р, супер!', 'Вкусно.', 'Ладно.', 'Маловато...', 'Многовато...'], b: 13}
+];
+var VIPSAY = ['Мяу! Ещё!', 'Быстрее, быстрее!', 'Налей, налей!', 'Я хочу ещё!', 'Молока!', 'Мяу-мяу! Скорее!'];
 var KEY = 'milkpaws_v10', OLDKEY = 'milkpaws_v9';
 var TASTE = {
   prof: {k: 'prec', bonus: 8, say: ' Строго до отметки, пожалуйста.', like: 'строго до метки'},
@@ -427,7 +443,8 @@ var ACH = [
   {id: 'stars5', n: 'Пять звёзд', d: 'Закончить смену на 5 звёзд', i: '★'},
   {id: 'meetall', n: 'Все свои', d: 'Познакомиться со всеми котами', i: '🐱'},
   {id: 'petall', n: 'Гладильщик', d: 'Погладить каждого кота', i: '🐾'},
-  {id: 'rich', n: 'Копилка', d: 'Накопить 300 ◈', i: '◈'}
+  {id: 'rich', n: 'Копилка', d: 'Накопить 300 ◈', i: '◈'},
+  {id: 'vip', n: 'Друзья Мии и Мао', d: 'Напоить Мию и Мао (10+ стаканов)', i: '⭐'}
 ];
 function unlock(id){
   if(!game.ach) game.ach = {};
@@ -476,11 +493,13 @@ function steam(c){
 function save(){
   try{ chkAch(); }catch(e){}
   try{
+    var vs = (game.vip && game.phase === 'play') ? game.vipSave : null;
     localStorage.setItem(KEY, JSON.stringify({
+      shiftNo: game.shiftNo,
       day: game.day, shift: game.shift, money: game.money, total: game.total,
       rel: game.rel, upg: game.upg, snd: game.snd, bestCombo: game.bestCombo,
-      cleanGlasses: game.cleanGlasses, dirtyGlasses: game.dirtyGlasses, glassTotal: game.glassTotal,
-      milk: game.milk, milkBought: game.milkBought, ach: game.ach, tutDone: game.tutDone
+      cleanGlasses: vs ? vs.c : game.cleanGlasses, dirtyGlasses: vs ? vs.d : game.dirtyGlasses, glassTotal: game.glassTotal,
+      milk: vs ? vs.m : game.milk, milkBought: game.milkBought, ach: game.ach, tutDone: game.tutDone
     }));
   }catch(e){}
 }
@@ -502,6 +521,7 @@ function load(){
     game.glassTotal = Math.max(d.glassTotal || 3, game.cleanGlasses + game.dirtyGlasses);
     game.milk = d.milk != null ? d.milk : 1.0;
     game.milkBought = d.milkBought || 0; game.ach = d.ach || {};
+    game.shiftNo = d.shiftNo != null ? d.shiftNo : Math.max(0, (d.day || 1) - 1);
     game.tutDone = d.tutDone != null ? !!d.tutDone : ((d.total || 0) > 0 || (d.day || 1) > 1);
     return true;
   }catch(e){ return false; }
@@ -1234,7 +1254,7 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
   var sw = Math.sin(T*1.8 + c.ph) * (ser ? 5 : 9) * s, tx = bx - 18*s + sw*1.4, ty = by + bh*.18;
   X.strokeStyle = d.f; X.lineCap = 'round'; X.lineWidth = 12*s;
   X.beginPath(); X.moveTo(bx + 6*s, by + bh*.82); X.bezierCurveTo(bx - 26*s, by + bh*.8, bx - 30*s + sw, by + bh*.4, tx, ty); X.stroke();
-  X.fillStyle = (d.p === 'striped' || pts || ser) ? d.d : d.l; X.beginPath(); X.arc(tx, ty, 6*s, 0, 7); X.fill();
+  X.fillStyle = (d.p === 'striped' || pts || ser || d.vip) ? d.d : d.l; X.beginPath(); X.arc(tx, ty, 6*s, 0, 7); X.fill();
   X.lineCap = 'butt';
 
   // тело
@@ -1247,6 +1267,22 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
     for(var i=0; i<4; i++){ X.fillRect(bx + bw*.08, by + bh*(.18 + i*.18), bw*.3, 4.5*s); X.fillRect(bx + bw*.62, by + bh*(.18 + i*.18), bw*.3, 4.5*s); }
     X.globalAlpha = 1;
   }
+  if(d.vip){
+    X.save(); RR(bx, by, bw, bh, 26*s); X.clip();
+    X.fillStyle = d.d; X.globalAlpha = d.p === 'mao' ? .6 : .5;
+    for(var vi=0; vi<6; vi++){ X.fillRect(bx, by + bh*(.1 + vi*.14), bw*.3, 4.2*s); X.fillRect(bx + bw*.7, by + bh*(.1 + vi*.14), bw*.3, 4.2*s); }
+    X.globalAlpha = 1;
+    if(d.p === 'mia'){
+      X.fillStyle = d.l; X.beginPath(); X.ellipse(x, by + bh*.3, bw*.27, bh*.3, 0, 0, 7); X.fill();
+      X.beginPath(); X.ellipse(x, by + bh*.78, bw*.2, bh*.17, 0, 0, 7); X.fill();
+    }else{
+      X.fillStyle = 'rgba(190,186,180,.35)'; X.beginPath(); X.ellipse(x, by + bh*.42, bw*.24, bh*.34, 0, 0, 7); X.fill();
+      X.fillStyle = d.d; X.globalAlpha = .5;
+      for(vi=0; vi<4; vi++) X.fillRect(x - bw*.16, by + bh*(.2 + vi*.13), bw*.32, 3*s);
+      X.globalAlpha = 1;
+    }
+    X.restore();
+  }
   if(d.p === 'calico'){
     X.fillStyle = '#e5a055'; X.beginPath(); X.ellipse(bx + bw*.3, by + bh*.38, 17*s, 21*s, 0, 0, 7); X.fill();
     X.fillStyle = '#3a2e2a'; X.beginPath(); X.ellipse(bx + bw*.72, by + bh*.58, 15*s, 19*s, 0, 0, 7); X.fill();
@@ -1254,9 +1290,11 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
   RR(bx, by, bw, bh, 26*s); X.strokeStyle = OL; X.lineWidth = 1.6*s; X.stroke();
 
   // одежда
+  if(!d.vip){
   RR(bx + 8*s, by + bh*.2, bw - 16*s, bh*.52, 16*s); X.fillStyle = d.c; X.fill();
   X.strokeStyle = 'rgba(0,0,0,.35)'; X.lineWidth = 1.2*s; X.stroke();
   X.fillStyle = d.cd; X.fillRect(bx + 8*s, by + bh*.2, bw - 16*s, 4*s);
+  }
   if(ser){ X.fillStyle = 'rgba(0,0,0,.4)'; for(var k=0; k<3; k++){ X.beginPath(); X.arc(x, by + bh*(.36 + k*.1), 1.8*s, 0, 7); X.fill(); } }
 
   // реакция на оценку: счастье (прищур + мурлыканье) / испуг (прижатые уши, большие зрачки)
@@ -1264,12 +1302,30 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
 
   // уши (за головой)
   var ec = pts ? d.d : d.f, twk = (!ox && Math.sin(T*.9 + c.ph*3) > .94) ? 3*s : 0;
-  [-1, 1].forEach(function(m){
+  if(d.p !== 'mao') [-1, 1].forEach(function(m){
     var tipY = hy - (ser ? 22 : 20)*s + (m === 1 ? twk : 0) + (bad ? 15*s : 0), tipX = x + m*(hw/2 + (ser ? 0 : 3)*s + (bad ? 10*s : 0));
     X.fillStyle = ec; X.beginPath(); X.moveTo(x + m*(hw/2 - 8*s), hy + 6*s); X.lineTo(tipX, tipY); X.lineTo(x + m*(hw/2 - (ser ? 24 : 28)*s), hy + 2*s); X.closePath(); X.fill();
     X.strokeStyle = OL; X.lineWidth = 1.3*s; X.stroke();
     X.fillStyle = d.e; X.beginPath(); X.moveTo(x + m*(hw/2 - 11*s), hy + 3*s); X.lineTo(tipX - m*2*s, tipY + 7*s); X.lineTo(x + m*(hw/2 - 22*s), hy + 1*s); X.closePath(); X.fill();
   });
+
+  if(d.p === 'mia'){
+    [-1, 1].forEach(function(m){
+      var tY = hy - 20*s + (m === 1 ? twk : 0) + (bad ? 15*s : 0), tX = x + m*(hw/2 + 3*s + (bad ? 10*s : 0));
+      X.strokeStyle = '#1e1008'; X.lineWidth = 2.6*s; X.lineCap = 'round';
+      X.beginPath(); X.moveTo(tX, tY + 2*s); X.lineTo(tX + m*2.5*s, tY - 10*s); X.stroke(); X.lineCap = 'butt';
+    });
+  }
+  if(d.p === 'mao'){
+    [-1, 1].forEach(function(m){
+      var ax = x + m*(hw/2 - 6*s), ay = hy + 4*s + (bad ? 4*s : 0);
+      X.fillStyle = d.f; X.beginPath(); X.moveTo(ax - m*14*s, ay + 2*s); X.quadraticCurveTo(ax - m*8*s, ay - 15*s, ax + m*6*s, ay - 7*s);
+      X.quadraticCurveTo(ax + m*12*s, ay + 1*s, ax + m*7*s, ay + 11*s); X.lineTo(ax - m*10*s, ay + 9*s); X.closePath(); X.fill();
+      X.strokeStyle = OL; X.lineWidth = 1.3*s; X.stroke();
+      X.fillStyle = d.d; X.globalAlpha = .55; X.beginPath(); X.moveTo(ax - m*8*s, ay + 1*s); X.quadraticCurveTo(ax - m*4*s, ay - 8*s, ax + m*3*s, ay - 3*s);
+      X.lineTo(ax - m*3*s, ay + 5*s); X.closePath(); X.fill(); X.globalAlpha = 1;
+    });
+  }
 
   // голова
   var hr = ser ? 22*s : 30*s;
@@ -1294,6 +1350,24 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
     X.fillRect(hx + 2*s, hy + hh*.5, 8*s, 2*s); X.fillRect(hx + 2*s, hy + hh*.58, 7*s, 2*s);
     X.fillRect(hx + hw - 10*s, hy + hh*.5, 8*s, 2*s); X.fillRect(hx + hw - 9*s, hy + hh*.58, 7*s, 2*s);
     X.globalAlpha = 1;
+  }
+  if(d.vip){
+    X.globalAlpha = .8; X.fillStyle = d.d;
+    X.fillRect(x - 1.4*s, hy + 1*s, 2.8*s, 13*s); X.fillRect(x - 8*s, hy + 1*s, 2.4*s, 10*s); X.fillRect(x + 5.6*s, hy + 1*s, 2.4*s, 10*s);
+    X.fillRect(x - 14*s, hy + 3*s, 2*s, 7*s); X.fillRect(x + 12*s, hy + 3*s, 2*s, 7*s);
+    X.fillRect(hx + 2*s, hy + hh*.5, 9*s, 2*s); X.fillRect(hx + 2*s, hy + hh*.58, 8*s, 2*s);
+    X.fillRect(hx + hw - 11*s, hy + hh*.5, 9*s, 2*s); X.fillRect(hx + hw - 10*s, hy + hh*.58, 8*s, 2*s);
+    X.globalAlpha = 1;
+    if(d.p === 'mia'){
+      X.fillStyle = '#f6eee2';
+      X.beginPath(); X.ellipse(x, mzY + 3*s, 14*s, 10*s, 0, 0, 7); X.fill();
+      X.beginPath(); X.ellipse(x - 9*s, mzY, 8*s, 7*s, 0, 0, 7); X.fill();
+      X.beginPath(); X.ellipse(x + 9*s, mzY, 8*s, 7*s, 0, 0, 7); X.fill();
+    }else{
+      X.fillStyle = 'rgba(205,200,195,.6)';
+      X.beginPath(); X.ellipse(x - 8*s, mzY, 8*s, 7*s, 0, 0, 7); X.fill();
+      X.beginPath(); X.ellipse(x + 8*s, mzY, 8*s, 7*s, 0, 0, 7); X.fill();
+    }
   }
   if(d.p === 'calico'){
     X.fillStyle = '#e5a055'; X.beginPath(); X.ellipse(hx + hw*.26, hy + hh*.28, 13*s, 11*s, 0, 0, 7); X.fill();
@@ -1358,7 +1432,7 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
     X.beginPath(); X.ellipse(x - 6*s, hy + hh*.7, 6*s, 3*s, -.2, 0, 7); X.fill();
     X.beginPath(); X.ellipse(x + 6*s, hy + hh*.7, 6*s, 3*s, .2, 0, 7); X.fill(); X.globalAlpha = 1;
   }
-  X.strokeStyle = catLum(d.f) < 90 ? 'rgba(235,230,220,.5)' : 'rgba(90,65,48,.55)'; X.lineWidth = 1*s;
+  X.strokeStyle = (catLum(d.f) < 90 || d.vip) ? 'rgba(240,236,226,.7)' : 'rgba(90,65,48,.55)'; X.lineWidth = 1*s;
   [-1, 1].forEach(function(m){
     for(var k=0; k<(ser ? 2 : 3); k++){ X.beginPath(); X.moveTo(x + m*9*s, hy + hh*(.66 + k*.05)); X.lineTo(x + m*(25 + k*1.5)*s, hy + hh*(.6 + k*.09)); X.stroke(); }
   });
@@ -1396,6 +1470,11 @@ function drawCat(c, overrideCtx, ox, oy, scMult){
     X.fillStyle = 'rgba(10,7,5,.8)'; X.beginPath(); X.roundRect(px - 2, py - 2, pw + 4, 8, 3); X.fill();
     X.fillStyle = c.pat > .5 ? '#78c878' : (c.pat > .25 ? '#e0a040' : '#e06060');
     X.beginPath(); X.roundRect(px, py, pw * Math.max(0, c.pat), 4, 1.5); X.fill();
+  }
+  if(!ox && d.vip && c.state !== 'leaving'){
+    X.font = 'bold 10px "Courier New",monospace'; X.textAlign = 'center'; X.textBaseline = 'middle';
+    X.fillStyle = 'rgba(10,7,5,.8)'; X.fillRect(x - 28, hy - 52, 56, 12);
+    X.fillStyle = '#ffd870'; X.fillText('⭐ ' + d.n.toUpperCase(), x, hy - 46);
   }
   if(!ox && c.critic && c.state !== 'leaving'){
     X.font = 'bold 10px "Courier New",monospace'; X.textAlign = 'center'; X.textBaseline = 'middle';
@@ -1626,7 +1705,7 @@ function updateHud(){
   var ord = (a && a.state === 'active' && !g.serving) ?
     (g.orderType === 'aged' ? 'Выдержанное 18+' : (g.orderType === 'foam' ? 'Молоко с пенкой' : 'Молоко')) + ' до ' + Math.round(g.target*100) + '%' +
     (g.needsSnack ? ' + ' + (g.needsSnack === 'fish' ? 'рыбка' : 'печенье') : '') + (g.taste ? ' ♥' : '') : '';
-  var key = [v, milkP, game.cleanGlasses, game.dirtyGlasses, hint, game.served, ord, game.wash.active ? 1 : 0, NSHIFT].join('|');
+  var key = [v, milkP, game.cleanGlasses, game.dirtyGlasses, hint, game.served, ord, game.wash.active ? 1 : 0, NSHIFT, game.vip ? 1 : 0].join('|');
   if(key === hudKey) return;
   hudKey = key;
   hudEl.style.display = 'flex';
@@ -1635,9 +1714,9 @@ function updateHud(){
   $('navR').textContent = r ? r + ' ▶' : ''; $('navR').style.visibility = r ? 'visible' : 'hidden';
   $('hroom').textContent = ROOMS[v];
   $('hchips').innerHTML =
-    '<div class="bd' + (milkP < 20 ? ' warn' : '') + '">🥛<span class="mbar"><u style="width:' + milkP + '%"></u></span><b>' + milkP + '%</b></div>' +
-    '<div class="bd' + (game.cleanGlasses <= 0 ? ' warn' : '') + '">чистых <b>' + game.cleanGlasses + '</b> · грязных <b>' + game.dirtyGlasses + '</b></div>' +
-    '<div class="bd">гостей <b>' + game.served + '/' + NSHIFT + '</b></div>' +
+    '<div class="bd' + (milkP < 20 ? ' warn' : '') + '">🥛<span class="mbar"><u style="width:' + milkP + '%"></u></span><b>' + (game.vip ? '∞' : milkP + '%') + '</b></div>' +
+    '<div class="bd' + (game.cleanGlasses <= 0 ? ' warn' : '') + '">' + (game.vip ? 'стаканы <b>∞</b>' : 'чистых <b>' + game.cleanGlasses + '</b> · грязных <b>' + game.dirtyGlasses + '</b>') + '</div>' +
+    '<div class="bd">гостей <b>' + game.served + '/' + (game.vip ? VIP_TOTAL : NSHIFT) + '</b></div>' +
     (ord ? '<div class="bd ord">Заказ: <b>' + ord + '</b></div>' : '');
   hintEl.textContent = hint; hintEl.style.display = hint ? 'block' : 'none';
 }
@@ -1859,6 +1938,7 @@ function triggerRandomEvent(){
 
 function startShift(){
   var st = game.st;
+  game.vip = !!game.tutDone && ((game.shiftNo || 0) + 1) % VIP_EVERY === 0; game.vipServed = 0; game.vipSpawned = false; game.vipSave = null;
   st.serve = 0; st.happy = 0; st.perf = 0; st.tips = 0; st.acc = 0; st.err = 0; st.m0 = game.money; st.earn = 0; st.spent = 0; st.fines = 0; st.bc = 0;
   game.cats = []; game.active = null; game.dlg = null; dlgEl.style.display = 'none'; passEl.style.display = 'none';
   game.served = 0; game.spawned = 0; game.nextT = .5; game.spawnT = 1.0; game.priceMult = 1; game.canShift = 0; game.police = null;
@@ -1867,15 +1947,35 @@ function startShift(){
   // стаканы, оставшиеся в руках у прошлых гостей, возвращаются на полку
   game.cleanGlasses = Math.max(game.cleanGlasses, game.glassTotal - game.dirtyGlasses);
   resetGlass(); game.phase = 'play'; sumEl.classList.add('hid'); shopEl.classList.add('hid'); bookEl.classList.add('hid'); optsEl.classList.add('hid');
-  triggerRandomEvent();
+  if(game.vip) vipStart(); else triggerRandomEvent();
   // защита от тупика: пустой бочонок и нет денег на бидон
-  if(game.milk < .12 && game.money < milkPrice() && !game.warehouseCan){
+  if(!game.vip && game.milk < .12 && game.money < milkPrice() && !game.warehouseCan){
     game.milk = Math.min(1, game.milk + .4);
     showEvent('Поставщик в долг оставил немного молока. Береги запасы!');
   }
   topBar(); refresh();
 }
 
+function vipStart(){
+  game.evtKind = 'calm'; game.heavyRain = false; game.rush = false; game.priceMult = 1; game.blackout = 0; NSHIFT = 6;
+  game.vipSave = {c: game.cleanGlasses, d: game.dirtyGlasses, m: game.milk};
+  game.spawnT = 1.2;
+  showEvent('⭐ Пришли МИЯ и МАО! Молоко и стаканы бесконечные — наливай быстро и точно!');
+}
+function vipSpawn(){
+  game.vipSpawned = true;
+  VIPS.forEach(function(d, i){
+    var slot = i ? 2 : 0;
+    rel(d.id).visits++;
+    game.cats.push({
+      d: d, slot: slot, x: i ? W + 90 : -90, tx: i ? 258 : 84, state: 'entering',
+      bub: '', bt: 0, cup: 0, cup0: 0, cupFoam: 0, cyc: 0, lift: 0, tilt: 0,
+      sip: false, sit: 0, stache: 0, purr: 0, pat: 1, res: 0, talk: false, react: 0, rr: 0,
+      ph: Math.random()*6, isSpecial: false, gotSnack: false, critic: false, vip: true
+    });
+  });
+  sStep(); tone(660, .1, 'triangle'); tone(880, .14, 'triangle');
+}
 function spawn(){
   var used = game.cats.filter(function(c){ return c.state !== 'leaving'; }).map(function(c){ return c.slot; });
   var free = [0, 1, 2].filter(function(i){ return used.indexOf(i) === -1; });
@@ -1900,13 +2000,15 @@ function activate(c){
   var g = game.glass; game.active = c; c.state = 'active'; resetGlass();
   var oType = 'normal';
   var r = Math.random();
-  if((game.day > 1 || game.shift >= 1) && r < .26) oType = 'aged';
+  if(c.vip) oType = 'normal';
+  else if((game.day > 1 || game.shift >= 1) && r < .26) oType = 'aged';
   else if(game.upg.foam > 0 && r > .68) oType = 'foam';
 
   g.orderType = oType;
   g.target = oType === 'foam' ? (.48 + Math.random()*.22) : (.52 + Math.random()*.32);
 
   var intro = c.d.i;
+  if(c.vip) intro = VIPSAY[Math.floor(Math.random() * VIPSAY.length)];
   if(c.critic) intro = 'Я кошачий критик. Оценю ваш налив. ' + intro;
   if(oType === 'aged'){
     g.needsDoc = true; g.docData = makeDocData(c);
@@ -1923,7 +2025,7 @@ function activate(c){
     }
   }
 
-  if(game.upg.snacks > 0 && Math.random() < .45){
+  if(!c.vip && game.upg.snacks > 0 && Math.random() < .45){
     g.needsSnack = Math.random() < .5 ? 'fish' : 'cookie';
     intro += g.needsSnack === 'fish' ? ' И рыбный снек!' : ' И печеньку!';
   }
@@ -2005,7 +2107,7 @@ function serve(){
   st.bc = Math.max(st.bc, game.combo);
 
   game.money = Math.max(0, game.money + basePay);
-  st.serve++; game.total++; game.served++; st.acc += Math.max(0, 1 - diff*4);
+  st.serve++; game.total++; game.served++; if(game.vip) game.vipServed++; st.acc += Math.max(0, 1 - diff*4);
   if(r < 2) st.happy++;
   if(r === 0) st.perf++;
   if(r > 2) st.err++;
@@ -2039,11 +2141,11 @@ function afterServe(){
   c.react = 2.6; c.rr = c.res;
   if(c.res === 0){ c.purr = 2; sPurr(); }
   game.shift = Math.min(3, game.served);
-  resetGlass(); game.active = null; game.nextT = .8; refresh();
+  resetGlass(); game.active = null; game.nextT = game.vip ? .2 : .8; refresh();
 }
 
 function leave(c, angry){
-  if(angry){ game.combo = 0; addFloat(c.x, 230, 'Ушёл не дождавшись...', '#e06060'); topBar(); }
+  if(angry){ game.combo = 0; addFloat(c.x, 230, 'Ушёл не дождавшись...', '#e06060'); topBar(); if(c.vip) game.vipServed = Math.max(game.vipServed, VIP_TOTAL); }
   c.state = 'leaving'; c.out = c.x < W/2 ? -1 : 1; c.bub = angry ? 'Слишком долго...' : (c.bub || ''); c.bt = angry ? 1.5 : (c.bt || 0);
   if(game.active === c){
     if(game.glass.placed && !game.glass.serving) game.cleanGlasses++;
@@ -2098,13 +2200,16 @@ var RATE = ['', 'Тяжёлая смена', 'Неплохо', 'Хорошая �
 
 function endShift(){
   game.phase = 'summary'; refresh();
+  game.shiftNo = (game.shiftNo || 0) + 1;
+  if(game.vip && game.vipSave){ game.cleanGlasses = game.vipSave.c; game.dirtyGlasses = game.vipSave.d; game.milk = game.vipSave.m; game.vipSave = null; }
   var s = game.st, e = game.money - s.m0, acc = s.serve ? Math.round(s.acc / s.serve * 100) : 0;
   var stars = starsFor(s);
   if(stars >= 5) unlock('stars5');
+  if(game.vip && s.serve >= 10) unlock('vip');
   sumEl.classList.remove('hid');
   var rows = [
-    ['Смена', dayLabel() + ' · ' + SN[game.shift]],
-    ['Обслужено', s.serve + '/' + NSHIFT],
+    ['Смена', game.vip ? '⭐ Мия и Мао' : dayLabel() + ' · ' + SN[game.shift]],
+    ['Обслужено', s.serve + '/' + (game.vip ? VIP_TOTAL : NSHIFT)],
     ['Заработано', '+' + s.earn + ' ◈'],
     ['Закупки (молоко, стаканы)', '−' + s.spent + ' ◈'],
     ['Штрафы', '−' + s.fines + ' ◈'],
@@ -2297,7 +2402,7 @@ function showTitle(){
   titleEl.innerHTML = '<div class="logo">MILK &amp;<br>PAWS</div><div class="sub">УЮТНЫЙ БАР В МИРЕ КОТОВ</div>' + (hasSave() ? '<button class="bt p" id="co">ПРОДОЛЖИТЬ</button>' : '') + '<button class="bt" id="nw">НОВАЯ ИГРА</button>';
   $('nw').onclick = function(){
     au(); sClick(); try{ localStorage.removeItem(KEY); localStorage.removeItem(OLDKEY); }catch(e){}
-    game.day = 1; game.shift = 0; game.money = 50; game.total = 0; game.rel = {}; game.combo = 0; game.bestCombo = 0;
+    game.day = 1; game.shift = 0; game.money = 50; game.total = 0; game.rel = {}; game.combo = 0; game.bestCombo = 0; game.shiftNo = 0;
     game.ach = {}; game.cleanGlasses = 3; game.dirtyGlasses = 0; game.glassTotal = 3; game.milk = 1.0; game.milkBought = 0; game.warehouseCan = false; game.pouringCan = 0;
     game.tutDone = false; game.tutStep = 0; game.tutT = 0; tutLast = '';
     game.upg = {nozzle:0, barrel:0, jukebox:0, snacks:0, foam:0, decor:0, sink:0};
@@ -2439,6 +2544,7 @@ cv.addEventListener('pointercancel', function(){
 
 function update(dt){
   game.time += dt;
+  if(game.vip && game.phase === 'play'){ game.milk = 1; game.cleanGlasses = game.glassTotal; game.dirtyGlasses = 0; }
   if(evtT > 0){ evtT -= dt; if(evtT <= 0) $('evt').style.display = 'none'; }
   if(game.blackout > 0) game.blackout -= dt;
   if(game.jarT > 0) game.jarT -= dt;
@@ -2467,7 +2573,7 @@ function update(dt){
   game.floats = game.floats.filter(function(f){ return f.t > 0; });
 
   if(fadeT > 0) fadeT -= dt;
-  var skT = Math.min(1, Math.max(0, (game.spawned - 1 + (game.active ? 0.5 : 0)) / NSHIFT));
+  var skT = game.vip ? Math.min(1, game.vipServed / VIP_TOTAL) : Math.min(1, Math.max(0, (game.spawned - 1 + (game.active ? 0.5 : 0)) / NSHIFT));
   if(skyP === null) skyP = skT; else skyP += (skT - skyP) * Math.min(1, dt * 0.4);
   // плавная гирлянда: включается по вечернему небу, с декором горит всегда
   var garT = game.upg.decor > 0 ? 1 : Math.max(0, Math.min(1, ((skyP || 0) - .3) / .25));
@@ -2484,6 +2590,7 @@ function update(dt){
 
   for(var i=0; i<game.cats.length; i++){
     var c = game.cats[i];
+    if(c.vip && c.state === 'waiting' && game.vipServed >= VIP_TOTAL) leave(c, false);
     if(c.purr > 0) c.purr -= dt;
     if(c.react > 0) c.react -= dt;
     if(c.state === 'entering'){
@@ -2492,13 +2599,14 @@ function update(dt){
     }else if(c.state === 'leaving'){
       c.x += c.out * 115 * dt;
     }else if((c.state === 'waiting' || c.state === 'active') && !c.talk && !g.serving && passEl.style.display !== 'block'){
-      c.pat -= patDrain * dt;
+      c.pat -= (c.vip ? VIP_PAT : patDrain) * dt;
       if(c.pat <= 0) leave(c, true);
     }else if((c.state === 'drinking' || c.state === 'sitting') && !c.talk){
       if(c.state === 'drinking'){
-        c.cyc += dt; var sip = c.cyc > .6 && c.cyc < 1.7;
+        var vk = c.vip ? VIP_DRINK : 1;
+        c.cyc += dt * vk; var sip = c.cyc > .6 && c.cyc < 1.7;
         if(sip){
-          c.cup = Math.max(0, c.cup - c.cup0 / 4.4 * dt);
+          c.cup = Math.max(0, c.cup - c.cup0 / 4.4 * dt * vk);
           c.cupFoam = Math.max(0, (c.cupFoam || 0) - .12 * dt);
           if(!c.sip) c.sip = true;
         }else if(c.sip){
@@ -2510,8 +2618,9 @@ function update(dt){
         if(c.cyc >= 2.8){
           c.cyc = 0;
           if(c.cup <= .005){
-            c.cup = 0; c.cupFoam = 0; c.state = 'sitting'; c.sit = 6 + Math.random()*6;
-            game.dirtyGlasses++;
+            c.cup = 0; c.cupFoam = 0;
+            if(c.vip && game.vipServed < VIP_TOTAL){ c.state = 'waiting'; c.pat = 1; c.sip = false; c.lift = 0; c.tilt = 0; c.bub = ''; c.bt = 0; }
+            else{ c.state = 'sitting'; c.sit = c.vip ? 1.0 : 6 + Math.random()*6; if(!c.vip) game.dirtyGlasses++; }
           }
         }
       }else{
@@ -2530,14 +2639,16 @@ function update(dt){
   if(game.phase === 'play'){
     game.nextT -= dt;
     if(!game.active && !g.serving && game.nextT <= 0){
-      var w = game.cats.filter(function(c){ return c.state === 'waiting'; })[0];
+      var ws = game.cats.filter(function(c){ return c.state === 'waiting'; }), w = ws[0];
+      if(game.vip){ for(var wi=1; wi<ws.length; wi++){ if(ws[wi].pat < w.pat) w = ws[wi]; } }
       if(w) activate(w);
     }
     game.spawnT -= dt;
-    if(game.spawned < NSHIFT && game.spawnT <= 0){
+    if(game.vip){ if(!game.vipSpawned && game.spawnT <= 0) vipSpawn(); }
+    else if(game.spawned < NSHIFT && game.spawnT <= 0){
       game.spawnT = spawn() ? (game.rush ? 7.0 + Math.random()*4.0 : 14.0 + Math.random()*8.0) : 3.0;
     }
-    if(game.spawned >= NSHIFT && game.cats.length === 0 && !game.active && !game.dlg && !game.wash.active && !game.drag.active) endShift();
+    if((game.vip ? game.vipSpawned : game.spawned >= NSHIFT) && game.cats.length === 0 && !game.active && !game.dlg && !game.wash.active && !game.drag.active) endShift();
   }
 
   var baseSpeed = .62 * (1 - game.upg.nozzle * .08) * (g.riskMode ? 1.28 : 1);
