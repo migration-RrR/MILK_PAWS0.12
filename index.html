@@ -219,11 +219,35 @@ canvas{display:block;width:100%;height:100%}
 #hmL{left:.8em}#hmR{right:.8em}
 #hmovehint{position:absolute;left:50%;bottom:1.2em;transform:translateX(-50%);padding:.45em .8em;border-radius:1em;background:rgba(20,13,8,.58);color:#d8c6a5;font-size:.72em;white-space:nowrap;pointer-events:none;opacity:.72}
 #hact{position:absolute;left:50%;bottom:2.3em;transform:translateX(-50%);min-width:14em;max-width:20em;font-size:1.1em;display:none;padding:.7em .8em}
+#hpanel{position:absolute;left:0;right:0;bottom:0;height:21%;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;pointer-events:none;padding:0 .8em;box-sizing:border-box}
+#hactw{height:3.4em;display:flex;align-items:center;justify-content:center;width:100%}
+#hpanel #hact{position:static;transform:none;pointer-events:auto;min-width:14em;max-width:100%;font-size:1.05em;padding:.55em .8em}
+#hnav{display:flex;align-items:center;gap:1.2em;pointer-events:auto}
+.hnb{width:3.8em;height:2.6em;font:bold 1.3em 'Courier New',monospace;color:#ffd890;background:linear-gradient(#3a2a1a,#241810);border:2px solid #7a5530;border-radius:.4em;box-shadow:0 3px 0 #0a0705;cursor:pointer}
+.hnb:active{transform:translateY(2px)}
+#hdots{display:flex;gap:.55em}#hdots i{width:.8em;height:.8em;border-radius:50%;background:#4a3a28;border:1px solid #7a5530;display:block}#hdots i.on{background:#ffd890}
+#hpanel #hmovehint{position:static;transform:none}
 #hmenu{position:absolute;inset:0;display:none;align-items:flex-end;justify-content:stretch;background:rgba(8,5,3,.42);padding:0 .8em 1em;z-index:30}
 #hmenu .box{width:100%;background:linear-gradient(#211911,#15100c);border:2px solid #7a5530;border-radius:2px;padding:1em;box-shadow:0 0 0 3px #0a0705;animation:rise .18s ease-out}
 #hmenu .nm{color:#c87838;font-size:1.2em;font-weight:bold;letter-spacing:2px;margin-bottom:.4em}
 #hmenu .tx{color:#f0e8d0;font-size:1.22em;line-height:1.35;margin-bottom:.6em}
 #hmenu .bt{display:block;width:100%;margin-top:.45em;font-size:1.12em;padding:.55em .8em;text-align:left;letter-spacing:0}
+
+/* ===== дом v5: верхняя панель и нижняя панель ===== */
+#hneeds{top:4.3em;left:.7em;right:.7em;width:auto;display:flex;gap:.35em;padding:.3em;background:linear-gradient(#2c1d10,#150d08);border:1px solid #d8b068;outline:1px solid rgba(216,176,104,.28);outline-offset:-3px;border-radius:3px;box-shadow:0 2px 0 #0a0705,inset 0 0 10px rgba(0,0,0,.55)}
+#hneeds .nrow{flex:1;flex-direction:column;align-items:stretch;margin:0;gap:.12em;padding:.1em .2em;font-size:.82em}
+#hneeds .nrow span{text-align:center;font-size:1.25em;line-height:1.1}
+#hneeds .nrow b{width:auto;text-align:center;font-size:.72em;letter-spacing:.5px;color:#e8d4a8}
+#hneeds .nbar{height:.7em;border-radius:2px;background:#0b0603;border:1px solid #6a4528;overflow:hidden}
+#hdream{top:8.1em;left:.7em;right:.7em;width:auto;display:flex;align-items:center;gap:.6em;padding:.28em .6em;background:linear-gradient(#2c1d10,#150d08);border:1px solid #d8b068;outline:1px solid rgba(216,176,104,.28);outline-offset:-3px;border-radius:3px;box-shadow:0 2px 0 #0a0705,inset 0 0 10px rgba(0,0,0,.55)}
+#hdream>div:nth-child(2){display:none}
+#hdream .nbar{flex:1;margin:0!important;height:.7em;border-radius:2px;overflow:hidden}
+#hdream>div{white-space:nowrap}
+#hroomlbl{top:17.6%;padding:.18em 1.1em;font:bold .95em Georgia,'Times New Roman',serif;letter-spacing:3px;color:#fff0c8;background:linear-gradient(#7a4a1e,#4a2c12);border:1px solid #e0b060;border-radius:2px;box-shadow:0 2px 0 #1a0f07,0 0 0 2px rgba(26,15,7,.8)}
+#hpanel #hact{min-width:16em;font-size:1.1em;padding:.6em 1em;background:linear-gradient(#c8803a,#8a4e1c);border:2px solid #f0c070;border-bottom-width:4px;color:#fff6dc;text-shadow:0 1px 0 #3a2008;letter-spacing:1px;border-radius:.4em}
+.hnb{width:4.6em;height:3em;font-size:1.25em;color:#2a1608;background:linear-gradient(#e0b060,#a8763e);border:2px solid #f6d890;border-radius:.55em;box-shadow:inset 0 1px 0 rgba(255,245,210,.6),0 3px 0 #1a0f07}
+#hdots{gap:.7em}#hdots i{width:.95em;height:.95em;background:#2a1a0e;border:2px solid #a8763e}#hdots i.on{background:#ffd890;border-color:#fff0c0;box-shadow:0 0 6px rgba(255,216,144,.7)}
+#hpanel #hmovehint{font-size:.7em;color:#c8b088;background:none;opacity:.8}
 </style></head><body><div id="w"><canvas id="g"></canvas>
 <div id="ui">
 <div id="top"></div>
@@ -269,7 +293,7 @@ resize();
 
 var UPGRADES = [
   {id: 'nozzle', n: 'Точный кран', d: 'Замедляет налив, уменьшает инерцию струи и расширяет зону идеала.', cost: [80, 180, 350], max: 3},
-  {id: 'barrel', n: 'Дубовый бочонок+', d: 'Премиальный бочонок с латунью: +6 к базовой цене каждого стакана.', cost: [120, 280], max: 2},
+  {id: 'barrel', n: 'Дубовый бочонок+', d: 'Бочонок растёт с каждым уровнем: +30% молока (реже бегать на склад) и +6 ◈ к цене стакана.', cost: [120, 280, 520], max: 3},
   {id: 'jukebox', n: 'Ретро-патефон', d: 'Коты терпеливее на 25% и оставляют больше чаевых.', cost: [100, 220, 400], max: 3},
   {id: 'snacks', n: 'Поднос с закусками', d: 'Открывает печенье и рыбные снеки (+8 за выдачу закуски к заказу).', cost: [90, 200], max: 2},
   {id: 'foam', n: 'Венчик для пенки', d: 'Открывает заказы с молочной пенкой (+8 за порцию).', cost: [110], max: 1},
@@ -696,7 +720,7 @@ function save(){
       rel: game.rel, upg: game.upg, snd: game.snd, bestCombo: game.bestCombo,
       cleanGlasses: vs ? vs.c : game.cleanGlasses, dirtyGlasses: vs ? vs.d : game.dirtyGlasses, glassTotal: game.glassTotal,
       milk: vs ? vs.m : game.milk, milkBought: game.milkBought, ach: game.ach, tutDone: game.tutDone, stock: game.stock,
-      needs: game.needs, clock: game.clock, outfit: game.outfit, owned: game.owned, homeReady: game.homeReady, pendingHome: game.pendingHome, atHome: game.phase === 'home', lastEarn: game.lastEarn
+      needs: game.needs, clock: game.clock, outfit: game.outfit, owned: game.owned, food: game.food, subUntil: game.subUntil, homeReady: game.homeReady, pendingHome: game.pendingHome, atHome: game.phase === 'home', lastEarn: game.lastEarn
     }));
   }catch(e){}
 }
@@ -712,7 +736,7 @@ function load(){
     game.rel = d.rel || {};
     game.upg = Object.assign({nozzle:0, barrel:0, jukebox:0, snacks:0, foam:0, decor:0, sink:0, temp:0, spice:0, steamer:0, dispenser:0}, d.upg || {});
     game.stock = Object.assign({cinnamon: 0, honey: 0}, d.stock || {}); if(!d.stock && game.upg.spice > 0) game.stock = {cinnamon: 10, honey: 10};
-    game.needs = Object.assign({hunger: 20, thirst: 20, fatigue: 15}, d.needs || {}); game.clock = d.clock != null ? d.clock : 10 * 60; game.outfit = d.outfit || 0; game.owned = d.owned || {};
+    game.needs = Object.assign({hunger: 20, thirst: 20, fatigue: 15, dirt: 10}, d.needs || {}); game.clock = d.clock != null ? d.clock : 10 * 60; game.outfit = d.outfit || 0; game.owned = d.owned || {}; game.food = d.food || {fish: 2, cheese: 2, yogurt: 2}; game.subUntil = d.subUntil || 0;
     game.homeReady = d.homeReady != null ? d.homeReady : true; game.pendingHome = !!d.pendingHome; game.atHomeSaved = !!d.atHome; game.lastEarn = d.lastEarn || 0;
     game.snd = Object.assign({sfx:.7, bgm:.45, muted:false}, d.snd || {});
     game.bestCombo = d.bestCombo || 0;
@@ -1756,6 +1780,7 @@ function counterBar(){
 }
 
 function barrel(){
+  var _bs = 1 + .1 * game.upg.barrel; ctx.save(); ctx.translate(338, 464); ctx.scale(_bs, _bs); ctx.translate(-338, -464);
   var bx = 276, by = 326, bw = 124, bh = 138;
   ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.beginPath(); ctx.ellipse(bx+bw/2, by+bh+1, bw*.56, 9, 0, 0, 7); ctx.fill();
   var isPrem = game.upg.barrel > 0;
@@ -1786,6 +1811,7 @@ function barrel(){
   }
   ctx.strokeStyle = '#8a6838'; ctx.lineWidth = 1.2; ctx.strokeRect(gx, gy, gw, gh);
 
+  ctx.restore();
   var nzCol = game.upg.nozzle > 0 ? '#c89850' : '#5a5448';
   ctx.fillStyle = nzCol; ctx.fillRect(NX-4, 372, bx-NX+10, 8); ctx.fillRect(NX-4, 372, 8, 30);
   ctx.fillStyle = '#8c382c'; ctx.fillRect(NX+22, 366, 12, 3.5); ctx.fillRect(NX+27, 366, 2.5, 7);
@@ -3188,6 +3214,7 @@ function endShift(){
   if(game.vip && game.vipSave){ game.cleanGlasses = game.vipSave.c; game.dirtyGlasses = game.vipSave.d; game.milk = game.vipSave.m; game.vipSave = null; }
   var s = game.st, e = game.money - s.m0, acc = s.serve ? Math.round(s.acc / s.serve * 100) : 0;
   var gr = 0; (game.goals || []).forEach(function(g){ if(goalDone(g, true)) gr += g.r; });
+  var nb = (game.shift >= 3 && !game.vip) ? 25 : 0; if(nb){ game.money += nb; s.earn += nb; e += nb; }
   if(gr){ game.money += gr; s.earn += gr; e += gr; }
   var stars = starsFor(s);
   if(stars >= 5) unlock('stars5');
@@ -3206,7 +3233,7 @@ function endShift(){
     ['Идеальных / лучшее комбо', s.perf + ' / x' + s.bc],
     ['Ошибок', s.err],
     ['Награда за цели', '+' + gr + ' ◈']
-  ];
+  ].concat(nb ? [['Ночная надбавка', '+' + nb + ' ◈']] : []);
   var rowsHtml = '';
   for(var i=0; i<rows.length; i++){
     rowsHtml += '<div class="row"><span>' + rows[i][0] + '</span><b>' + rows[i][1] + '</b></div>';
@@ -3253,7 +3280,7 @@ function openShop(){
   var gMax = game.glassTotal >= 12, gp = glassPrice();
   html += '<div class="scard wide' + (shopFlash === 'glass' ? ' flash' : '') + '"><div class="sn">🥛 Набор стаканов (+2)</div><div class="sd">Всего стаканов: ' + game.glassTotal + '/13. Чем их больше, тем реже нужно бегать на кухню.</div>' +
     (gMax ? '<button class="sbtn" disabled>МАКСИМУМ</button>' : '<button class="sbtn" id="glbuy" ' + (game.money < gp ? 'disabled' : '') + '>КУПИТЬ · ' + gp + ' ◈</button>' + (game.money < gp ? '<div class="need">не хватает ' + (gp - game.money) + ' ◈</div>' : '')) + '</div>';
-  html += '</div><div style="padding:0 .8em .8em"><button class="bt p" id="shdone" style="width:100%;margin:0;display:block">🚗 ДОМОЙ</button></div></div>';
+  html += '</div><div style="padding:0 .8em .8em"><button class="bt" id="gostore" style="width:100%;margin:0 0 .5em;display:block">🛍 МАГАЗИН ЕДЫ И ОДЕЖДЫ</button><button class="bt p" id="shdone" style="width:100%;margin:0;display:block">🚗 ДОМОЙ</button></div></div>';
   shopEl.innerHTML = html; shopFlash = '';
   var cvs = shopEl.querySelectorAll('canvas.sico');
   for(var i=0; i<cvs.length; i++) drawIcon(cvs[i], cvs[i].getAttribute('data-ic'), parseInt(cvs[i].getAttribute('data-lv'), 10) || 0);
@@ -3284,6 +3311,27 @@ function openShop(){
   }
   var gb = $('glbuy');
   if(gb) gb.onclick = function(){ au(); if(buyGlass()){ shopFlash = 'glass'; openShop(); } };
+  $('gostore').onclick = function(){ au(); sClick(); openStore(); };
+  $('shdone').onclick = function(){ au(); sClick(); leaveBar(); };
+}
+
+var FOODS = [{id: 'fish', ic: '🐟', n: 'Рыбка', p: 18, d: 'Для жарки и рецептов.'}, {id: 'cheese', ic: '🧀', n: 'Сыр', p: 14, d: 'Для бутербродов и запеканки.'}, {id: 'yogurt', ic: '🥣', n: 'Йогурт', p: 10, d: 'Быстрый перекус.'}];
+var RBP = 80;
+function openStore(){
+  sumEl.classList.add('hid'); shopEl.classList.remove('hid'); homeInit();
+  var F = game.food, h = '<div class="box shbox"><div class="awn"></div><div class="shhd"><div class="st">ЕДА И ОДЕЖДА</div><div class="shmon">◈ ' + game.money + '</div></div><div class="shgrid">';
+  OUTFITS.forEach(function(o, i){ if(!o.p) return; var own = !!game.owned['o' + i];
+    h += '<div class="scard' + (own ? ' own max' : '') + '">' + (own ? '<div class="badge">✔ КУПЛЕНО</div>' : '') + '<div style="height:30px;border-radius:6px;background:' + o.c + ';border-bottom:6px solid ' + o.d + '"></div><div class="sn">👕 ' + o.n + '</div>' + (own ? '<button class="sbtn" disabled>В ШКАФУ</button>' : '<button class="sbtn" data-o="' + i + '" ' + (game.money < o.p ? 'disabled' : '') + '>КУПИТЬ · ' + o.p + ' ◈</button>') + '</div>'; });
+  FOODS.forEach(function(f){ h += '<div class="scard"><div class="sn">' + f.ic + ' ' + f.n + ' ×3</div><div class="sd">В запасе: ' + (F[f.id] || 0) + '. ' + f.d + '</div><button class="sbtn" data-f="' + f.id + '" ' + (game.money < f.p * 3 ? 'disabled' : '') + '>КУПИТЬ · ' + f.p * 3 + ' ◈</button></div>'; });
+  var rb = !!game.owned.rbook;
+  h += '<div class="scard wide' + (rb ? ' own max' : '') + '"><div class="sn">📖 Книга рецептов</div><div class="sd">Открывается в холодильнике: готовь сытные блюда из продуктов.</div>' + (rb ? '<button class="sbtn" disabled>КУПЛЕНО</button>' : '<button class="sbtn" data-r="1" ' + (game.money < RBP ? 'disabled' : '') + '>КУПИТЬ · ' + RBP + ' ◈</button>') + '</div>';
+  h += '</div><div style="padding:0 .8em .8em"><button class="bt" id="stback" style="width:100%;margin:0 0 .5em;display:block">← ЛАВКА БАРА</button><button class="bt p" id="shdone" style="width:100%;margin:0;display:block">🚗 ДОМОЙ</button></div></div>';
+  shopEl.innerHTML = h;
+  function buy(price, fn){ if(game.money < price) return; au(); tone(960, .12, 'triangle'); game.money -= price; fn(); save(); topBar(); openStore(); }
+  shopEl.querySelectorAll('[data-o]').forEach(function(b){ b.onclick = function(){ var i = +b.getAttribute('data-o'); buy(OUTFITS[i].p, function(){ game.owned['o' + i] = 1; game.outfit = i; }); }; });
+  shopEl.querySelectorAll('[data-f]').forEach(function(b){ b.onclick = function(){ var id = b.getAttribute('data-f'), f = FOODS.filter(function(x){ return x.id === id; })[0]; buy(f.p * 3, function(){ F[id] = (F[id] || 0) + 3; }); }; });
+  shopEl.querySelectorAll('[data-r]').forEach(function(b){ b.onclick = function(){ buy(RBP, function(){ game.owned.rbook = 1; }); }; });
+  $('stback').onclick = function(){ au(); sClick(); openShop(); };
   $('shdone').onclick = function(){ au(); sClick(); leaveBar(); };
 }
 
@@ -3537,9 +3585,11 @@ function drawTutHL(){
    ЖИЗНЬ ПОСЛЕ РАБОТЫ: квартира котика, поездка домой, нужды, время
    ==================================================================== */
 var RW = 360, NRM = 4, FY = 548, WORLD = RW * NRM, KX = 360 / 460;
+var HV_T = 96, HV_H = 410, HV_Y0 = 60, HV_SC = HV_H / (584 - 60), HV_VW = W / HV_SC, HV_OFS = (HV_VW - RW) / 2;
+function camFor(p){ return Math.max(0, Math.min(WORLD - HV_VW, p * RW - HV_OFS)); }
 var RNAME = ['ВАННАЯ', 'СПАЛЬНЯ', 'ГОСТИНАЯ', 'КУХНЯ'];
 /* мечта: накопить на PS5 и GTA 6 (покупки добавятся позже через owned) */
-var DREAM = {title: 'PlayStation 5 + GTA 6', items: [{id: 'ps5', n: 'PlayStation 5', cost: 1200}, {id: 'gta6', n: 'GTA 6', cost: 400}]};
+var DREAM = {title: 'PlayStation 5 + GTA 6', items: [{id: 'ps5', n: 'PlayStation 5', cost: 8000}, {id: 'gta6', n: 'GTA 6', cost: 2000}]};
 function dreamCost(){ var s = 0; DREAM.items.forEach(function(i){ if(!(game.owned && game.owned[i.id])) s += i.cost; }); return s; }
 function dreamPct(){ var c = dreamCost(); return c <= 0 ? 100 : Math.min(100, Math.floor(game.money / c * 100)); }
 /* места работы и расписание: сюда добавится кофейня */
@@ -3551,23 +3601,29 @@ function scheduleFor(day){ return [WORKPLACES.milk]; }
 var OUTFITS = [
   {n: 'Зелёная толстовка', c: '#3f7a4c', d: '#2c5a38', l: '#5a9a68'},
   {n: 'Синяя куртка', c: '#3a6aa0', d: '#284a78', l: '#5a8ac0'},
-  {n: 'Красный свитер', c: '#b8403a', d: '#8c2c28', l: '#d86a5a'}
+  {n: 'Красный свитер', c: '#b8403a', d: '#8c2c28', l: '#d86a5a'},
+  {n: 'Жёлтый дождевик', c: '#d8b030', d: '#a88820', l: '#f0d060', p: 70},
+  {n: 'Фиолетовая жилетка', c: '#7a4aa8', d: '#563478', l: '#9a6ac8', p: 90},
+  {n: 'Чёрный смокинг', c: '#2a2a32', d: '#141418', l: '#4a4a58', p: 150}
 ];
 function fmtClock(m){ m = ((Math.floor(m) % 1440) + 1440) % 1440; var h = Math.floor(m / 60), mm = m % 60; return (h < 10 ? '0' : '') + h + ':' + (mm < 10 ? '0' : '') + mm; }
 function cl01(v){ return Math.max(0, Math.min(100, v)); }
 function homeInit(){
-  if(!game.needs) game.needs = {hunger: 20, thirst: 20, fatigue: 15};
+  if(!game.needs) game.needs = {hunger: 20, thirst: 20, fatigue: 15, dirt: 10};
   if(game.clock == null) game.clock = 10 * 60;
   if(game.outfit == null) game.outfit = 0;
+  if(game.needs.dirt == null) game.needs.dirt = 10;
+  if(!game.food) game.food = {fish: 2, cheese: 2, yogurt: 2};
+  if(game.subUntil == null) game.subUntil = 0;
   if(!game.owned) game.owned = {};
   if(game.homeReady == null) game.homeReady = true;
 }
 function needsAfterShift(){
   homeInit(); var n = game.needs;
-  n.hunger = cl01(n.hunger + 32); n.thirst = cl01(n.thirst + 28); n.fatigue = cl01(n.fatigue + 40);
+  n.hunger = cl01(n.hunger + 32); n.thirst = cl01(n.thirst + 28); n.fatigue = cl01(n.fatigue + 6); n.dirt = cl01((n.dirt || 0) + 28);
 }
 function needsMood(){
-  homeInit(); var n = game.needs, worst = Math.max(n.hunger, n.thirst, n.fatigue);
+  homeInit(); var n = game.needs, worst = Math.max(n.hunger, n.thirst, n.fatigue, n.dirt || 0);
   if(worst >= 80) return .93; if(worst >= 65) return .97;
   if(worst <= 35) return 1.04; return 1;
 }
@@ -3584,22 +3640,65 @@ function startAct(kind, dur, done, face){
 }
 function addMin(m){ game.clock += m; topBar(); }
 function tvNextLabel(){
-  var L = ['Включить телевизор', 'Канал: НОВОСТИ ▶', 'Канал: ШОУ ▶', 'Канал: РЕКЛАМА ▶', 'Канал: ПОГОДА ▶'];
-  return HM.tv === 4 ? 'Выключить телевизор' : L[HM.tv + 1 > 4 ? 0 : HM.tv + 1];
+  var L = ['Включить телевизор', 'Канал: НОВОСТИ ▶', 'Канал: ШОУ ▶', 'Канал: РЕКЛАМА ▶', 'Канал: ПОГОДА ▶', 'Канал: МЕТФЛИКС ▶', '🎮 Играть: GTA 6 (PS5)'];
+  return HM.tv >= tvMax() ? 'Выключить телевизор' : L[HM.tv + 1];
 }
-var TVNAMES = ['', 'Новости', 'Развлекательное шоу', 'Реклама', 'Погода'];
+var TVNAMES = ['', 'Новости', 'Развлекательное шоу', 'Реклама', 'Погода', 'Метфликс'];
+var SUBP = 60;
+function tvMax(){ return dreamCost() <= 0 ? 6 : 5; }
+function openTvGame(){
+  HM.menu = true; HM.dir = 0;
+  var o = document.createElement('div');
+  o.style.cssText = 'position:absolute;inset:0;z-index:40;background:rgba(6,4,16,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:"Courier New",monospace;color:#fff;touch-action:none';
+  o.innerHTML = '<div style="color:#ff4fa8;font-weight:bold;font-size:1.3em;margin-bottom:.3em">GTA 6 · VICE CITY RUSH</div><canvas id="tvg" width="240" height="360" style="width:60%;max-height:68%;border:3px solid #ff4fa8;background:#14102a;touch-action:none"></canvas><div id="tvs" style="margin:.4em 0;font-size:.95em;text-align:center">Тап слева/справа — смена полосы</div><div style="display:flex;gap:.5em;width:90%;justify-content:center"><button class="bt" id="tvl" style="width:auto;margin:0;padding:.5em 1em">◀</button><button class="bt p" id="tvx" style="width:auto;margin:0;padding:.5em 1em">ВЫЙТИ</button><button class="bt" id="tvr" style="width:auto;margin:0;padding:.5em 1em">▶</button></div>';
+  wr.appendChild(o);
+  var c = $('tvg'), g = c.getContext('2d'), lane = 1, cars = [], t = 0, sp = 130, score = 0, over = false, spawn = 0, last = performance.now(), raf = 0, best = (game.owned && game.owned.gtaBest) || 0, runs = 0;
+  function reset(){ lane = 1; cars = []; t = 0; score = 0; over = false; spawn = .5; $('tvs').textContent = 'Тап слева/справа — смена полосы'; }
+  function mv(d){ if(over){ reset(); return; } lane = Math.max(0, Math.min(2, lane + d)); tone(500 + lane * 80, .04, 'square', .03); }
+  function key(e){ if(e.key === 'ArrowLeft') mv(-1); else if(e.key === 'ArrowRight') mv(1); }
+  document.addEventListener('keydown', key);
+  c.onpointerdown = function(e){ var r = c.getBoundingClientRect(); mv(e.clientX - r.left < r.width / 2 ? -1 : 1); };
+  $('tvl').onclick = function(){ mv(-1); }; $('tvr').onclick = function(){ mv(1); };
+  function close(){
+    cancelAnimationFrame(raf); document.removeEventListener('keydown', key); o.remove(); HM.menu = false;
+    if(runs){ game.needs.fatigue = cl01(game.needs.fatigue + 5 * runs); game.needs.thirst = cl01(game.needs.thirst + 3); addMin(15 + 10 * runs); sayHm('Рекорд в GTA 6: ' + best + '. Глаза уже квадратные!', 4); save(); }
+  }
+  $('tvx').onclick = function(){ au(); sClick(); close(); };
+  var LX = [40, 120, 200];
+  function step(now){
+    var dt = Math.min(.05, (now - last) / 1000); last = now;
+    if(!over){
+      t += dt; sp = 130 + t * 7; score += dt * 10; spawn -= dt;
+      if(spawn <= 0){ spawn = Math.max(.35, 1 - t * .015); cars.push({l: Math.floor(Math.random() * 3), y: -60, col: ['#4af', '#fd4', '#6f6', '#f84'][Math.floor(Math.random() * 4)]}); }
+      cars.forEach(function(k){ k.y += sp * dt; }); cars = cars.filter(function(k){ return k.y < 400; });
+      cars.forEach(function(k){ if(k.l === lane && k.y > 266 && k.y < 340 && !over){ over = true; runs++; var sc = Math.floor(score); if(sc > best){ best = sc; game.owned.gtaBest = sc; } $('tvs').innerHTML = 'АВАРИЯ! Счёт: ' + sc + ' · Рекорд: ' + best + '<br>Тапни, чтобы ещё раз'; tone(120, .3, 'sawtooth', .06); } });
+    }
+    var gr = g.createLinearGradient(0, 0, 0, 360); gr.addColorStop(0, '#2a1450'); gr.addColorStop(.4, '#7a2a6a'); gr.addColorStop(1, '#14102a'); g.fillStyle = gr; g.fillRect(0, 0, 240, 360);
+    g.fillStyle = '#22203a'; g.fillRect(0, 0, 240, 360);
+    g.fillStyle = '#ff4fa8'; g.fillRect(0, 0, 4, 360); g.fillRect(236, 0, 4, 360);
+    g.fillStyle = 'rgba(255,230,150,.7)'; var off = (t * sp) % 60; for(var i = -1; i < 7; i++){ g.fillRect(79, i * 60 + off, 3, 30); g.fillRect(159, i * 60 + off, 3, 30); }
+    cars.forEach(function(k){ g.fillStyle = k.col; g.fillRect(LX[k.l] - 17, k.y, 34, 54); g.fillStyle = 'rgba(0,0,0,.45)'; g.fillRect(LX[k.l] - 13, k.y + 10, 26, 12); });
+    g.fillStyle = over ? '#888' : '#ff4fa8'; g.fillRect(LX[lane] - 17, 290, 34, 54); g.fillStyle = '#fff'; g.fillRect(LX[lane] - 13, 298, 26, 12); g.fillStyle = '#ffe070'; g.fillRect(LX[lane] - 15, 288, 7, 4); g.fillRect(LX[lane] + 8, 288, 7, 4);
+    g.fillStyle = '#fff'; g.font = 'bold 14px "Courier New"'; g.textAlign = 'left'; g.fillText(String(Math.floor(score)), 10, 22);
+    raf = requestAnimationFrame(step);
+  }
+  reset(); raf = requestAnimationFrame(step);
+}
+function subOn(){ return (game.subUntil || 0) >= game.day; }
 var HOME_OBJS = [
   {id: 'sink', cx: 75, r: 52, hl: [30, 330, 92, 240], label: function(){ return 'Умыться'; }, act: function(){
-    startAct('wash', 2.4, function(){ game.needs.fatigue = cl01(game.needs.fatigue - 3); addMin(5); sayHm('Свежо! Усы как новые.'); }, 1); }},
+    startAct('wash', 2.4, function(){ game.needs.fatigue = cl01(game.needs.fatigue - 3); game.needs.dirt = cl01((game.needs.dirt || 0) - 15); addMin(5); sayHm('Свежо! Усы как новые.'); }, 1); }},
   {id: 'mirror', cx: 182, r: 46, hl: [150, 100, 66, 230], label: function(){ return 'Посмотреть в зеркало'; }, act: function(){
     var L = ['Какой красавчик! Усы на месте.', 'Мордочка бодрая. Можно на работу!', 'Шерсть сегодня особенно пушистая.', 'Надо чаще улыбаться. Мур!'];
     HM.mirrorT = 2.6; sayHm(L[Math.floor(Math.random() * L.length)], 3); tone(880, .08, 'triangle', .04); }},
   {id: 'tub', cx: 345, r: 95, hl: [250, 330, 190, 135], label: function(){ return 'Принять ванну'; }, act: function(){
-    startAct('bath', 5.2, function(){ game.needs.fatigue = cl01(game.needs.fatigue - 24); game.needs.thirst = cl01(game.needs.thirst + 6); addMin(40); sayHm('Чистый и довольный! Мур-р.'); }, 1); }},
+    startAct('bath', 5.2, function(){ game.needs.fatigue = cl01(game.needs.fatigue - 24); game.needs.dirt = 0; game.needs.thirst = cl01(game.needs.thirst + 6); addMin(40); sayHm('Чистый и довольный! Мур-р.'); }, 1); }},
   {id: 'wardrobe', cx: 527, r: 56, hl: [484, 298, 86, 262], label: function(){ return 'Открыть шкаф'; }, act: function(){
-    homeMenu('ШКАФ: во что одеться?', OUTFITS.map(function(o, i){ return {t: (game.outfit === i ? '✔ ' : '') + o.n, cls: game.outfit === i ? 'ok' : '', f: function(){ game.outfit = i; save(); sayHm('Отличный выбор: ' + o.n.toLowerCase() + '!'); tone(740, .08, 'triangle', .04); }}; }).concat([{t: 'Закрыть', f: null}])); }},
-  {id: 'poster', cx: 618, r: 42, hl: [586, 126, 64, 128], label: function(){ return 'Постер с мечтой'; }, act: function(){
+    homeMenu('ШКАФ: во что одеться?', OUTFITS.map(function(o, i){ if(o.p && !(game.owned && game.owned['o' + i])) return null; return {t: (game.outfit === i ? '✔ ' : '') + o.n, cls: game.outfit === i ? 'ok' : '', f: function(){ game.outfit = i; save(); sayHm('Отличный выбор: ' + o.n.toLowerCase() + '!'); tone(740, .08, 'triangle', .04); }}; }).filter(Boolean).concat([{t: 'Закрыть', f: null}])); }},
+  {id: 'poster', cx: 618, r: 42, hl: [586, 126, 64, 128], label: function(){ var c0 = dreamCost(); return c0 <= 0 ? 'Постер с мечтой ✔' : (game.money >= c0 ? '🎮 Купить PS5 и GTA 6' : 'Постер с мечтой'); }, act: function(){
     var c = dreamCost(), p = dreamPct();
+    if(c <= 0){ sayHm('Мечта сбылась: PS5 и GTA 6 теперь твои! Мур-р!', 4.5); return; }
+    if(game.money >= c){ homeMenu('Купить PS5 + GTA 6 за ' + c + ' ◈?', [{t: '🎮 Купить за ' + c + ' ◈', cls: 'p', f: function(){ if(game.money < c) return; game.money -= c; DREAM.items.forEach(function(it){ game.owned[it.id] = 1; }); topBar(); save(); tone(880, .12, 'triangle'); setTimeout(function(){ tone(1180, .2, 'triangle'); }, 120); showEvent('МЕЧТА СБЫЛАСЬ! PS5 и GTA 6 куплены!'); sayHm('Ура! Теперь можно играть ночами напролёт!', 4.5); }}, {t: 'Ещё копим', f: null}]); return; }
     sayHm('Мечта: PS5 и GTA 6. Накоплено ' + Math.min(game.money, c) + ' из ' + c + ' ◈ (' + p + '%).', 4.5); }},
   {id: 'bed', cx: 762, r: 92, hl: [665, 410, 205, 150], label: function(){ return 'Лечь спать'; }, act: function(){
     homeMenu('Лечь спать до утра?', [{t: '😴 Спать', cls: 'p', f: doSleep}, {t: 'Ещё не хочу', f: null}]); }},
@@ -3619,7 +3718,10 @@ var HOME_OBJS = [
     game.needs.fatigue = cl01(game.needs.fatigue - 2); addMin(8); sayHm(L[Math.floor(Math.random() * L.length)], 3.4); }},
   {id: 'tv', cx: 1339, r: 52, hl: [1302, 440, 80, 125], label: function(){ return tvNextLabel(); }, act: function(){
     if(!HM.sitAt){ HM.x = Math.min(HM.x, 1282 * KX); HM.face = 1; }
-    HM.tv = HM.tv >= 4 ? 0 : HM.tv + 1; HM.tvNoise = .45; tone(HM.tv ? 520 : 200, .1, 'square', .04);
+    var nx = HM.tv >= tvMax() ? 0 : HM.tv + 1;
+    if(nx === 5 && !subOn()){ homeMenu('МЕТФЛИКС: подписка на 7 дней — ' + SUBP + ' ◈', [{t: 'Оформить за ' + SUBP + ' ◈', cls: 'p', f: function(){ if(game.money >= SUBP){ game.money -= SUBP; game.subUntil = game.day + 7; HM.tv = 5; HM.tvNoise = .45; topBar(); save(); tone(960, .12, 'triangle'); sayHm('Подписка до дня ' + game.subUntil + '! Фильмы на диване — лучший отдых.', 4); }else sayHm('Не хватает ◈ на подписку.', 3); }}, {t: 'Не сейчас', f: function(){ if(tvMax() >= 6){ HM.tv = 6; HM.tvNoise = .45; openTvGame(); }else HM.tv = 0; }}]); return; }
+    if(nx === 6){ HM.tv = 6; HM.tvNoise = .45; sayHm('Включаем PS5. GTA 6!', 2); openTvGame(); return; }
+    HM.tv = nx; HM.tvNoise = .45; tone(HM.tv ? 520 : 200, .1, 'square', .04);
     if(HM.tv) sayHm('На экране: ' + TVNAMES[HM.tv] + '.', 2); }},
   {id: 'fridge', cx: 1435, r: 52, hl: [1400, 300, 82, 260], label: function(){ return 'Открыть холодильник'; }, act: function(){ openFridge(); }},
   {id: 'stove', cx: 1530, r: 56, hl: [1490, 340, 84, 220], label: function(){ return HM.hold && HM.hold.id === 'fish' && HM.hold.stage === 'raw' ? 'Приготовить рыбку' : 'Плита'; }, act: function(){
@@ -3662,16 +3764,35 @@ function homeMenu(title, items){
   for(var j = 0; j < bs.length; j++){ (function(b){ b.onclick = function(){
     au(); sClick(); var it = items[parseInt(b.getAttribute('data-i'), 10)]; m.style.display = 'none'; HM.menu = false; HM.menuKind = ''; if(it && it.f) it.f(); }; })(bs[j]); }
 }
+var RECIPES = [
+  {n: '🍲 Рыбный суп на молоке', need: {fish: 1}, hg: 75, th: 15, ft: 0},
+  {n: '🧀 Сырная запеканка', need: {cheese: 2}, hg: 70, th: 0, ft: 0},
+  {n: '🥪 Рыбный бутерброд с сыром', need: {fish: 1, cheese: 1}, hg: 85, th: 0, ft: 6},
+  {n: '🥣 Молочная каша с йогуртом', need: {yogurt: 2}, hg: 50, th: 25, ft: 4}
+];
+var FNAME = {fish: 'рыба', cheese: 'сыр', yogurt: 'йогурт'};
+function openRecipes(){
+  var items = RECIPES.map(function(r){
+    var miss = Object.keys(r.need).filter(function(k){ return (game.food[k] || 0) < r.need[k]; }), txt = Object.keys(r.need).map(function(k){ return FNAME[k] + '×' + r.need[k]; }).join(' + ');
+    return {t: r.n + ' (' + txt + ')' + (miss.length ? ' — нет: ' + miss.map(function(k){ return FNAME[k]; }).join(', ') : ''), cls: miss.length ? '' : 'p', f: miss.length ? null : function(){
+      Object.keys(r.need).forEach(function(k){ game.food[k] -= r.need[k]; });
+      startAct('cook', 4.2, function(){ game.needs.hunger = cl01(game.needs.hunger - r.hg); game.needs.thirst = cl01(game.needs.thirst - r.th); game.needs.fatigue = cl01(game.needs.fatigue - r.ft); addMin(30); save(); sayHm('Рецепт удался! Пальчики оближешь.'); }, 1); }};
+  });
+  homeMenu('📖 КНИГА РЕЦЕПТОВ', items.concat([{t: 'Закрыть книгу', f: null}]));
+}
 function openFridge(){
-  HM.menuKind = 'fridge'; tone(300, .1, 'triangle', .04);
-  var busy = !!HM.hold, items = [
+  HM.menuKind = 'fridge'; tone(300, .1, 'triangle', .04); homeInit();
+  var busy = !!HM.hold, F = game.food;
+  function use(k, no){ if((F[k] || 0) <= 0){ sayHm('Пусто! ' + no + ' — в магазине еды.', 3.4); return false; } F[k]--; return true; }
+  var items = [
     {t: '🥛 Выпить молока', f: function(){ startAct('drink', 2.6, function(){ game.needs.thirst = cl01(game.needs.thirst - 55); addMin(5); sayHm('Ммм, молочко! Лучшее на свете.'); }, 1); }},
     {t: '💧 Холодная вода', f: function(){ startAct('drink', 2.2, function(){ game.needs.thirst = cl01(game.needs.thirst - 35); addMin(3); sayHm('Освежает!'); }, 1); }},
-    {t: '🥣 Йогурт (быстрый перекус)', f: function(){ startAct('eat', 2.8, function(){ game.needs.hunger = cl01(game.needs.hunger - 20); game.needs.thirst = cl01(game.needs.thirst - 10); addMin(8); sayHm('Лёгкий перекус. Неплохо!'); }, 1); }},
-    {t: busy ? '🐟 Руки заняты' : '🐟 Взять рыбку (готовить)', f: busy ? null : function(){ HM.hold = {id: 'fish', stage: 'raw', ic: '🐟', n: 'Сырая рыбка'}; sayHm('Рыбка! Отнеси её на плиту.'); }},
-    {t: busy ? '🧀 Руки заняты' : '🧀 Взять сыр (бутерброд)', f: busy ? null : function(){ HM.hold = {id: 'cheese', stage: 'raw', ic: '🧀', n: 'Сыр'}; sayHm('Сыр! Сделаем бутерброд на столе для готовки.'); }},
-    {t: 'Закрыть холодильник', f: null}
+    {t: '🥣 Йогурт (' + (F.yogurt || 0) + ')', f: function(){ if(!use('yogurt', 'Йогурта нет')) return; startAct('eat', 2.8, function(){ game.needs.hunger = cl01(game.needs.hunger - 20); game.needs.thirst = cl01(game.needs.thirst - 10); addMin(8); save(); sayHm('Лёгкий перекус. Неплохо!'); }, 1); }},
+    {t: busy ? '🐟 Руки заняты' : '🐟 Взять рыбку (' + (F.fish || 0) + ')', f: busy ? null : function(){ if(!use('fish', 'Рыбки нет')) return; HM.hold = {id: 'fish', stage: 'raw', ic: '🐟', n: 'Сырая рыбка'}; sayHm('Рыбка! Отнеси её на плиту.'); }},
+    {t: busy ? '🧀 Руки заняты' : '🧀 Взять сыр (' + (F.cheese || 0) + ')', f: busy ? null : function(){ if(!use('cheese', 'Сыра нет')) return; HM.hold = {id: 'cheese', stage: 'raw', ic: '🧀', n: 'Сыр'}; sayHm('Сыр! Сделаем бутерброд на столе для готовки.'); }}
   ];
+  if(game.owned && game.owned.rbook) items.push({t: '📖 Книга рецептов', cls: 'p', f: openRecipes});
+  items.push({t: 'Закрыть холодильник', f: null});
   homeMenu('ХОЛОДИЛЬНИК', items);
 }
 
@@ -3684,7 +3805,7 @@ function doSleep(){
 }
 function wakeUp(){
   game.day++; game.shift = 0; game.clock = 7 * 60;
-  var n = game.needs; n.hunger = cl01(n.hunger + 22); n.thirst = cl01(n.thirst + 18); n.fatigue = 0;
+  var n = game.needs; n.hunger = cl01(n.hunger + 22); n.thirst = cl01(n.thirst + 18); n.fatigue = 0; n.dirt = cl01((n.dirt || 0) + 8);
   game.homeReady = true; game.pendingHome = false; HM.bedLie = false; HM.mode = 'stand'; HM.hold = null;
   var bed = HOME_OBJS.filter(function(o){ return o.id === 'bed'; })[0]; HM.x = bed.cx - 110; HM.roomPage = 1; HM.face = -1;
   topBar(); save(); homeSyncUI();
@@ -3698,7 +3819,7 @@ function enterHome(fresh){
   sumEl.classList.add('hid'); shopEl.classList.add('hid'); titleEl.classList.add('hid');
   HM.x = 1010 * KX; HM.hx = null; HM.face = 1; HM.dir = 0; HM.target = null; HM.pend = null; HM.roomPage = 2; HM.mode = 'stand'; HM.sitAt = null; HM.act = null; HM.menu = false;
   HM.hold = null; HM.say = ''; HM.sayT = 0; HM.bedLie = false; HM.tv = 0; HM.near = null; HM.needKey = ''; HM.lblKey = '';
-  HM.camX = HM.roomPage * RW; HM.fade = 1; HM.fadeTo = 0; HM.fadeCb = null;
+  HM.camX = camFor(HM.roomPage); HM.fade = 1; HM.fadeTo = 0; HM.fadeCb = null;
   game.homeReady = !!game.homeReady;
   $('homeui').style.display = 'block'; $('hmenu').style.display = 'none';
   $('hud').style.display = 'none'; $('hint').style.display = 'none';
@@ -3768,6 +3889,9 @@ function drawHero(x, y, s, face, o){
   ctx.fillStyle = of.c; rr(-23, -82 + by - bob * .3, 46, 54, 12); ctx.fill();
   ctx.fillStyle = of.l; ctx.fillRect(-23, -34 + by, 46, 6); ctx.fillStyle = 'rgba(255,255,255,.14)'; ctx.fillRect(-20, -80 + by, 5, 44);
   ctx.fillStyle = of.d; rr(-12, -56 + by, 24, 14, 4); ctx.fill(); R('rgba(0,0,0,.2)', -12, -43 + by, 24, 1);
+  var dv = (game.needs && game.needs.dirt) || 0;
+  if(dv > 30){ for(var di = 0; di < Math.floor((dv - 30) / 10) + 1; di++){ ctx.fillStyle = 'rgba(60,40,20,.45)'; ctx.beginPath(); ctx.arc(-16 + ((di * 29) % 32), -76 + by + ((di * 17) % 40), 2 + di % 3, 0, 7); ctx.fill(); }
+    if(dv >= 70){ ctx.strokeStyle = 'rgba(120,160,60,.7)'; ctx.lineWidth = 2; for(var fi = 0; fi < 3; fi++){ ctx.beginPath(); ctx.moveTo(-14 + fi * 14, -92 + by); ctx.quadraticCurveTo(-18 + fi * 14 + Math.sin(t * 4 + fi) * 4, -102 + by, -14 + fi * 14, -112 + by); ctx.stroke(); } } }
   R('#f4ecd8', 7, -78 + by, 2, 12); R('#f4ecd8', 13, -78 + by, 2, 10);
   // передняя рука
   var a = .05;
@@ -3827,6 +3951,14 @@ function drawTVScreen(x, y, w, h){
     ctx.fillStyle = '#6a4326'; ctx.fillRect(x + 2, y + h * .8, w * .6, 4);
     ctx.fillStyle = '#c0302a'; ctx.fillRect(x, y + h - 9, w, 9);
     smt('МУРЛЫКИНО: РЕКОРДНЫЙ УРОЖАЙ ВАЛЕРЬЯНКИ  •  В БАРЕ MILK&PAWS НОВЫЕ ПОЛКИ  •  ', x - ((t * 18) % 260) + 260, y + h - 4.5, 6.5, '#fff', 'left');
+  }else if(ch === 6){
+    var tg = ctx.createLinearGradient(0, y, 0, y + h); tg.addColorStop(0, '#2a1450'); tg.addColorStop(.6, '#d0408a'); tg.addColorStop(1, '#14102a'); ctx.fillStyle = tg; ctx.fillRect(x, y, w, h);
+    ctx.fillStyle = '#ffd060'; ctx.beginPath(); ctx.arc(x + w / 2, y + h * .55, 9, 0, 7); ctx.fill();
+    smt('GTA 6', x + w / 2, y + h * .25, 12, '#fff'); if(Math.sin(t * 4) > 0) smt('PRESS START', x + w / 2, y + h * .85, 6, '#ffe070');
+  }else if(ch === 5){
+    ctx.fillStyle = '#0a0a0a'; ctx.fillRect(x, y, w, h); smt('МЕТФЛИКС', x + w / 2, y + h * .3, 9 * (1 + .05 * Math.sin(t * 3)), '#e50914');
+    for(i = 0; i < 4; i++){ ctx.fillStyle = ['#3a2a4a', '#2a3a4a', '#4a3a2a', '#2a4a3a'][i]; ctx.fillRect(x + 3 + i * (w - 6) / 4, y + h * .52, (w - 6) / 4 - 2, h * .3); }
+    ctx.fillStyle = '#e50914'; ctx.fillRect(x + 3, y + h * .9, (w - 6) * ((t * .1) % 1), 2);
   }else if(ch === 2){
     ctx.fillStyle = '#2a1442'; ctx.fillRect(x, y, w, h);
     for(i = 0; i < 3; i++){ var ax = x + w * (.2 + i * .3), sw2 = Math.sin(t * 1.6 + i * 2) * 14; ctx.fillStyle = ['rgba(255,120,200,.28)', 'rgba(120,200,255,.28)', 'rgba(255,230,120,.28)'][i]; ctx.beginPath(); ctx.moveTo(ax, y); ctx.lineTo(ax + sw2 - 10, y + h); ctx.lineTo(ax + sw2 + 10, y + h); ctx.closePath(); ctx.fill(); }
@@ -3864,8 +3996,8 @@ function DEC0(){
 function DEC1(){
   FRM(276, 126, 30, 38, function(x, y, w, h){ ctx.fillStyle = lgr(0, y, 0, y + h, [0, '#e8c890', 1, '#c8683a']); ctx.fillRect(x, y, w, h); ctx.fillStyle = '#2a1a3a'; ctx.beginPath(); ctx.moveTo(x, y + h); ctx.lineTo(x + 12, y + 14); ctx.lineTo(x + w, y + h); ctx.fill(); });
   FRM(312, 148, 28, 34, function(x, y, w, h){ ctx.fillStyle = '#9ac8d8'; ctx.fillRect(x, y, w, h); ctx.fillStyle = '#ffb060'; ctx.beginPath(); ctx.arc(x + w / 2, y + h * .6, 7, 0, 7); ctx.fill(); ctx.beginPath(); ctx.moveTo(x + w / 2 - 6, y + h * .5); ctx.lineTo(x + w / 2 - 5, y + h * .3); ctx.lineTo(x + w / 2 - 1, y + h * .42); ctx.fill(); ctx.beginPath(); ctx.moveTo(x + w / 2 + 6, y + h * .5); ctx.lineTo(x + w / 2 + 5, y + h * .3); ctx.lineTo(x + w / 2 + 1, y + h * .42); ctx.fill(); });
-  SHLF(272, 238, 72); OB(280, 214, 10, 24, '#e8dcc0', 2); R('#ffd060', 284, 208, 2, 6); GL(285, 210, 14, .3); BKS(296, 238, 3, 5); PLT(330, 238, .6, '#c8683a', '#4ab058');
-  R('#1a0f07', 281, 36, 1, 52); PLT(281, 124, .75, '#a8763e', '#5ab860'); R('#c8985a', 270, 92, 22, 2);
+  SHLF(272, 238, 72); OB(280, 214, 10, 24, '#e8dcc0', 2); R('#ffd060', 284, 208, 2, 6); GL(285, 210, 14, .3); BKS(296, 238, 3, 5); 
+  R('#1a0f07', 281, 36, 1, 52);  R('#c8985a', 270, 92, 22, 2);
   FS(120, FY + 4, 44, 8); OB(100, 520, 40, 26, '#a8763e', 11); OB(104, 510, 32, 14, '#c8683a', 7); R('rgba(255,255,255,.2)', 108, 512, 14, 2);
 }
 function DEC2(){
@@ -3875,16 +4007,19 @@ function DEC2(){
   for(i = 0; i < 12; i++){ var gx = 24 + i * 28, gy2 = 44 + Math.sin((gx - 14) / 332 * Math.PI * 3) * 4; GL(gx, gy2 + 3, 9, .3); R(['#ffcf75', '#ff9e5e', '#ffe6a3'][i % 3], gx - 1.5, gy2 + 1, 3, 4); }
 }
 function DEC3(){
-  OB(8, 100, 78, 112, '#6d4930', 4); R('#1a0f07', 6, 94, 82, 8); R('#a8763e', 7, 95, 80, 5); PNL(12, 108, 33, 96, '#8a5a2c'); PNL(49, 108, 33, 96, '#8a5a2c'); KN(41, 190); KN(53, 190); OB(12, 74, 30, 20, '#a8763e', 3); OB(48, 70, 22, 24, '#c8c0a8', 4); PLT(74, 94, .6, '#c8683a', '#6ab048');
+  OB(8, 100, 78, 112, '#6d4930', 4); R('#1a0f07', 6, 94, 82, 8); R('#a8763e', 7, 95, 80, 5); PNL(12, 108, 33, 96, '#8a5a2c'); PNL(49, 108, 33, 96, '#8a5a2c'); KN(41, 190); KN(53, 190); OB(12, 74, 30, 20, '#a8763e', 3); OB(48, 70, 22, 24, '#c8c0a8', 4); 
   R('#1a0f07', 176, 270, 90, 3); for(var i = 0; i < 4; i++){ R('#8a8478', 190 + i * 22, 273, 1, 8); ctx.fillStyle = '#1a0f07'; ctx.beginPath(); ctx.ellipse(190 + i * 22, 288, 8, 7, 0, 0, 7); ctx.fill(); ctx.fillStyle = ['#c87838', '#9aa8b4', '#8c382c', '#e8dcc0'][i]; ctx.beginPath(); ctx.ellipse(190 + i * 22, 288, 6.5, 5.5, 0, 0, 7); ctx.fill(); R('rgba(255,255,255,.35)', 186 + i * 22, 285, 3, 1); }
   RUG(124, 598, 100, 20, '#6a2622', '#a8503a', '#e8c078'); FS(336, FY + 6, 24, 5); OB(326, 540, 20, 9, '#c84a3a', 4); R('#f4ecd8', 329, 541, 14, 3); OB(322, 548, 12, 5, '#8ab8c8', 2);
 }
 
 /* ---------- комнаты: нарисованный интерьер в стиле бара (единая квартира) ---------- */
-function GB(cx, cy, s, dx){ ctx.save(); ctx.translate(cx + dx, cy); ctx.scale(s, s); ctx.translate(-cx, -cy); }
+var FURN_K = .75, FWX = 1, GBX = {'45,548': [1, 1.45, 9.5], '120,548': [1, 1.37, 10, .69], '189,548': [1, 1.29, 21], '240,548': [1, 1, 21], '294,548': [1, 1, 11], '58,548': [.8, FWX], '271,548': [.8, FWX, 6], '267,548': [.85, FWX], '327,548': [1, FWX, -6], '239,548': [1, FWX, -6], '338,548': [1, FWX, -4], '143,215': [1, 1], '205,140': [1, 1], '73,548': [1, 1], '41,548': [1, 1.5, 4], '124,205': [1, 1], '212,175': [1, 1], '200,183': [1, 1]};
+function GBK(cx, cy){ return GBX[cx + ',' + cy] || [1, FWX]; }
+function GB(cx, cy, s, dx){ var kk = GBK(cx, cy); ctx.save(); ctx.translate(cx + dx + (kk[2] || 0), cy); ctx.scale(s * FURN_K * kk[0] * kk[1], s * FURN_K * kk[0] * (kk[3] || 1)); ctx.translate(-cx, -cy); }
 function GE(){ ctx.restore(); }
-function GTR(k, base){ var g = GRP[k]; ctx.translate(base + g[0] + g[3], g[1]); ctx.scale(g[2], g[2]); ctx.translate(-g[0], -g[1]); }
+function GTR(k, base){ var g = GRP[k]; ctx.translate(base + g[0] + g[3], g[1]); ctx.scale(g[2] * (g[4] || 1), g[2] * (g[5] || 1)); ctx.translate(-g[0], -g[1]); }
 var GRP = {sink: [58, FY, 1.2, 0], mirror: [143, 215, 1.2, 0], tub: [271, FY, 1.15, -10], wardrobe: [53, FY, 1.2, -2], bed: [239, FY, 1.12, -14], night: [338, FY, 1.1, -3], door: [41, FY, 1.2, 0], window: [124, 205, 1.15, 6], lamp: [73, FY, 1.2, 100], clock: [205, 140, 1.2, 0], sofa: [160, FY, 1.1, 0], coffee: [267, FY, 1.05, -6], tv: [327, FY, 1.1, -8], fridge: [45, FY, 1.2, 0], stove: [120, FY, 1.2, 6], prep: [189, FY, 1.15, 10], chair: [240, FY, 1.15, 16], ktable: [294, FY, 1.15, 5]};
+Object.keys(GRP).forEach(function(k){ var g = GRP[k], kk = GBK(g[0], g[1]); g[2] *= FURN_K * kk[0]; g[4] = kk[1]; g[5] = kk[3] || 1; g[3] += (kk[2] || 0); });
 function lgr(x0, y0, x1, y1, st){ var g = ctx.createLinearGradient(x0, y0, x1, y1); for(var i = 0; i < st.length; i += 2) g.addColorStop(st[i], st[i + 1]); return g; }
 function OB(x, y, w, h, c, r){ r = r == null ? 4 : r; ctx.fillStyle = '#1a0f07'; rr(x - 1, y - 1, w + 2, h + 2, r + 1); ctx.fill();
   ctx.fillStyle = lgr(x, y, x, y + h, [0, mixCol(c, '#ffffff', .26), .3, c, 1, mixCol(c, '#000000', .4)]); rr(x, y, w, h, r); ctx.fill();
@@ -3916,23 +4051,24 @@ function WIN(x, y, w, h, o){ o = o || {};
     for(var s = 0; s < 2; s++){ var cw = w * .28 + 20, x0 = s ? x + w - w * .28 : x - 22; for(var q = 0; q < cw; q += 5){ var ch = h + 44 - Math.abs(cw / 2 - q) * .2; R((q / 5 & 1) ? dd : cc, x0 + q, y - 18, 5, ch); R(ll, x0 + q, y - 18, 1, ch); } R('rgba(0,0,0,.3)', x0, y + h + 22, cw, 3); R('#1a0f07', x0, y + h * .55 - 1, cw, 5); R('#e0b060', x0, y + h * .55, cw, 3); }
     R('#1a0f07', x - 26, y - 23, w + 52, 5); R('#e0b060', x - 26, y - 23, w + 52, 2); R('#e0b060', x - 29, y - 26, 5, 11); R('#e0b060', x + w + 24, y - 26, 5, 11); for(var rg = 0; rg < w + 40; rg += 9) R('#c8985a', x - 20 + rg, y - 21, 3, 7); }
   ctx.fillStyle = lgr(0, 260, 0, H, [0, 'rgba(255,226,160,0)', .5, 'rgba(255,226,160,.08)', 1, 'rgba(255,226,160,0)']); ctx.beginPath(); ctx.moveTo(x, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w + 70, H); ctx.lineTo(x - 40, H); ctx.fill(); }
-function WALLP(c1, c2, st, mk){ ctx.fillStyle = lgr(0, 0, 0, 416, [0, c1, 1, c2]); ctx.fillRect(0, 0, RW, 416);
-  for(var x = 0, i = 0; x < RW; x += 36, i++){ ctx.fillStyle = (i & 1) ? 'rgba(0,0,0,.09)' : st; ctx.fillRect(x, 0, 36, 416); R('rgba(10,6,3,.32)', x, 0, 1, 416); }
+var WD = 54, FL = 438 + WD;
+function WALLP(c1, c2, st, mk){ ctx.fillStyle = lgr(0, 0, 0, 416 + WD, [0, c1, 1, c2]); ctx.fillRect(0, 0, RW, 416 + WD);
+  for(var x = 0, i = 0; x < RW; x += 36, i++){ ctx.fillStyle = (i & 1) ? 'rgba(0,0,0,.09)' : st; ctx.fillRect(x, 0, 36, 416 + WD); R('rgba(10,6,3,.32)', x, 0, 1, 416 + WD); }
   for(var wy = 52, wr = 0; wy < 322; wy += 16, wr++) for(x = (wr & 1) ? 9 : 0; x < RW; x += 18){ R(mk, x + 4, wy, 1, 5); R(mk, x + 2, wy + 2, 5, 1); } }
-function WAINS(c1, c2, hl, rail){ for(var x = 0; x < RW; x += 18){ R('#2a190d', x, 332, 17, 84); R((x / 18 & 1) ? c1 : c2, x + 2, 335, 13, 78); R(hl, x + 2, 335, 13, 1); R('rgba(0,0,0,.35)', x + 2, 411, 13, 1); R('rgba(0,0,0,.3)', x + 17, 332, 1, 84); } R('#1a0f07', 0, 325, RW, 1); R(rail, 0, 326, RW, 6); R('rgba(255,215,160,.3)', 0, 326, RW, 1); R('#1a0f07', 0, 332, RW, 1); }
+function WAINS(c1, c2, hl, rail){ for(var x = 0; x < RW; x += 18){ R('#2a190d', x, 332, 17, 84 + WD); R((x / 18 & 1) ? c1 : c2, x + 2, 335, 13, 78 + WD); R(hl, x + 2, 335, 13, 1); R('rgba(0,0,0,.35)', x + 2, 411 + WD, 13, 1); R('rgba(0,0,0,.3)', x + 17, 332, 1, 84 + WD); } R('#1a0f07', 0, 325, RW, 1); R(rail, 0, 326, RW, 6); R('rgba(255,215,160,.3)', 0, 326, RW, 1); R('#1a0f07', 0, 332, RW, 1); }
 function CEIL(){ var x; R('#1a0f07', 0, 0, RW, 9); R('#3a2414', 0, 0, RW, 7); R('#5a3a20', 0, 7, RW, 2); R('rgba(255,215,160,.2)', 0, 7, RW, 1); for(x = 8; x < RW; x += 36){ R('#24140a', x, 1, 5, 5); R('#e0b060', x + 2, 3, 1, 1); }
   ctx.fillStyle = lgr(0, 9, 0, 70, [0, 'rgba(8,4,2,.5)', 1, 'rgba(8,4,2,0)']); ctx.fillRect(0, 9, RW, 61); R('#1a0f07', 0, 29, RW, 1); R('#6a4326', 0, 30, RW, 5); R('rgba(255,215,160,.3)', 0, 30, RW, 1); R('#1a0f07', 0, 35, RW, 1); R('rgba(0,0,0,.25)', 0, 36, RW, 4); }
-function BASE(c){ R('#1a0f07', 0, 415, RW, 1); R(c, 0, 416, RW, 18); R('rgba(255,215,160,.25)', 0, 416, RW, 1); R('rgba(0,0,0,.28)', 0, 430, RW, 4); R('#1a0f07', 0, 434, RW, 4); R('rgba(0,0,0,.35)', 0, 438, RW, 8); }
-function FLOOR(c1, c2, tile){ var cx = RW / 2, y = 438, i = 0, W0 = tile ? 46 : 62, k;
-  R(c1, 0, 438, RW, H - 438);
-  while(y < H){ var h = 9 + i * 3.2, yb = Math.min(H, y + h), sT = 1 + (y - 438) / 380 * .4, sB = 1 + (yb - 438) / 380 * .4, off = tile ? 0 : (i * 37) % W0;
+function BASE(c){ var d = WD; R('#1a0f07', 0, 415 + d, RW, 1); R(c, 0, 416 + d, RW, 18); R('rgba(255,215,160,.25)', 0, 416 + d, RW, 1); R('rgba(0,0,0,.28)', 0, 430 + d, RW, 4); R('#1a0f07', 0, 434 + d, RW, 4); R('rgba(0,0,0,.35)', 0, 438 + d, RW, 8); }
+function FLOOR(c1, c2, tile){ var cx = RW / 2, y = FL, i = 0, W0 = tile ? 46 : 62, k;
+  R(c1, 0, FL, RW, H - FL);
+  while(y < H){ var h = 9 + i * 3.2, yb = Math.min(H, y + h), sT = 1 + (y - FL) / 380 * .4, sB = 1 + (yb - FL) / 380 * .4, off = tile ? 0 : (i * 37) % W0;
     for(k = -4; k < 12; k++){ var a = k * W0 - off, b = a + W0, aT = cx + (a - cx) * sT, bT = cx + (b - cx) * sT, aB = cx + (a - cx) * sB, bB = cx + (b - cx) * sB; if(bT < -4 && bB < -4 || aT > RW + 4 && aB > RW + 4) continue;
       ctx.fillStyle = tile ? (((k + i) & 1) ? c1 : c2) : mixCol(c1, c2, hr(k + i * 7, 3) * .8); ctx.beginPath(); ctx.moveTo(aT, y); ctx.lineTo(bT, y); ctx.lineTo(bB, yb); ctx.lineTo(aB, yb); ctx.closePath(); ctx.fill();
       ctx.strokeStyle = 'rgba(10,5,2,.42)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(aT, y); ctx.lineTo(aB, yb); ctx.stroke();
       if(tile){ ctx.fillStyle = 'rgba(255,255,255,.12)'; ctx.beginPath(); ctx.moveTo(aT + 3, y + 2); ctx.lineTo(aT + 12, y + 2); ctx.lineTo(aB + 6, yb - 2); ctx.lineTo(aB + 2, yb - 2); ctx.fill(); }
       else if(hr(k, i) > .6){ ctx.fillStyle = 'rgba(0,0,0,.07)'; ctx.fillRect(aT + 8, y + 3, (bT - aT) * .5, 1); } }
     R('rgba(10,5,2,.4)', 0, yb - 1, RW, 1); R('rgba(255,225,180,.07)', 0, y, RW, 1); y = yb; i++; }
-  ctx.fillStyle = lgr(0, 438, 0, H, [0, 'rgba(255,218,160,.05)', 1, 'rgba(0,0,0,.34)']); ctx.fillRect(0, 438, RW, H - 438); }
+  ctx.fillStyle = lgr(0, FL, 0, H, [0, 'rgba(255,218,160,.05)', 1, 'rgba(0,0,0,.08)']); ctx.fillRect(0, FL, RW, H - FL); }
 function CASING(r){ function post(x, fl){ R('#1a0f07', x - 1, 9, 16, 414); ctx.fillStyle = lgr(x, 0, x + 14, 0, fl ? [0, '#2c1a0d', .5, '#5a381e', 1, '#8a5a2c'] : [0, '#8a5a2c', .5, '#5a381e', 1, '#2c1a0d']); ctx.fillRect(x, 9, 14, 414); R('rgba(255,215,160,.25)', fl ? x + 11 : x + 2, 9, 1, 414);
     R('#a8763e', x - 2, 38, 18, 6); R('#1a0f07', x - 2, 44, 18, 1); R('#6a4326', x - 2, 400, 18, 14); R('#1a0f07', x - 2, 414, 18, 1); WG(x, 46, 14, 350, .12, true); ctx.fillStyle = lgr(fl ? x : x + 14, 0, fl ? x - 22 : x + 36, 0, [0, 'rgba(0,0,0,.4)', 1, 'rgba(0,0,0,0)']); ctx.fillRect(fl ? x - 22 : x + 14, 40, 22, 376); }
   if(r > 0) post(0, false); if(r < NRM - 1) post(RW - 14, true); }
@@ -3976,7 +4112,7 @@ GE();   RUG(262, 596, 142, 30, '#3a2a1a', '#a8c8c4', '#e8dcb8'); DEC0(); PEND(20
 }
 function artBedroom(){
   var i, x; WALLP('#2f4048', '#3d525c', 'rgba(255,255,255,.03)', 'rgba(200,230,240,.07)'); CEIL(); WAINS('#2c3d47', '#33454f', 'rgba(255,255,255,.1)', '#4a5e6a'); BASE('#5a6a74'); FLOOR('#8a5a34', '#5a3a1e', false); CASING(1);
-  GB(212, 175, 1.1, 6); WIN(168, 100, 88, 150, {c: '#7a3030'}); PLT(238, 249, .8, '#c8683a', '#4ab058'); GE();
+  GB(212, 175, 1.1, 6); WIN(168, 100, 88, 150, {c: '#7a3030'});  GE();
   // гирлянда
   ctx.strokeStyle = '#1a110a'; ctx.lineWidth = 1; ctx.beginPath(); for(x = 98; x <= 316; x += 6){ var gy = 46 + Math.sin((x - 98) / 218 * Math.PI) * 14; if(x === 98) ctx.moveTo(x, gy); else ctx.lineTo(x, gy); } ctx.stroke();
   for(i = 0; i < 10; i++){ var gx = 106 + i * 22, gy2 = 46 + Math.sin((gx - 98) / 218 * Math.PI) * 14; GL(gx, gy2 + 3, 10, .3); R(['#ffcf75', '#ff9e5e', '#ffe6a3', '#ffb86c'][i % 4], gx - 1.5, gy2 + 1, 3, 4); }
@@ -3992,7 +4128,7 @@ function artBedroom(){
   ctx.fillStyle = '#1a0f27'; for(i = 0; i < 4; i++){ ctx.beginPath(); ctx.moveTo(101 + i * 12, 251); ctx.lineTo(106 + i * 12, 216 - (i % 2) * 10); ctx.lineTo(111 + i * 12, 251); ctx.fill(); }
   ctx.fillStyle = '#f4f4f8'; rr(108, 150, 12, 44, 5); ctx.fill(); ctx.fillStyle = '#18181c'; rr(111, 154, 5, 36, 2); ctx.fill(); ctx.fillStyle = '#f4f4f8'; rr(123, 168, 14, 26, 4); ctx.fill(); smt('PS5', 116, 206, 9, '#fff'); smt('GTA 6', 124, 139, 8, '#ffe8a0'); R('rgba(255,255,255,.18)', 101, 127, 5, 124);
   // полка с растением и книгами
-  R('rgba(0,0,0,.3)', 100, 285, 60, 5); R('#1a0f07', 96, 273, 64, 9); R('#a8763e', 97, 274, 62, 6); R('#1a0f07', 104, 282, 3, 10); R('#1a0f07', 148, 282, 3, 10); BKS(104, 273, 5, 2); PLT(142, 273, .7, '#c8683a', '#4ab058'); R('#e8dcc0', 126, 258, 10, 15);
+  R('rgba(0,0,0,.3)', 100, 285, 60, 5); R('#1a0f07', 96, 273, 64, 9); R('#a8763e', 97, 274, 62, 6); R('#1a0f07', 104, 282, 3, 10); R('#1a0f07', 148, 282, 3, 10); BKS(104, 273, 5, 2);  R('#e8dcc0', 126, 258, 10, 15);
   GB(239, FY, 1.12, -14);
   // кровать
   FS(236, FY + 6, 208, 18); R('#2a190d', 162, 548, 10, 12); R('#2a190d', 296, 548, 10, 12); OB(158, 470, 152, 80, '#5a381e', 5); WG(160, 472, 148, 76, .1); R('rgba(0,0,0,.35)', 160, 536, 148, 10);
@@ -4051,12 +4187,12 @@ function artLiving(){
   RUG(190, 596, 250, 30, '#3a1a14', '#7a2a2a', '#e8c078');
 }
 function artKitchen(){
-  var i, x, y; ctx.fillStyle = lgr(0, 0, 0, 416, [0, '#d9c9a6', 1, '#e6d8b8']); ctx.fillRect(0, 0, RW, 416); for(x = 0; x < RW; x += 30){ R('rgba(120,90,50,.05)', x, 0, 15, 250); R('rgba(120,90,50,.1)', x, 0, 1, 250); }
-  for(y = 250, i = 0; y < 416; y += 17, i++) for(x = (i & 1) ? -14 : 0; x < RW; x += 28){ R(((Math.floor((x + 14) / 28) + i) & 1) ? '#9ab8a2' : '#a8c4ae', x + 1, y + 1, 26, 15); R('rgba(255,255,255,.4)', x + 1, y + 1, 26, 2); R('rgba(255,255,255,.18)', x + 3, y + 4, 2, 9); R('rgba(0,0,0,.2)', x + 1, y + 14, 26, 2); }
-  R('#1a0f07', 0, 244, RW, 1); R('#6a4326', 0, 245, RW, 6); R('rgba(255,235,190,.3)', 0, 245, RW, 1); ctx.fillStyle = lgr(0, 250, 0, 416, [0, 'rgba(0,0,0,.18)', .3, 'rgba(0,0,0,0)', 1, 'rgba(0,0,0,.25)']); ctx.fillRect(0, 250, RW, 166);
+  var i, x, y, DYK = 100, DYH = 50; ctx.fillStyle = lgr(0, 0, 0, 416 + WD, [0, '#d9c9a6', 1, '#e6d8b8']); ctx.fillRect(0, 0, RW, 416 + WD); for(x = 0; x < RW; x += 30){ R('rgba(120,90,50,.05)', x, 0, 15, 250); R('rgba(120,90,50,.1)', x, 0, 1, 250); }
+  for(y = 250, i = 0; y < 416 + WD; y += 17, i++) for(x = (i & 1) ? -14 : 0; x < RW; x += 28){ R(((Math.floor((x + 14) / 28) + i) & 1) ? '#9ab8a2' : '#a8c4ae', x + 1, y + 1, 26, 15); R('rgba(255,255,255,.4)', x + 1, y + 1, 26, 2); R('rgba(255,255,255,.18)', x + 3, y + 4, 2, 9); R('rgba(0,0,0,.2)', x + 1, y + 14, 26, 2); }
+  R('#1a0f07', 0, 244, RW, 1); R('#6a4326', 0, 245, RW, 6); R('rgba(255,235,190,.3)', 0, 245, RW, 1); ctx.fillStyle = lgr(0, 250, 0, 416 + WD, [0, 'rgba(0,0,0,.08)', .3, 'rgba(0,0,0,0)', 1, 'rgba(0,0,0,.12)']); ctx.fillRect(0, 250, RW, 166 + WD);
   CEIL(); BASE('#8a6038'); FLOOR('#b88a56', '#7a5430', false); CASING(3);
-  GB(200, 183, 1.1, 10); WIN(164, 118, 72, 130, {}); for(i = 0; i < 6; i++){ R('#1a0f07', 160 + i * 14, 104, 14, 14); R(i & 1 ? '#c84a3a' : '#f4ecd8', 161 + i * 14, 104, 12, 11); ctx.fillStyle = i & 1 ? '#c84a3a' : '#f4ecd8'; ctx.beginPath(); ctx.arc(167 + i * 14, 115, 6, 0, Math.PI); ctx.fill(); } R('#e0b060', 158, 100, 88, 3);
-  PLT(218, 247, .7, '#c8683a', '#6ab048'); GE();
+  ctx.save(); ctx.translate(0, DYK); GB(200, 183, 1.1, 10); WIN(164, 118, 72, 130, {}); for(i = 0; i < 6; i++){ R('#1a0f07', 160 + i * 14, 104, 14, 14); R(i & 1 ? '#c84a3a' : '#f4ecd8', 161 + i * 14, 104, 12, 11); ctx.fillStyle = i & 1 ? '#c84a3a' : '#f4ecd8'; ctx.beginPath(); ctx.arc(167 + i * 14, 115, 6, 0, Math.PI); ctx.fill(); } R('#e0b060', 158, 100, 88, 3);
+  PLT(218, 247, .7, '#c8683a', '#6ab048'); GE(); ctx.restore();
   GB(45, FY, 1.2, 0);
   // холодильник
   FS(45, FY + 4, 82, 14); OB(14, 300, 61, 252, '#7aa88a', 10); R('rgba(255,255,255,.28)', 18, 306, 4, 240); R('#1a0f07', 14, 384, 61, 3); R('rgba(0,0,0,.2)', 14, 387, 61, 3);
@@ -4064,9 +4200,9 @@ function artKitchen(){
   OB(24, 316, 24, 18, '#f4ecd8', 1); R('#c87838', 26, 320, 14, 2); R('#4a8aa8', 26, 325, 18, 2); R('#e05050', 38, 346, 7, 7); R('#4aa8d8', 26, 356, 7, 7); R('#e0c040', 34, 420, 7, 7); R('#1a0f07', 26, 394, 24, 5); R('#e0b060', 27, 395, 22, 3);
   GE(); GB(120, FY, 1.2, 6);
   // вытяжка и плита
-  FS(120, FY + 4, 90, 14); R('#1a0f07', 112, 36, 16, 200); R('#8a5a2c', 114, 36, 12, 200); R('#e8c078', 115, 36, 3, 200);
+  FS(120, FY + 4, 90, 14); ctx.save(); ctx.translate(0, DYH); R('#1a0f07', 112, -500, 16, 736); R('#8a5a2c', 114, -500, 12, 736); R('#e8c078', 115, -500, 3, 736);
   ctx.fillStyle = '#1a0f07'; ctx.beginPath(); ctx.moveTo(84, 278); ctx.lineTo(156, 278); ctx.lineTo(142, 232); ctx.lineTo(98, 232); ctx.fill(); ctx.fillStyle = lgr(84, 0, 156, 0, [0, '#a8763e', .5, '#f0cc88', 1, '#8a5a2c']); ctx.beginPath(); ctx.moveTo(87, 275); ctx.lineTo(153, 275); ctx.lineTo(140, 235); ctx.lineTo(100, 235); ctx.fill(); R('#1a0f07', 86, 275, 68, 5); R('#fff4c8', 96, 278, 48, 2); GL(120, 282, 50, .15);
-  OB(86, 442, 68, 112, '#efe7d3', 4); WG(88, 444, 64, 108, .04, true); OB(84, 434, 72, 10, '#2a2a30', 2); for(i = 0; i < 2; i++){ ctx.fillStyle = '#1a0f07'; ctx.beginPath(); ctx.ellipse(104 + i * 32, 439, 12, 3.2, 0, 0, 7); ctx.fill(); ctx.strokeStyle = '#5a5a62'; ctx.beginPath(); ctx.ellipse(104 + i * 32, 439, 7, 1.8, 0, 0, 7); ctx.stroke(); }
+  ctx.restore(); OB(86, 442, 68, 112, '#efe7d3', 4); WG(88, 444, 64, 108, .04, true); OB(84, 434, 72, 10, '#2a2a30', 2); for(i = 0; i < 2; i++){ ctx.fillStyle = '#1a0f07'; ctx.beginPath(); ctx.ellipse(104 + i * 32, 439, 12, 3.2, 0, 0, 7); ctx.fill(); ctx.strokeStyle = '#5a5a62'; ctx.beginPath(); ctx.ellipse(104 + i * 32, 439, 7, 1.8, 0, 0, 7); ctx.stroke(); }
   R('#2a2a30', 92, 448, 56, 14); for(i = 0; i < 4; i++){ ctx.fillStyle = '#1a0f07'; ctx.beginPath(); ctx.arc(99 + i * 14, 455, 4.5, 0, 7); ctx.fill(); ctx.fillStyle = '#d7b77e'; ctx.beginPath(); ctx.arc(99 + i * 14, 455, 2.6, 0, 7); ctx.fill(); R('#1a0f07', 99 + i * 14, 452, 1, 3); }
   OB(91, 468, 58, 70, '#cfc6b0', 4); R('#1a0f07', 98, 476, 44, 40); ctx.fillStyle = lgr(0, 478, 0, 514, [0, '#40515a', 1, '#111b21']); ctx.fillRect(99, 477, 42, 38); R('rgba(255,150,60,.25)', 102, 500, 36, 12); R('rgba(255,255,255,.2)', 102, 479, 3, 34); R('#1a0f07', 96, 520, 48, 5); R('#d0d4d8', 97, 521, 46, 3);
   OB(90, 422, 14, 12, '#8aa8b8', 3); R('#1a0f07', 102, 424, 8, 3); R('#c8c8c8', 90, 418, 14, 3);
@@ -4083,18 +4219,28 @@ function artKitchen(){
   R('#1a0f07', 291, 500, 7, 50); R('#6a4326', 292, 500, 5, 50); R('#1a0f07', 276, 546, 36, 8); R('#6a4326', 278, 547, 32, 5);
   GE();
   // полка с банками и календарь
-  R('rgba(0,0,0,.3)', 258, 196, 86, 5); R('#1a0f07', 256, 186, 88, 8); R('#a8763e', 257, 187, 86, 5); var jc = ['#e8c070', '#c88858', '#e8e0c8', '#8ab868'];
+  ctx.save(); ctx.translate(0, DYK); R('rgba(0,0,0,.3)', 258, 196, 86, 5); R('#1a0f07', 256, 186, 88, 8); R('#a8763e', 257, 187, 86, 5); var jc = ['#e8c070', '#c88858', '#e8e0c8', '#8ab868'];
   for(i = 0; i < 4; i++){ R('#1a0f07', 262 + i * 20, 152, 16, 34); R('rgba(190,215,225,.5)', 263 + i * 20, 153, 14, 33); R(jc[i], 264 + i * 20, 166, 12, 20); R('#8a5a2c', 262 + i * 20, 148, 16, 5); R('#f0e4c8', 267 + i * 20, 170, 7, 7); }
-  R('rgba(0,0,0,.3)', 272, 224, 46, 74); R('#1a0f07', 268, 216, 46, 74); R('#f4ecd8', 270, 218, 42, 70); R('#c84a3a', 270, 218, 42, 14); smt('НОЯ', 291, 225, 8, '#fff0d0'); for(i = 0; i < 6; i++) for(var j = 0; j < 4; j++) R('rgba(60,40,20,.5)', 274 + i * 6, 238 + j * 11, 3, 4);
-  DEC3(); PEND(258, 66, '#f0c878'); SPEC();
+  R('rgba(0,0,0,.3)', 266, 224, 74, 74); R('#1a0f07', 260, 216, 74, 74); R('#f4ecd8', 262, 218, 70, 70); R('#c84a3a', 262, 218, 70, 14); smt('НОЯ', 297, 225, 9, '#fff0d0'); for(i = 0; i < 7; i++) for(var j = 0; j < 5; j++) R('rgba(60,40,20,.5)', 266 + i * 9, 238 + j * 10, 5, 4);
+  DEC3(); ctx.restore(); PEND(258, 126, '#f0c878'); SPEC();
 }
 var ROOMART = [artBath, artBedroom, artLiving, artKitchen];
 var roomLayer = [];
+function BASKET(x, y, w, h, c){ FS(x + w / 2, y + h + 4, w + 14, 10); OB(x, y, w, h, c, 5); for(var i = 1; i < 4; i++) R('rgba(0,0,0,.18)', x + 2, y + i * h / 4, w - 4, 1); for(var j = 1; j < 5; j++) R('rgba(0,0,0,.12)', x + j * w / 5, y + 2, 1, h - 4); R('rgba(255,230,180,.25)', x + 3, y + 3, w - 6, 2); }
+function SCONCE(x, y, c){ R('#1a0f07', x - 5, y, 10, 4); R('#3a2414', x - 4, y + 4, 8, 14); ctx.fillStyle = '#1a0f07'; ctx.beginPath(); ctx.moveTo(x - 9, y + 20); ctx.lineTo(x + 9, y + 20); ctx.lineTo(x + 5, y + 6); ctx.lineTo(x - 5, y + 6); ctx.fill(); ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(x - 8, y + 19); ctx.lineTo(x + 8, y + 19); ctx.lineTo(x + 4, y + 7); ctx.lineTo(x - 4, y + 7); ctx.fill(); GL(x, y + 24, 46, .28, '255,214,140'); }
+function BIGPLANT(x, y, s){ FS(x, y + 4, 34 * s, 8); ctx.fillStyle = '#1a0f07'; ctx.beginPath(); ctx.moveTo(x - 13 * s, y - 26 * s); ctx.lineTo(x + 13 * s, y - 26 * s); ctx.lineTo(x + 10 * s, y); ctx.lineTo(x - 10 * s, y); ctx.fill(); ctx.fillStyle = '#a8603a'; ctx.beginPath(); ctx.moveTo(x - 11.5 * s, y - 25 * s); ctx.lineTo(x + 11.5 * s, y - 25 * s); ctx.lineTo(x + 9 * s, y - 1); ctx.lineTo(x - 9 * s, y - 1); ctx.fill(); R('rgba(255,230,190,.25)', x - 10 * s, y - 24 * s, 3 * s, 20 * s); R('#6a3a22', x - 12 * s, y - 28 * s, 24 * s, 4 * s);
+  var L = [[-20, -46, -.9], [-8, -70, -.35], [6, -78, .1], [18, -58, .6], [-14, -40, -1.2], [20, -40, 1.1], [0, -52, 0]]; for(var i = 0; i < L.length; i++){ ctx.save(); ctx.translate(x + L[i][0] * s * .3, y - 28 * s); ctx.rotate(L[i][2]); ctx.fillStyle = '#1a0f07'; ctx.beginPath(); ctx.ellipse(0, L[i][1] * s * .5, 9 * s, 20 * s, 0, 0, 7); ctx.fill(); ctx.fillStyle = i % 2 ? '#4f9250' : '#3c7c40'; ctx.beginPath(); ctx.ellipse(0, L[i][1] * s * .5, 7.5 * s, 18 * s, 0, 0, 7); ctx.fill(); R('rgba(255,255,255,.18)', -1, L[i][1] * s * .5 - 14 * s, 1.5, 24 * s); ctx.restore(); } }
+var ROOMX = [
+  function(){ BASKET(160, 506, 30, 42, '#b8884a'); R('#e8f0ee', 163, 500, 24, 8); R('#9ec8d0', 163, 504, 24, 3);  SCONCE(110, 130, '#f0c878'); SCONCE(176, 130, '#f0c878'); },
+  function(){  },
+  function(){  },
+  function(){ }
+];
 function roomImg(r){
   if(!roomLayer[r]){
     var c = document.createElement('canvas'); c.width = RW * DPR; c.height = H * DPR; var x = c.getContext('2d'); x.setTransform(DPR, 0, 0, DPR, 0, 0);
     roomLayer[r] = {cv: c, x: x}; var _c = ctx; ctx = x;
-    try{ ROOMART[r](); var wg = lgr(0, 36, 0, 438, [0, 'rgba(5,8,12,.2)', .3, ['rgba(30,72,78,.1)', 'rgba(20,34,48,.12)', 'rgba(82,43,27,.1)', 'rgba(88,67,38,.08)'][r], 1, 'rgba(5,4,3,.22)']); ctx.fillStyle = wg; ctx.fillRect(0, 36, RW, 402); }
+    try{ WD = (r === 3) ? 100 : 54; FL = 438 + WD; ROOMART[r](); ROOMX[r](); var wg = lgr(0, 36, 0, 438, [0, 'rgba(5,8,12,.2)', .3, ['rgba(30,72,78,.1)', 'rgba(20,34,48,.12)', 'rgba(82,43,27,.1)', 'rgba(88,67,38,.08)'][r], 1, 'rgba(5,4,3,.22)']); ctx.fillStyle = 'rgba(0,0,0,0)'; ctx.fillRect(0, 36, RW, 402); }
     finally{ ctx = _c; }
   }
   return roomLayer[r].cv;
@@ -4103,8 +4249,8 @@ var HOME_LAMPS = [{x: 200, y: 92, r: 120}, {x: RW + 112, y: 92, r: 110}, {x: 2 *
 
 (function(){ var M = {sink: 'sink', mirror: 'mirror', tub: 'tub', wardrobe: 'wardrobe', bed: 'bed', alarm: 'night', door: 'door', window: 'window', sofa: 'sofa', clock: 'clock', coffee: 'coffee', tv: 'tv', fridge: 'fridge', stove: 'stove', prep: 'prep', chair: 'chair', ktable: 'ktable'};
   HOME_OBJS.forEach(function(o){ var k = M[o.id]; if(!k) return; var g = GRP[k], base = Math.floor(o.cx / RW) * RW;
-    var fx = function(x){ return base + g[0] + g[3] + (x - base - g[0]) * g[2]; }, fy = function(y){ return g[1] + (y - g[1]) * g[2]; };
-    var x0 = fx(o.hl[0]), x1 = fx(o.hl[0] + o.hl[2]), y0 = fy(o.hl[1]), y1 = fy(o.hl[1] + o.hl[3]); o.cx = fx(o.cx); o.r *= g[2]; o.hl = [x0, y0, x1 - x0, y1 - y0]; }); })();
+    var fx = function(x){ return base + g[0] + g[3] + (x - base - g[0]) * g[2] * (g[4] || 1); }, fy = function(y){ return g[1] + (y - g[1]) * g[2] * (g[5] || 1); };
+    var x0 = fx(o.hl[0]), x1 = fx(o.hl[0] + o.hl[2]), y0 = fy(o.hl[1]), y1 = fy(o.hl[1] + o.hl[3]); o.cx = fx(o.cx); o.r *= g[2] * (g[4] || 1); o.hl = [x0, y0, x1 - x0, y1 - y0]; }); })();
 
 /* ===================== ДОМ: отрисовка ===================== */
 function speechBubble(x, y, txt, alpha){
@@ -4123,8 +4269,11 @@ function speechBubble(x, y, txt, alpha){
   ctx.restore();
 }
 function renderHome(){
+  var W = HV_VW, sbq = null;
   var cam = HM.camX, t = game.time, r, i, nf = nightF(game.clock / 60), B1 = RW, B2 = 2 * RW, B3 = 3 * RW;
-  ctx.fillStyle = '#0a0705'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#0a0705'; ctx.fillRect(0, 0, 360, H);
+  var pg0 = ctx.createLinearGradient(0, HV_T + HV_H, 0, H); pg0.addColorStop(0, '#4a2f1a'); pg0.addColorStop(.5, '#33200f'); pg0.addColorStop(1, '#22150b'); ctx.fillStyle = pg0; ctx.fillRect(0, HV_T + HV_H, 360, H - HV_T - HV_H); for(var pl = 0; pl < 6; pl++){ ctx.fillStyle = 'rgba(0,0,0,.14)'; ctx.fillRect(0, HV_T + HV_H + 20 + pl * 24, 360, 1); } var pg1 = ctx.createLinearGradient(0, 0, 0, HV_T); pg1.addColorStop(0, '#2e1d10'); pg1.addColorStop(1, '#1a100a'); ctx.fillStyle = pg1; ctx.fillRect(0, 0, 360, HV_T);
+  ctx.save(); ctx.beginPath(); ctx.rect(0, HV_T, 360, HV_H); ctx.clip(); ctx.translate(0, HV_T - HV_Y0 * HV_SC); ctx.scale(HV_SC, HV_SC); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
   ctx.save();
   for(i = 0; i < WINDOWS.length; i++){ var w = WINDOWS[i], wx = w.r * RW + w.x - cam; if(wx + w.w > 0 && wx < W) drawSkyIn(wx, w.y, w.w, w.h); }
   for(r = 0; r < NRM; r++){ var ox = r * RW - cam; if(ox + RW > 0 && ox < W) ctx.drawImage(roomImg(r), Math.round(ox * DPR) / DPR, 0, RW, H); }
@@ -4182,6 +4331,7 @@ function renderHome(){
   var ak = HM.act ? HM.act.k : '';
   if(!HM.bedLie && ak !== 'sleep' && ak !== 'bath' && inV(HM.hx - 60, HM.hx + 60)){
     var hm = (ak === 'wash' || ak === 'drink' || ak === 'eat' || ak === 'cook' || ak === 'prep') ? ak : (HM.sitAt ? 'sit' : 'stand');
+    FS(HM.hx, FY + 10, 70, 14);
     drawHero(HM.hx, FY + 8, .85, HM.face, {mode: hm, walk: HM.hwalk && !HM.act, hold: (HM.hold && ak !== 'eat') ? HM.hold.ic : null});
   }
   for(i = 0; i < HM.particles.length; i++){
@@ -4207,14 +4357,12 @@ function renderHome(){
     ctx.restore();
   }
   ctx.restore();
-  if(nf > 0){ ctx.fillStyle = 'rgba(8,8,36,' + (nf * .36) + ')'; ctx.fillRect(0, 0, W, H); }
-  for(i = 0; i < HOME_LAMPS.length; i++){ var L = HOME_LAMPS[i], lx = L.x - cam; if(lx + L.r > 0 && lx - L.r < W) GL(lx, L.y, L.r, .10 + nf * .3); }
-  if(HM.tv){ var tl = B2 + 328 - cam; if(tl > -150 && tl < W + 150) GL(tl, 455, 130, .18, '130,170,255'); }
-  if(HM.sayT > 0 && HM.say) speechBubble(HM.hx - cam, FY + 8 - 152 * .85 + (HM.sitAt || ak === 'eat' ? 19 : 0) - (HM.hold && ak !== 'eat' ? 24 : 0), HM.say, Math.min(1, HM.sayT * 2));
+  if(HM.sayT > 0 && HM.say) sbq = [HM.hx - cam, FY + 8 - 152 * .85 + (HM.sitAt || ak === 'eat' ? 19 : 0) - (HM.hold && ak !== 'eat' ? 24 : 0), HM.say, Math.min(1, HM.sayT * 2)];
   if(HM.fade > 0){ ctx.fillStyle = 'rgba(0,0,0,' + HM.fade + ')'; ctx.fillRect(0, 0, W, H); }
   ctx.restore();
-  ctx.drawImage(VIG, 0, 0, W, H);
-  drawCRT();
+  ctx.restore();
+  ctx.lineWidth = 7; ctx.strokeStyle = '#1a0f07'; ctx.strokeRect(-3, HV_T - 3, 366, HV_H + 6); ctx.lineWidth = 2; ctx.strokeStyle = '#a8763e'; ctx.strokeRect(1, HV_T + 1, 358, HV_H - 2); ctx.fillStyle = '#e0b060'; ctx.fillRect(0, HV_T + HV_H + 4, 360, 2); ctx.fillStyle = '#7a5530'; ctx.fillRect(0, HV_T + HV_H + 6, 360, 2); [[4, HV_T + 4], [356, HV_T + 4], [4, HV_T + HV_H - 4], [356, HV_T + HV_H - 4]].forEach(function(c){ ctx.fillStyle = '#e0b060'; ctx.beginPath(); ctx.arc(c[0], c[1], 3, 0, 7); ctx.fill(); ctx.fillStyle = '#7a5530'; ctx.beginPath(); ctx.arc(c[0] + .6, c[1] + .6, 1.4, 0, 7); ctx.fill(); });
+  if(sbq) speechBubble(sbq[0] * HV_SC, HV_T + (sbq[1] - HV_Y0) * HV_SC, sbq[2], sbq[3]);
 }
 /* ===================== ДОМ: логика ===================== */
 function hpart(x, y, vx, vy, t, col, sz, txt){ HM.particles.push({x: x, y: y, vx: vx, vy: vy, t: t, col: col, sz: sz, txt: txt}); }
@@ -4246,13 +4394,13 @@ function updateHome(dt){
   // Герой не бегает по длинной сцене; камера плавно фиксируется на выбранной комнате.
   HM.walking = false; HM.dir = 0;
   if(HM.hx == null || HM.act || HM.sitAt){ HM.hx = HM.x; HM.hwalk = false; } else { var hd = HM.x - HM.hx, hst = 270 * dt; if(Math.abs(hd) <= hst){ HM.hx = HM.x; HM.hwalk = false; } else { HM.hx += (hd > 0 ? 1 : -1) * hst; HM.hwalk = true; HM.face = hd > 0 ? 1 : -1; } }
-  var tg = HM.roomPage * RW;
-  var ctg = (HM.hwalk && !HM.act) ? Math.max(0, Math.min((NRM - 1) * RW, HM.hx - RW / 2)) : tg; if(!HM.drag) HM.camX += (ctg - HM.camX) * Math.min(1, dt * (HM.hwalk ? 7 : 9));
+  var tg = camFor(HM.roomPage);
+  var ctg = (HM.hwalk && !HM.act) ? Math.max(0, Math.min(WORLD - HV_VW, HM.hx - HV_VW / 2)) : tg; if(!HM.drag) HM.camX += (ctg - HM.camX) * Math.min(1, dt * (HM.hwalk ? 7 : 9));
   // время и потребности
   if(!(HM.act && HM.act.k === 'sleep')){
     var rate = HM.sitAt ? 1 : (HM.act ? 0 : .25), mins = rate * dt, n = game.needs;
-    game.clock += mins; n.hunger = cl01(n.hunger + .05 * mins); n.thirst = cl01(n.thirst + .07 * mins + (HM.tv && HM.sitAt ? .02 * dt : 0));
-    if(HM.sitAt){ n.fatigue = cl01(n.fatigue - (1.0 + (HM.tv && HM.sitAt === 'sofa' ? .6 : 0)) * dt); } else n.fatigue = cl01(n.fatigue + .04 * mins);
+    game.clock += mins; n.dirt = cl01((n.dirt || 0) + .03 * mins); n.hunger = cl01(n.hunger + .05 * mins); n.thirst = cl01(n.thirst + .07 * mins + (HM.tv && HM.sitAt ? .02 * dt : 0));
+    if(HM.sitAt){ n.fatigue = cl01(n.fatigue - (1.0 + (HM.tv && HM.sitAt === 'sofa' ? (HM.tv === 5 ? 1.5 : (HM.tv === 6 ? 0 : .6)) : 0)) * dt); } else n.fatigue = cl01(n.fatigue + .04 * mins);
   }
   var mk = Math.floor(game.clock); if(mk !== HM.lastMin){ HM.lastMin = mk; topBar(); }
   if(game.clock >= 1500 && !HM.act && !HM.menu && !HM.fadeCb){ sayHm('Глаза слипаются... пора спать.', 2.5); doSleep(); }
@@ -4265,13 +4413,14 @@ function updateHome(dt){
 }
 function homeSyncUI(){
   var n = game.needs, room = Math.max(0, Math.min(NRM - 1, HM.roomPage));
-  var key = room + '|' + Math.floor(game.clock) + '|' + Math.round(n.hunger) + '|' + Math.round(n.thirst) + '|' + Math.round(n.fatigue) + '|' + game.money;
+  var key = room + '|' + Math.floor(game.clock) + '|' + Math.round(n.hunger) + '|' + Math.round(n.thirst) + '|' + Math.round(n.fatigue) + '|' + Math.round(n.dirt || 0) + '|' + game.money;
   if(key !== HM.needKey){
     HM.needKey = key;
-    var rows = [['🍗', 'ГОЛОД', n.hunger], ['💧', 'ЖАЖДА', n.thirst], ['😴', 'УСТАЛ.', n.fatigue]], html = '';
+    var rows = [['🍗', 'ГОЛОД', n.hunger], ['💧', 'ЖАЖДА', n.thirst], ['😴', 'УСТАЛ.', n.fatigue], ['🧼', 'ГРЯЗЬ', n.dirt || 0]], html = '';
     rows.forEach(function(r){ var c = r[2] < 40 ? '#6ca05e' : (r[2] < 70 ? '#e0a040' : '#d85a48'); html += '<div class="nrow"><span>' + r[0] + '</span><b>' + r[1] + '</b><div class="nbar"><i style="width:' + Math.round(r[2]) + '%;background:' + c + '"></i></div></div>'; });
     $('hneeds').innerHTML = html;
-    $('hroomlbl').innerHTML = RNAME[room] + '<br><span style="font-size:.85em;color:#c8b898">' + fmtClock(game.clock) + ' · День ' + game.day + '</span>';
+    var dh = ''; for(var q = 0; q < NRM; q++) dh += '<i class="' + (q === room ? 'on' : '') + '"></i>'; $('hdots').innerHTML = dh; $('hnl').style.opacity = room > 0 ? 1 : .35; $('hnr').style.opacity = room < NRM - 1 ? 1 : .35;
+    $('hroomlbl').textContent = RNAME[room];
     var dc = dreamCost(), pc = dreamPct();
     $('hdream').innerHTML = '<div style="font-size:.8em;color:#c8b898">🎮 МЕЧТА</div><div style="font-size:.78em;color:#ffd890">PS5 + GTA 6</div><div class="nbar" style="margin:.2em 0"><i style="width:' + pc + '%;background:#c87838"></i></div><div style="font-size:.78em;color:#f0e4c8">' + Math.min(game.money, dc) + '/' + dc + ' ◈</div>';
   }
@@ -4280,8 +4429,8 @@ function homeSyncUI(){
 }
 function homeTap(e){
   if(game.phase !== 'home' || homeCapture()) return;
-  var r = cv.getBoundingClientRect(), px = (e.clientX - r.left) * W / r.width, py = (e.clientY - r.top) * H / r.height, wx = HM.camX + px * RW / W;
-  if(py < 120 || py > H - 70) return;
+  var r = cv.getBoundingClientRect(), px = (e.clientX - r.left) * W / r.width, sy = (e.clientY - r.top) * H / r.height, wx = HM.camX + px / HV_SC, py = (sy - HV_T) / HV_SC + HV_Y0;
+  if(sy < HV_T || sy > HV_T + HV_H) return;
   // Тап по предмету сразу запускает его действие — как нажатие на объект в баре.
   for(var i = 0; i < HOME_OBJS.length; i++){
     var o = HOME_OBJS[i], hl = o.hl;
@@ -4305,15 +4454,17 @@ function homeChangeRoom(dir){
 }
 (function(){
   var u = $('ui'), d = document.createElement('div'); d.id = 'homeui';
-  d.innerHTML = '<div id="hneeds"></div><div id="hroomlbl"></div><div id="hdream"></div><div id="hmovehint">Свайпай влево или вправо, чтобы переключать комнаты</div><button class="bt p" id="hact"></button><div id="hmenu"></div>';
+  d.innerHTML = '<div id="hneeds"></div><div id="hroomlbl"></div><div id="hdream"></div><div id="hpanel"><div id="hactw"><button class="bt p" id="hact"></button></div><div id="hnav"><button id="hnl" class="hnb">◀</button><div id="hdots"></div><button id="hnr" class="hnb">▶</button></div><div id="hmovehint">Свайпай по комнате или жми стрелки</div></div><div id="hmenu"></div>';
   u.appendChild(d);
+  $('hnl').addEventListener('click', function(){ au(); homeChangeRoom(-1); });
+  $('hnr').addEventListener('click', function(){ au(); homeChangeRoom(1); });
   $('hact').addEventListener('click', function(){ if(game.phase === 'home' && HM.near && !homeCapture()){ au(); sClick(); HM.near.act(); homeSyncUI(); } });
   var hs = null;
   function endDrag(e, cancel){
     if(!hs) return; var s = hs; hs = null;
     if(s.drag){
-      HM.drag = false; var k = RW / cv.getBoundingClientRect().width, proj = HM.camX - s.v * 180 * k;
-      var pg = Math.max(s.page - 1, Math.min(s.page + 1, Math.round(proj / RW)));
+      HM.drag = false; var k = HV_VW / cv.getBoundingClientRect().width, proj = HM.camX - s.v * 180 * k;
+      var pg = s.page, bd = 1e9; for(var pp = Math.max(0, s.page - 1); pp <= Math.min(NRM - 1, s.page + 1); pp++){ var dd = Math.abs(camFor(pp) - proj); if(dd < bd){ bd = dd; pg = pp; } }
       HM.roomPage = s.page; homeSetRoom(pg); if(pg === s.page) HM.needKey = '';
     }else if(!cancel && game.phase === 'home' && Math.abs(e.clientX - s.x) < 18 && Math.abs(e.clientY - s.y) < 18){
       homeTap({clientX: e.clientX, clientY: e.clientY});
@@ -4330,7 +4481,7 @@ function homeChangeRoom(dir){
     var dx = e.clientX - hs.x, dy = e.clientY - hs.y;
     if(!hs.drag && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)){ hs.drag = true; HM.drag = true; HM.near = null; }
     if(hs.drag){
-      var k = RW / cv.getBoundingClientRect().width, now = performance.now(), mx = (NRM - 1) * RW, nc = hs.cam - dx * k;
+      var k = HV_VW / cv.getBoundingClientRect().width, now = performance.now(), mx = WORLD - HV_VW, nc = hs.cam - dx * k;
       if(nc < 0) nc *= .35; else if(nc > mx) nc = mx + (nc - mx) * .35;
       HM.camX = nc; var dt = now - hs.lt; if(dt > 0) hs.v = hs.v * .6 + ((e.clientX - hs.lx) / dt) * .4; hs.lx = e.clientX; hs.lt = now;
     }
@@ -4369,7 +4520,8 @@ function driveTap(e, down){
   DRVHOLD = !!down;
   if(down && e && DRV){
     var r = cv.getBoundingClientRect(), px = (e.clientX - r.left) * W / r.width, py = (e.clientY - r.top) * H / r.height;
-    if(py > 500 && px > DRV.carX - 80 && px < DRV.carX + 80){ DRV.honk = .7; tone(392, .22, 'square', .05); setTimeout(function(){ tone(330, .26, 'square', .05); }, 120); }
+    if(DRV.mode === 'work') px = W - px;
+    if(py > (DRV.mode === 'work' ? 440 : 500) && px > DRV.carX - 80 && px < DRV.carX + 80){ DRV.honk = .7; tone(392, .22, 'square', .05); setTimeout(function(){ tone(330, .26, 'square', .05); }, 120); }
   }
 }
 function updateDrive(dt){
@@ -4612,6 +4764,12 @@ function drawDriveInterior(progress, moving){
 
 function renderDrive(){
   var d = DRV; if(!d){ ctx.fillStyle = '#0a0705'; ctx.fillRect(0, 0, W, H); return; }
+  var flip = d.mode === 'work';
+  if(flip){
+    ctx.save(); ctx.translate(W, 0); ctx.scale(-1, 1);
+    var _ft = Object.getPrototypeOf(ctx).fillText;
+    ctx.fillText = function(t, x, y, mw){ var a = ctx.textAlign; ctx.save(); ctx.translate(x, y); ctx.scale(-1, 1); ctx.textAlign = (a === 'left' || a === 'start') ? 'right' : ((a === 'right' || a === 'end') ? 'left' : a); _ft.call(ctx, t, 0, 0); ctx.restore(); };
+  }
   var t = d.t, seg = d.seg, D = driveD(t, seg), hh = game.clock / 60, nf = nightF(hh), home = d.mode === 'home', i;
   function ease(p){ p = Math.max(0, Math.min(1, p)); return p * p * (3 - 2 * p); }
   dsky(hh, nf);
@@ -4632,32 +4790,34 @@ function renderDrive(){
   ctx.fillStyle = 'rgba(255,230,150,.7)'; for(i = Math.floor(D / 70) - 1; i < Math.floor(D / 70) + 7; i++) ctx.fillRect(i * 70 - D, 560, 36, 5);
   R('rgba(255,255,255,.35)', 0, 482, W, 2); R('rgba(255,255,255,.2)', 0, 628, W, 2);
   // машина
+  var CY = flip ? 522 : 590;
   var carX = 250; if(t > seg[0]) carX = 250 - 120 * ease((t - seg[0]) / (seg[1] - seg[0]));
   d.carX = carX;
   var lights = t > seg[0] - .6, sit = true, parked = t > seg[2] + (seg[3] - seg[2]) * .7;
   // В салоне котёнок больше не высовывает мордочку в окно.
   var catIn = false;
   var shake = (t > seg[1] && t < seg[2] + 3) ? Math.sin(t * 28) * .7 : 0;
-  dCar(carX, 590 + shake, D, lights, catIn, d.honk, nf);
+  dCar(carX, CY + shake, D, lights, catIn, d.honk, nf);
   // кот идёт
   var dr0 = f0, dr1 = f1;
   if(t < seg[0] - .2){
-    var p = ease((t - .5) / 2.6); var hx = dr0 + (carX - 8 - dr0) * p, hy = 470 + (590 - 470) * p;
+    var p = ease((t - .5) / 2.6); var hx = dr0 + (carX - 8 - dr0) * p, hy = 470 + (CY - 470) * p;
     if(t > .4) drawHero(hx, hy, .5 - p * .02, 1, {walk: p > 0 && p < 1});
   }
   // Короткая отдельная анимация посадки: котёнок подходит к двери, запрыгивает внутрь и исчезает за кузовом.
   var boardP = ease((t - (seg[0] - .2)) / .68);
   if(t >= seg[0] - .2 && t < seg[0] + .48){
     ctx.save(); ctx.globalAlpha = 1 - boardP;
-    drawHero(carX - 8 + boardP * 19, 590 - boardP * 18, .48 * (1 - boardP * .62), 1, {walk: boardP < .25});
+    drawHero(carX - 8 + boardP * 19, CY - boardP * 18, .48 * (1 - boardP * .62), 1, {walk: boardP < .25});
     ctx.restore();
   }
   var ex = seg[2] + (seg[3] - seg[2]) * .72;
   if(t > ex && t < seg[3] + 1){
-    var p2 = ease((t - ex) / ((seg[3] - ex) * .95)); var hx2 = carX + 10 + (dr1 - carX - 10) * p2, hy2 = 590 + (470 - 590) * p2;
+    var p2 = ease((t - ex) / ((seg[3] - ex) * .95)); var hx2 = carX + 10 + (dr1 - carX - 10) * p2, hy2 = CY + (470 - CY) * p2;
     drawHero(hx2, hy2, .5 - p2 * .1, 1, {walk: p2 > 0 && p2 < 1});
   }
   // После подхода котёнок садится в машину; поездка остаётся внешним кинематографичным видом.
+  if(flip){ delete ctx.fillText; ctx.restore(); }
   // подписи
   var capA = 0, cap1 = '', cap2 = '';
   if(home && t < seg[0]){ capA = Math.min(1, t / .6, (seg[0] - t) / .5); cap1 = 'СМЕНА ЗАКОНЧЕНА'; cap2 = 'Заработано за день: +' + (game.lastEarn || 0) + ' ◈  ·  В кармане: ' + game.money + ' ◈'; }
@@ -4679,7 +4839,7 @@ function showTitle(){
     game.day = 1; game.shift = 0; game.money = 50; game.total = 0; game.rel = {}; game.combo = 0; game.bestCombo = 0; game.shiftNo = 0;
     game.ach = {}; game.cleanGlasses = 3; game.dirtyGlasses = 0; game.glassTotal = 3; game.milk = 1.0; game.milkBought = 0; game.warehouseCan = false; game.pouringCan = 0;
     game.tutDone = false; game.tutStep = 0; game.tutT = 0; tutLast = ''; game.stock = {cinnamon: 0, honey: 0};
-    game.needs = {hunger: 20, thirst: 20, fatigue: 15}; game.clock = 10 * 60; game.outfit = 0; game.owned = {}; game.homeReady = true; game.pendingHome = false; game.lastEarn = 0;
+    game.needs = {hunger: 20, thirst: 20, fatigue: 15, dirt: 10}; game.clock = 10 * 60; game.outfit = 0; game.owned = {}; game.food = {fish: 2, cheese: 2, yogurt: 2}; game.subUntil = 0; game.homeReady = true; game.pendingHome = false; game.lastEarn = 0;
     game.upg = {nozzle:0, barrel:0, jukebox:0, snacks:0, foam:0, decor:0, sink:0, temp:0, spice:0, steamer:0, dispenser:0};
     titleEl.classList.add('hid'); startShift();
   };
@@ -4928,8 +5088,10 @@ function update(dt){
     if((game.vip ? game.vipSpawned : game.spawned >= NSHIFT) && game.cats.length === 0 && !game.active && !game.dlg && !game.wash.active && !game.drag.active) endShift();
   }
 
+  if(game.phase === 'play' && game.tutDone && !game.vip && game.needs){ game.needs.fatigue = cl01(game.needs.fatigue + dt * (game.shift >= 3 ? .8 : .3)); }
+  var ex = (game.needs && game.needs.fatigue >= 95) ? 1 + .4 * Math.sin(game.time * 11) : 1;
   var baseSpeed = .62 * (1 - game.upg.nozzle * .08);
-  var pourSpeed = baseSpeed * (0.85 + g.level * 0.55);
+  var pourSpeed = baseSpeed * (0.85 + g.level * 0.55) * ex;
   if(game.pouringCan > 0){
     game.pouringCan -= dt;
     game.milk = Math.min(1, game.milk + 0.55 * dt);
@@ -4944,7 +5106,7 @@ function update(dt){
   if(g.pouring){
     var dm = Math.min(game.milk, pourSpeed * dt);
     g.level = Math.min(1, g.level + dm);
-    game.milk = Math.max(0, game.milk - dm * 0.24);
+    game.milk = Math.max(0, game.milk - dm * 0.24 / (1 + game.upg.barrel * .3));
     if(pn && ac){ pn.frequency.setValueAtTime(135 + g.level * 190, ac.currentTime); }
     if(Math.random() < .35) addBurst(NX, g.y + 25*g.sc - 50*g.sc*g.level, '#ffffff', 1);
     if(g.level >= 1 || game.milk <= 0.002) stopPour();
@@ -4974,9 +5136,19 @@ function update(dt){
 }
 
 var last = 0;
+function fxFatigue(){
+  if(game.phase !== 'play' || !game.needs || !game.tutDone) return;
+  var f = game.needs.fatigue, nt = game.shift >= 3, T = game.time;
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  if(nt){ ctx.fillStyle = 'rgba(10,14,48,.22)'; ctx.fillRect(0, 0, W, H); }
+  if(f > 60){ var a = Math.min(.55, (f - 60) / 40 * .55) * (.75 + .25 * Math.sin(T * 2)), gr = ctx.createRadialGradient(W / 2, H / 2, H * .25, W / 2, H / 2, H * .75); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(5,5,20,' + a + ')'); ctx.fillStyle = gr; ctx.fillRect(0, 0, W, H); }
+  if(f >= 99){ var lid = (Math.sin(T * 1.3) + 1) / 2, hh = H * .12 * lid; ctx.fillStyle = 'rgba(0,0,0,.7)'; ctx.fillRect(0, 0, W, hh); ctx.fillRect(0, H - hh, W, hh); smt('Z z z... засыпаю на смене', W / 2, 138, 10, '#cfd8ff'); }
+  ctx.fillStyle = 'rgba(18,12,8,.82)'; ctx.fillRect(6, 92, 96, 12); ctx.fillStyle = f < 60 ? '#6ca05e' : (f < 85 ? '#e0a040' : '#d85a48'); ctx.fillRect(7, 93, 94 * f / 100, 10);
+  smt((nt ? 'НОЧЬ ' : '') + 'УСТАЛ. ' + Math.round(f) + '%', 54, 98, 7, '#fff');
+}
 function loop(now){
   var dt = Math.min(.05, (now - last) / 1000) || .016;
-  last = now; update(dt); render();
+  last = now; update(dt); render(); fxFatigue();
   requestAnimationFrame(loop);
 }
 
